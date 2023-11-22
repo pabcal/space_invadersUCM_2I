@@ -11,6 +11,7 @@ import static tp1.view.Messages.error;
 
 
 //Pablo Calderón Pérez and Pedro Santiago Gentil
+//Version 2
 
 public class Main {
 
