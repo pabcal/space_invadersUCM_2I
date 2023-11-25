@@ -44,8 +44,19 @@ public class MoveCommand extends Command {
 
 	@Override
 	public Command parse(String[] commandWords) {
-        //TODO fill with your code
-	    return null;
+		Command c = null;
+        if ( commandWords.length > 1 && this.matchCommandName(commandWords[0])) {
+        	c = this;
+        	String command2 = commandWords[1].toUpperCase();
+        	if (command2.equals("RIGHT") || command2.equals("LEFT") ||
+					command2.equals("LLEFT") || command2.equals("RRIGHT") ||
+					command2.equals("DOWN") || command2.equals("UP") ||
+					command2.equals("NONE")) { 
+				move = Move.valueOf(command2);
+				c = this;
+        	}
+        }
+	    return c;
 	}
 
 }

@@ -12,11 +12,14 @@ public class CommandGenerator {
 		//TODO fill with your code
 	);
 
-	public static Command parse(String[] commandWords) {		
+	public static Command parse(String[] commandWords) {		 // Pepe
 		Command command = null;
 		for (Command c: availableCommands) {
-			//TODO fill with your code
+			if (command == null)
+				command = c.parse(commandWords);
 		}
+		if (command == null && commandWords[0] == "")
+			assert true; //rellenar 
 		return command;
 	}
 		
