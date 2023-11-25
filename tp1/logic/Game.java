@@ -310,7 +310,7 @@ public class Game {
 	
 	/*
 	 Game.playerProcessHit() is the method concerning the collision and damage effects between the bombs and the player. Is important to notice that
-	 a difference between this function and the laser´s Game.processHIT() is that is not called two times. This is due to the implementation of Bomb.performAttcak(UCMShip other)
+	 a difference between this function and the laserï¿½s Game.processHIT() is that is not called two times. This is due to the implementation of Bomb.performAttcak(UCMShip other)
 	 that allows us to call it only once.
 	*/
 	public void playerProcessHit() {
@@ -330,6 +330,10 @@ public class Game {
 	public double ndd() { //produces and returns the next double of the Random object in Game
 		double nextDouble = this.rand.nextDouble();
 		return nextDouble;
+	}
+	
+	public void exit() {
+		//TO DO
 	}
 	
 	

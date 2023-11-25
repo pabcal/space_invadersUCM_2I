@@ -103,7 +103,7 @@ public class Controller {
 								System.out.println(Messages.LASER_ERROR);
 							break;
 						case "h":
-							System.out.println(Messages.HELP);
+							//System.out.println(Messages.HELP);
 							
 							break;
 						case "l":
