@@ -43,7 +43,7 @@ public class MoveCommand extends Command {
 
 
 	@Override
-	public Command parse(String[] commandWords) {
+	public Command parse(String[] commandWords) { // Pepe
 		Command c = null;
         if ( commandWords.length > 1 && this.matchCommandName(commandWords[0])) {
         	c = this;
