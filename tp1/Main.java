@@ -10,7 +10,7 @@ import tp1.view.Messages;
 import static tp1.view.Messages.error;
 
 
-//Pablo Calderón Pérez and Pedro Santiago Gentil
+//Pablo Calderï¿½n Pï¿½rez and Pedro Santiago Gentil.
 //Version 2
 
 public class Main {
