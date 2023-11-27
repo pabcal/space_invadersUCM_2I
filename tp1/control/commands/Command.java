@@ -30,7 +30,7 @@ public abstract class Command {
 		        getName().equalsIgnoreCase(name);
 	  }
 	  
-	  public String helpText(){ //pablito gay
+	  public String helpText(){ //pepe + pablo = love
 	    return getDetails() + " : " + getHelp() + "\n";
 	  }
 }
