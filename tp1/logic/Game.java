@@ -337,4 +337,43 @@ public class Game {
 	}
 	
 	
+	
+	
+	
+	
+//	private boolean finished = false;
+//	public boolean isFinished() 
+//	{
+//		if (this.playerWin() || this.aliensWins())
+//			this.finished = true;
+//			
+//		// TODO fill with your code
+//		return finished;
+//	}
+//
+//	public void exit() {
+//		this.finished = true;
+//	}
+//	
+	
+//not sure where to put the aliens win or player wins messahe, dont know if you wanna do it with a boolean finished like that	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
