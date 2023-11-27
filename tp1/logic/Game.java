@@ -18,7 +18,7 @@ import tp1.view.Messages;
 
 
 // TODOimplementarlo
-public class Game {
+public class Game implements GameStatus{
 	
 	//constant declarations (the same in all difficulties)
 	public static final int DIM_X = 9;
@@ -47,6 +47,7 @@ public class Game {
 	private Ufo ufo;
 	private boolean shockwave = false;
 	private int alienCycleCounter = 0;
+	private boolean finished = false;
 
 	private int score = 0;
 	//TODO fill your code
@@ -107,7 +108,7 @@ public class Game {
 		return this.manager.getRemainingAliens() == 0;
 	}
 
-	public boolean aliensWins() 
+	public boolean aliensWin() 
 	{
 		if (this.rAlienList.anObjectInPos(getPlayerPos()) != null ||
 				this.dAlienList.anObjectInPos(getPlayerPos()) != null ||
@@ -332,31 +333,32 @@ public class Game {
 		return nextDouble;
 	}
 	
-	public void exit() {
-		//TO DO
+	
+	
+	
+
+	
+
+	public boolean isFinished() //COMENTAR
+	{
+		if (!finished && (this.playerWin() || this.aliensWin()))
+			finished = true;
+			
+		return finished;
 	}
+
+	public void exit() { //COMENTAR
+		finished = true;
+	}
+
+	@Override
+	public String infoToString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
-	
-	
-	
-	
-//	private boolean finished = false;
-//	public boolean isFinished() 
-//	{
-//		if (this.playerWin() || this.aliensWins())
-//			this.finished = true;
-//			
-//		// TODO fill with your code
-//		return finished;
-//	}
-//
-//	public void exit() {
-//		this.finished = true;
-//	}
-//	
-	
-//not sure where to put the aliens win or player wins messahe, dont know if you wanna do it with a boolean finished like that	
 	
 	
 	
