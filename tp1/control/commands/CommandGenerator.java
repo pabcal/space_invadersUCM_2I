@@ -18,8 +18,8 @@ public class CommandGenerator {
 			if (command == null)
 				command = c.parse(commandWords);
 		}
-		if (command == null && commandWords[0] == "")
-			assert true; //rellenar 
+		if (command == null && commandWords.length > 0 && commandWords[0] == "")
+			assert true; //rellenar para None
 		return command;
 	}
 		
