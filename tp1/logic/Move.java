@@ -37,10 +37,10 @@ public enum Move {
 
 	}
 	
-	public Move getMovement (String mov)
+	static public Move getMovement (String mov)
 	{
 		Move move = null;
-		if (mov.equals("RIGHT") || mov.equals("LEFT") ||
+		if (mov.equals(Move.RIGHT) || mov.equals("LEFT") || //changeeeee
 				mov.equals("LLEFT") || mov.equals("RRIGHT") ||
 				mov.equals("DOWN") || mov.equals("UP") ||
 				mov.equals("NONE"))
