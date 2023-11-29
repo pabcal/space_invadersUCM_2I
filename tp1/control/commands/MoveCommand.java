@@ -37,23 +37,28 @@ public class MoveCommand extends Command {
 
 	@Override
 	public ExecutionResult execute(Game game) {
-		//TODO fill with your code
-		return null;
+		boolean valid = game.movePlayer(move);
+		
+		
+		
+		return new ExecutionResult(valid, valid, Messages.MOVEMENT_ERROR);
 	}
 
 
 	@Override
-	public Command parse(String[] commandWords) { // Pepe
+	public Command parse(String[] commandWords) 
+	{
 		Command c = null;
-        if ( commandWords.length > 1 && this.matchCommandName(commandWords[0])) {
-        	c = this;
-        	String command2 = commandWords[1].toUpperCase();
-        	if (command2.equals("RIGHT") || command2.equals("LEFT") ||
-					command2.equals("LLEFT") || command2.equals("RRIGHT") ||
-					command2.equals("DOWN") || command2.equals("UP") ||
-					command2.equals("NONE")) { 
-				move = Move.valueOf(command2);
-				c = this;
+        if ( commandWords.length > 0 && this.matchCommandName(commandWords[0])) 
+        {
+        	if (commandWords.length > 1)
+        	{
+            	String command2 = commandWords[1].toUpperCase();
+            	move = move.getMovement(command2);
+            	if (move == null)
+            		System.out.println(Messages.DIRECTION_ERROR);
+            	c = this;
+
         	}
         }
 	    return c;

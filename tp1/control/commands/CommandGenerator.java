@@ -20,6 +20,8 @@ public class CommandGenerator {
 		}
 		if (command == null && commandWords.length > 0 && commandWords[0] == "")
 			assert true; //rellenar para None
+		else
+			assert true; //rellenar error message
 		return command;
 	}
 		

@@ -297,10 +297,16 @@ public class Game implements GameStatus{
 		this.shockwave = value;
 	}
 	
-	public void shootShockwave() {
-		this.dAlienList.shockwaveHit();
-		this.rAlienList.shockwaveHit();
-		this.setShockwave(false);
+	public boolean shootShockwave() {
+		boolean completed = false;
+		if (shockwave == true)
+		{
+			completed = true;
+			this.dAlienList.shockwaveHit();
+			this.rAlienList.shockwaveHit();
+			this.setShockwave(false);
+		}
+		return completed;
 	}
 	
 	

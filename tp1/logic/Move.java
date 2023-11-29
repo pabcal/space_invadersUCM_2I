@@ -37,6 +37,16 @@ public enum Move {
 
 	}
 	
+	public Move getMovement (String mov)
+	{
+		Move move = null;
+		if (mov.equals("RIGHT") || mov.equals("LEFT") ||
+				mov.equals("LLEFT") || mov.equals("RRIGHT") ||
+				mov.equals("DOWN") || mov.equals("UP") ||
+				mov.equals("NONE"))
+			move = Move.valueOf(mov);
+		return move;
+	}
 	
 	
 	
