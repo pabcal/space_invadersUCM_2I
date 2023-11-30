@@ -91,7 +91,7 @@ public class Ufo {
 		return this.pos.isEqual(pos1);
 	}
 	
-	public boolean receiveAttack(UCMWeapon other) {
+	public boolean receiveAttack(Laser other) {
 		return this.inPosition(other.getPos());
 	}
 	
