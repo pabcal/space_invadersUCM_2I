@@ -33,7 +33,7 @@ public class CommandGenerator {
 	public static String commandHelp() {
 		StringBuilder commands = new StringBuilder();	
 		for (Command c: availableCommands) {
-			commands.append(c.getDetails()).append(": ").append(c.getHelp()).append(Messages.LINE_SEPARATOR);
+			commands.append(c.helpText());
 		}
 		return commands.toString();
 	}
