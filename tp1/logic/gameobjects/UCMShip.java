@@ -70,7 +70,7 @@ public class UCMShip {
 		this.health = 0;
 	}
 	
-	public boolean receiveAttack(Bomb bomb) {
+	public boolean receiveAttack(EnemyWeapon bomb) {
 		this.getHit(bomb.getDamage());
 		return true;
 	}

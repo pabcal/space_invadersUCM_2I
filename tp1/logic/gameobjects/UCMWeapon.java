@@ -13,7 +13,7 @@ import tp1.view.Messages;
  * Class that represents the laser fired by {@link UCMShip}
  *
  */
-public class UCMLaser {
+public class UCMWeapon {
 	
 	//TODO fill your code
 	private Move dir;
@@ -22,7 +22,7 @@ public class UCMLaser {
 	private boolean active = false;
 	private int damage = Game.UCM_DAMAGE; //ask	
 	
-	public UCMLaser() {
+	public UCMWeapon() {
 		this.dir = Move.UP;
 	}
 
@@ -139,7 +139,7 @@ public class UCMLaser {
 	 * @return always returns <code>true</code>
 	 */
 	
-	public boolean receiveAttack(Bomb weapon) {
+	public boolean receiveAttack(EnemyWeapon weapon) {
 		receiveDamage();
 		return true;
 	}

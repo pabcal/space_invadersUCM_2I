@@ -13,7 +13,7 @@ public class DestroyerAlien {
 	private int health;
 	private int points = Game.DESTROYER_ALIEN_POINTS;
 	private Game game;
-	private Bomb bomb;
+	private EnemyWeapon bomb;
 	
 	private String appearance = Messages.DESTROYER_ALIEN_SYMBOL;
 	private Position pos;
@@ -54,7 +54,7 @@ public class DestroyerAlien {
 		return (this.pos.getCol() == 0 || this.pos.getCol() == Game.DIM_X - 1);
 	}
 
-	public boolean receiveAttack(UCMLaser laser) {	//ASK ----------------------------------------------------------
+	public boolean receiveAttack(UCMWeapon laser) {	//ASK ----------------------------------------------------------
 		return this.inPosition(laser.getPos()); 
 	}
 	
@@ -158,7 +158,7 @@ public class DestroyerAlien {
 	}
 	
 	
-	public Bomb getBomb() {
+	public EnemyWeapon getBomb() {
 		return this.bomb;
 	}
 	
@@ -168,7 +168,7 @@ public class DestroyerAlien {
 	
 	private void createBomb() {
 		Position copy = new Position(this.pos.getCol(), this.pos.getRow() + 1);
-		Bomb bomb = new Bomb(copy, game);
+		EnemyWeapon bomb = new EnemyWeapon(copy, game);
 		this.bomb = bomb;
 	}
 	

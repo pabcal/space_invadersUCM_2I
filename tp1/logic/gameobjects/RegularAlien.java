@@ -57,7 +57,7 @@ public class RegularAlien {
 		return (this.pos.getCol() == 0 || this.pos.getCol() == Game.DIM_X - 1);
 	}
 
-	public boolean receiveAttack(UCMLaser laser) {	//ASK ----------------------------------------------------------
+	public boolean receiveAttack(UCMWeapon laser) {	//ASK ----------------------------------------------------------
 		return this.inPosition(laser.getPos()); 
 	}
 	

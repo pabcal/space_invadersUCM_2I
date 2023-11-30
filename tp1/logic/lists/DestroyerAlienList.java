@@ -2,7 +2,7 @@ package tp1.logic.lists;
 
 import tp1.logic.Game;
 import tp1.logic.Position;
-import tp1.logic.gameobjects.Bomb;
+import tp1.logic.gameobjects.EnemyWeapon;
 import tp1.logic.gameobjects.DestroyerAlien;
 
 
@@ -102,10 +102,10 @@ public class DestroyerAlienList {
 		}
 	}
 	
-	public Bomb searchBombInPos(Position pos) {
+	public EnemyWeapon searchBombInPos(Position pos) {
 		int i = 0;
 		boolean inPos = false;
-		Bomb bomb = null;
+		EnemyWeapon bomb = null;
 		Position bombPosition;
 		while (i < num && !inPos) {
 			bomb = this.objects[i].getBomb();
@@ -119,7 +119,7 @@ public class DestroyerAlienList {
 		return (inPos ? bomb : null);
 	}
 	
-	public Bomb getBombFrom(int index) {
+	public EnemyWeapon getBombFrom(int index) {
 		return this.objects[index].getBomb();
 	}
 	

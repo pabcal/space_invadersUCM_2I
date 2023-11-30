@@ -2,10 +2,10 @@ package tp1.logic;
 
 import java.util.Random;
 
-import tp1.logic.gameobjects.UCMLaser;
+import tp1.logic.gameobjects.UCMWeapon;
 import tp1.logic.gameobjects.UCMShip;
 import tp1.logic.gameobjects.Ufo;
-import tp1.logic.gameobjects.Bomb;
+import tp1.logic.gameobjects.EnemyWeapon;
 import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.lists.DestroyerAlienList;
@@ -39,7 +39,7 @@ public class Game implements GameStatus{
 	private Level level; 
 	private long seed;
 	private UCMShip player = new UCMShip();
-	private UCMLaser laser = new UCMLaser(); //changes 1.1
+	private UCMWeapon laser = new UCMWeapon(); //changes 1.1
 	private AlienManager manager; 
 	private RegularAlienList rAlienList;
 	private DestroyerAlienList dAlienList;
@@ -85,7 +85,7 @@ public class Game implements GameStatus{
 		Position posAux = new Position(col, row);
 		RegularAlien auxRAlien = this.rAlienList.anObjectInPos(posAux);
 		DestroyerAlien auxDAlien = this.dAlienList.anObjectInPos(posAux);
-		Bomb auxBomb = this.dAlienList.searchBombInPos(posAux);
+		EnemyWeapon auxBomb = this.dAlienList.searchBombInPos(posAux);
 		
 		if(auxRAlien != null)
 			what = auxRAlien.getAppearance();
@@ -183,7 +183,7 @@ public class Game implements GameStatus{
 	{
 		RegularAlien alien = null;
 		DestroyerAlien dAlien = null;
-		Bomb bomb = null;
+		EnemyWeapon bomb = null;
 		int i = 0;
 		if (laser.is_active()) {
 			while (i < this.dAlienList.getNum() && laser.is_active()) {
@@ -250,7 +250,7 @@ public class Game implements GameStatus{
 		this.score = 0;
 		this.cycle = 0;
 		this.laser = null;
-		this.laser = new UCMLaser();
+		this.laser = new UCMWeapon();
 		this.manager = null;
 		this.manager = new AlienManager(this, this.level);
 		this.rAlienList = null;
@@ -321,7 +321,7 @@ public class Game implements GameStatus{
 	 that allows us to call it only once.
 	*/
 	public void playerProcessHit() {
-		Bomb bomb = null;
+		EnemyWeapon bomb = null;
 		for (int j = 0; j < this.dAlienList.getNum(); ++j) {
 			bomb = this.dAlienList.getBombFrom(j);
 			if (bomb != null && bomb.is_active())
