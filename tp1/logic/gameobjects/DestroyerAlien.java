@@ -8,7 +8,7 @@ import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
-public class DestroyerAlien {
+public class DestroyerAlien extends AlienShip {
 	private Move dir = Move.LEFT;
 	private int health;
 	private int points = Game.DESTROYER_ALIEN_POINTS;
@@ -168,7 +168,7 @@ public class DestroyerAlien {
 	
 	private void createBomb() {
 		Position copy = new Position(this.pos.getCol(), this.pos.getRow() + 1);
-		Bomb bomb = new Bomb(game, copy, Weapon.LIFE_OF_WEAPONS);
+		Bomb bomb = new Bomb(game, copy);
 		this.bomb = bomb;
 	}
 	

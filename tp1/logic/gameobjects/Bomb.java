@@ -9,8 +9,8 @@ public class Bomb extends EnemyWeapon {
 	private int damage = Game.DESTROYER_ALIEN_DAMAGE;
 //	private boolean active = true;
 	
-	public Bomb( Game game, Position pos, int life) {
-		super(game, pos, life);
+	public Bomb( Game game, Position pos) {
+		super(game, pos);
 		dir = Move.DOWN;
 
 	}

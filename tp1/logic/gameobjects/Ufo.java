@@ -8,7 +8,7 @@ import tp1.logic.Position;
 import tp1.view.Messages;
 
 
-public class Ufo {
+public class Ufo extends EnemyShip{
 
 	//TODO fill your code
 

@@ -16,15 +16,18 @@ import tp1.view.Messages;
 public class Laser extends UCMWeapon{
 	
 	//TODO fill your code
-	private Move dir;
-	private String appearance = Messages.LASER_SYMBOL;
-	private Position pos;
-	private boolean active = false;
+//	private Move dir;
+//	private String appearance = Messages.LASER_SYMBOL;
+//	private Position pos;
+//	private boolean active = false;
 	private int damage = Game.UCM_DAMAGE; //ask	
 	
-	public Laser() {
+	public Laser(Game game) {
+		super(game, new Position());
+		Position auxPos = game.getPlayerPos();
+		pos = new Position(auxPos.getCol(), auxPos.getCol() - 1);
 		this.dir = Move.UP;
-		pos = game.
+		
 		
 	}
 
@@ -109,28 +112,28 @@ public class Laser extends UCMWeapon{
 	 * @param other regular alien under attack by the laser
 	 * @return always returns <code>true</code>
 	 */
-	private boolean weaponAttack(RegularAlien other) { //ASK RETURN TRUE -----------------------------------------------------------------------------------------------
-		return other.receiveAttack(this);	
-	}
+//	private boolean weaponAttack(RegularAlien other) { //ASK RETURN TRUE -----------------------------------------------------------------------------------------------
+//		return other.receiveAttack(this);	
+//	}
+//	
 	
+//	public Position getPos() { //changes 1.1
+//		return this.pos;
+//	}
 	
-	public Position getPos() { //changes 1.1
-		return this.pos;
-	}
-	
-	public String getAppearance() { //changes 1.1
-		return this.appearance;
+	public String getSymbol() { //changes 1.1
+		return Messages.LASER_SYMBOL;
 	}
 	
 	public void activate() {
 		this.active = true;
 	}
 	
-	public boolean is_active() {
-		return this.active;
-	}
-
-	//TODO fill your code
+//	public boolean is_active() {
+//		return this.active;
+//	}
+//
+//	//TODO fill your code
 
 
 	// RECEIVE ATTACK METHODS
@@ -141,40 +144,40 @@ public class Laser extends UCMWeapon{
 	 * @return always returns <code>true</code>
 	 */
 	
-	public boolean receiveAttack(Bomb weapon) {
-		receiveDamage();
-		return true;
-	}
+//	public boolean receiveAttack(Bomb weapon) {
+//		receiveDamage();
+//		return true;
+//	}
 	
 	public void receiveDamage() {
 		die();
 	}
 
-	public boolean performAttack(DestroyerAlien other) {
-		boolean attacked = false;
-		if (other.inPosition(this.getPos())) {
-			attacked = weaponAttack(other);
-			this.die();
-		}
-		return attacked;
-	}
-	
-	private boolean weaponAttack(DestroyerAlien other) { 
-		return other.receiveAttack(this);	
-	}
-	
-	public boolean performAttack(Ufo other) { 
-		boolean attacked = false;
-		if (other.inPosition(this.getPos())) {
-			attacked = weaponAttack(other);
-			this.die();
-		}
-		//TODO fill your code
-		return attacked;
-	}
-	
-	private boolean weaponAttack(Ufo other) { 
-		return other.receiveAttack(this);	
-	}
+//	public boolean performAttack(DestroyerAlien other) {
+//		boolean attacked = false;
+//		if (other.inPosition(this.getPos())) {
+//			attacked = weaponAttack(other);
+//			this.die();
+//		}
+//		return attacked;
+//	}
+//	
+//	private boolean weaponAttack(DestroyerAlien other) { 
+//		return other.receiveAttack(this);	
+//	}
+//	
+//	public boolean performAttack(Ufo other) { 
+//		boolean attacked = false;
+//		if (other.inPosition(this.getPos())) {
+//			attacked = weaponAttack(other);
+//			this.die();
+//		}
+//		//TODO fill your code
+//		return attacked;
+//	}
+//	
+//	private boolean weaponAttack(Ufo other) { 
+//		return other.receiveAttack(this);	
+//	}
 
 }
