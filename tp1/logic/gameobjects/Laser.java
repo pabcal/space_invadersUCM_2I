@@ -13,7 +13,7 @@ import tp1.view.Messages;
  * Class that represents the laser fired by {@link UCMShip}
  *
  */
-public class Laser {
+public class Laser extends UCMWeapon{
 	
 	//TODO fill your code
 	private Move dir;

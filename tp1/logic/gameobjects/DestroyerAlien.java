@@ -168,7 +168,7 @@ public class DestroyerAlien {
 	
 	private void createBomb() {
 		Position copy = new Position(this.pos.getCol(), this.pos.getRow() + 1);
-		Bomb bomb = new Bomb(copy, game);
+		Bomb bomb = new Bomb(game, copy, Weapon.LIFE_OF_WEAPONS);
 		this.bomb = bomb;
 	}
 	

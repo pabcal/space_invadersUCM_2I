@@ -96,7 +96,7 @@ public class Game implements GameStatus{
 		else if (posAux.isEqual(this.laser.getPos()) && this.laser.is_active()) 
 			what = this.laser.getAppearance();
 		else if (auxBomb != null)
-			what = auxBomb.getAppearance();
+			what = auxBomb.getSymbol();
 		else if (posAux.isEqual(this.ufo.getPosition()) && this.ufo.Alive()) 
 			what = this.ufo.getAppearance();
 		else

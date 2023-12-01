@@ -5,8 +5,10 @@ import tp1.logic.Move;
 import tp1.logic.Position;
 
 public abstract class Weapon extends GameObject{
+	static final int LIFE_OF_WEAPONS = 1;
 	protected boolean active = false;
 	protected int damage;
+	protected int armor;
 
 	public Weapon(Game game, Position pos, int life) {
 		super(game, pos, life);
@@ -22,35 +24,38 @@ public abstract class Weapon extends GameObject{
 		}
 		return attacked;
 	}
-	
 	public boolean is_active()
 	{
 		return this.active;
 	}
-	
-	protected boolean onBorder()
+	@Override
+	protected boolean onBorder() //tells you if its outside
 	{
 		return pos.getRow() > Game.DIM_Y - 1 || pos.getRow() < 0;
 	}
-	
+	@Override
 	protected int getDamage()
 	{
 		return this.damage;
 	}
-
+	@Override
 	public void automaticMove () {
 		if (this.active) {
-			performMovement(dir);
+			performMovement();
 			if(onBorder())
 				die();
 		}
 	}
 	
-	protected void performMovement(Move dir) {
+	@Override
+	protected void performMovement() {
 		dir.updatePosition(this.pos);
-//		this.inPlayerPos = this.game.inPlayerPos(this.pos); //unique for bomb, but we can implement it in computer actions
 	}
-	
+	@Override
+	protected int getArmor()
+	{
+		return this.armor;
+	}
 
 	protected abstract boolean weaponAttack(GameItem other);
 	

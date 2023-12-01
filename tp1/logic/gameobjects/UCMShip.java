@@ -4,7 +4,7 @@ import tp1.view.Messages;
 import tp1.logic.Game;
 import tp1.logic.Move;
 
-public class UCMShip {
+public class UCMShip extends Ship{
 	
 	private int health;
 	private Position pos = new Position();

@@ -28,12 +28,12 @@ public abstract class GameObject implements GameItem {
 	
 	protected abstract String getSymbol();
 	protected abstract int getDamage();
-	protected abstract int getArmour();
+	protected abstract int getArmor();
 	
-	public abstract void performMovement();
+	protected abstract void performMovement();
 	
 			
-	public abstract void onDelete();
+	//public abstract void onDelete();
 	public abstract void automaticMove();
 	protected abstract boolean onBorder();
 	public abstract void computerAction();

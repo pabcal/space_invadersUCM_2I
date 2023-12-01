@@ -6,18 +6,51 @@ import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class Bomb extends EnemyWeapon {
-	private Move dir = Move.DOWN;
-	private Game game;
-	private String appearance = Messages.BOMB_SYMBOL;
-	private Position pos;
 	private int damage = Game.DESTROYER_ALIEN_DAMAGE;
-	private boolean active = true;
-	private boolean inPlayerPos = false;
+//	private boolean active = true;
 	
 	public Bomb( Game game, Position pos, int life) {
 		super(game, pos, life);
+		dir = Move.DOWN;
 
 	}
+	
+	public String getSymbol() {
+		return Messages.BOMB_SYMBOL;
+	}
+
+	
+	public boolean getInPlayerPos() {
+		return game.inPlayerPos(pos);
+	}
+
+	@Override
+	public void computerAction() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //	public void automaticMove () {
 //		if (this.active) {
@@ -87,11 +120,6 @@ public class Bomb extends EnemyWeapon {
 //		return other.receiveAttack(this);	
 //	}
 	
-	public String getAppearance() {
-		return this.appearance;
-	}
-	
-	
 //	public boolean is_active() {
 //		return this.active;
 //	}
@@ -100,9 +128,7 @@ public class Bomb extends EnemyWeapon {
 //		return this.pos;
 //	}
 	
-	public boolean getInPlayerPos() {
-		return this.inPlayerPos;
-	}
-	
-	
+
+
+
 }
