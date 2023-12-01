@@ -10,4 +10,12 @@ public abstract class EnemyWeapon extends Weapon{
 		// TODO Auto-generated constructor stub
 	}
 
+	protected boolean weaponAttack(GameItem item)
+	{
+		return receiveAttack(this);
+	}
+	
+	
+	
+	
 }

@@ -9,5 +9,16 @@ public abstract class UCMWeapon extends Weapon {
 		super(game, pos, life);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	
+	
+	protected boolean weaponAttack(GameItem item)
+	{
+		return receiveAttack(this);
+	}
+	
+	
+	
+	
+	
 }

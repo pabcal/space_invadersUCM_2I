@@ -18,12 +18,14 @@ public class Laser {
 	//TODO fill your code
 	private Move dir;
 	private String appearance = Messages.LASER_SYMBOL;
-	private Position pos = new Position(-1, -1);
+	private Position pos;
 	private boolean active = false;
 	private int damage = Game.UCM_DAMAGE; //ask	
 	
 	public Laser() {
 		this.dir = Move.UP;
+		pos = game.
+		
 	}
 
 	/**
