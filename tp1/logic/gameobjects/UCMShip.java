@@ -11,17 +11,10 @@ public class UCMShip extends Ship{
 	Move dir = null;
 	
 
-	public UCMShip() {
-		UCMShip(4, 7, Game.UCM_HEALTH);
-		
+	public UCMShip(Game game) {
+		super(game, new Position(4, 7), Game.UCM_HEALTH);
 	}
 
-	private void UCMShip(int col, int row, int health)
-	{
-		this.health = health;
-		this.pos.setCol(col);
-		this.pos.setRow(row);
-	}
 
 //	public static void main(String[] args) {
 //		// TODO Auto-generated method stub
@@ -82,6 +75,59 @@ public class UCMShip extends Ship{
 	
 	public Move getDir() {
 		return this.dir;
+	}
+	
+	
+	@Override
+	protected int getArmor() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+
+	@Override
+	public boolean performAttack(GameItem other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected String getSymbol() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected int getDamage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+
+	@Override
+	protected void performMovement() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void automaticMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean onBorder() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void computerAction() {
+		// TODO Auto-generated method stub
+		
 	}
 		
 }
