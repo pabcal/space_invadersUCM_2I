@@ -22,7 +22,7 @@ public class Ufo {
 	
 	//TODO fill your code
 	public Ufo(Game game) {
-		this.pos = new Position (9, 0);
+		this.pos = new Position (Game.DIM_X, 0);
 		this.enabled = false;
 		this.game = game;
 		
@@ -36,7 +36,7 @@ public class Ufo {
 	
 	
 	
-	private void enable() {
+	private void enable() { //AlienManager
 		this.pos = new Position(Game.DIM_X, 0);
 		this.enabled = true;
 		this.health = 1;
