@@ -11,7 +11,7 @@ import tp1.view.Messages;
  * Class representing a regular alien
  *
  */
-public class RegularAlien {
+public class RegularAlien extends AlienShip{
 
 	//TODO fill your code
 //	private int cyclesToMove;

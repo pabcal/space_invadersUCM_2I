@@ -56,10 +56,9 @@ public abstract class GameObject implements GameItem {
 	protected void hit(Weapon weapon)
 	{
 		int damage = weapon.getDamage();
-		
 		if (life <= damage)
 			die();
-		else
+		else 
 			life -= damage;
 	}
 	

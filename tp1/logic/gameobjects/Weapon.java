@@ -10,8 +10,8 @@ public abstract class Weapon extends GameObject{
 	protected int damage;
 	protected int armor;
 
-	public Weapon(Game game, Position pos, int life) {
-		super(game, pos, life);
+	public Weapon(Game game, Position pos) {
+		super(game, pos, LIFE_OF_WEAPONS);
 	}
 	
 	//TODO fill with your code
@@ -20,7 +20,7 @@ public abstract class Weapon extends GameObject{
 		boolean attacked = false;
 		if (other.isOnPosition(this.pos)) {
 			attacked = weaponAttack(other);
-			this.die();
+			die();
 		}
 		return attacked;
 	}

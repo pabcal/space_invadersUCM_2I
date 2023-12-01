@@ -39,7 +39,7 @@ public class Game implements GameStatus{
 	private Level level; 
 	private long seed;
 	private UCMShip player = new UCMShip();
-	private Laser laser = new Laser(); //changes 1.1
+	private Laser laser = new Laser(this); //changes 1.1
 	private AlienManager manager; 
 	private RegularAlienList rAlienList;
 	private DestroyerAlienList dAlienList;
@@ -90,11 +90,11 @@ public class Game implements GameStatus{
 		if(auxRAlien != null)
 			what = auxRAlien.getAppearance();
 		else if (auxDAlien != null)
-			what = auxDAlien.getAppearance();
+			what = auxDAlien.getSymbol();
 		else if (posAux.isEqual(this.player.getPos()))
-			what = player.getAppearance();
+			what = player.getSymbol();
 		else if (posAux.isEqual(this.laser.getPos()) && this.laser.is_active()) 
-			what = this.laser.getAppearance();
+			what = this.laser.getSymbol();
 		else if (auxBomb != null)
 			what = auxBomb.getSymbol();
 		else if (posAux.isEqual(this.ufo.getPosition()) && this.ufo.Alive()) 
@@ -250,7 +250,7 @@ public class Game implements GameStatus{
 		this.score = 0;
 		this.cycle = 0;
 		this.laser = null;
-		this.laser = new Laser();
+		this.laser = new Laser(this);
 		this.manager = null;
 		this.manager = new AlienManager(this, this.level);
 		this.rAlienList = null;
