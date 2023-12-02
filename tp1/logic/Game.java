@@ -8,6 +8,7 @@ import tp1.logic.gameobjects.Ufo;
 import tp1.logic.gameobjects.Bomb;
 import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
+import tp1.logic.gameobjects.Shockwave;
 import tp1.logic.lists.DestroyerAlienList;
 import tp1.logic.lists.RegularAlienList;
 import tp1.view.Messages;
@@ -45,10 +46,14 @@ public class Game implements GameStatus{
 	private DestroyerAlienList dAlienList;
 	private Random rand;
 	private Ufo ufo;
-	private boolean shockwave = false;
+//	private boolean shockwave = false;
 	private int alienCycleCounter = 0;
 	private boolean finished = false;
+	private Shockwave shockwave;
 
+	
+	
+	
 	private int score = 0;
 	//TODO fill your code
 
@@ -287,20 +292,23 @@ public class Game implements GameStatus{
 		this.dAlienList.deleteDeactivatedBombs(); //calls function to delete the bombs that are no longer active
 		
 	}
+	// changes 
+//	public void setShockwave(boolean value)
+//	{
+//		this.shockwave = value;
+//	}
 	
-	public void setShockwave(boolean value)
-	{
-		this.shockwave = value;
-	}
 	
+	//changes
 	public boolean shootShockwave() {
 		boolean completed = false;
-		if (shockwave == true)
+		shockwave.UfoHasBeenHit();
+		if (shockwave.getShockwaveStatus())
 		{
 			completed = true;
 			this.dAlienList.shockwaveHit();
 			this.rAlienList.shockwaveHit();
-			this.setShockwave(false);
+			shockwave.setShockwave(false);
 		}
 		return completed;
 	}
