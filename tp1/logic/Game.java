@@ -33,6 +33,7 @@ public class Game implements GameStatus{
 	public static final int UFO_POINTS = 25;
 	public static final int UCM_DAMAGE = 1;
 	public static final int UCM_HEALTH = 3;
+	public static final int SHOCKWAVE_DAMAGE = 1;
 
 	
 	
@@ -49,7 +50,7 @@ public class Game implements GameStatus{
 //	private boolean shockwave = false;
 	private int alienCycleCounter = 0;
 	private boolean finished = false;
-	private Shockwave shockwave;
+	private Shockwave shockwave = new Shockwave(this);
 
 	
 	
@@ -65,14 +66,15 @@ public class Game implements GameStatus{
 		this.dAlienList = this.manager.initializeDestroyerAliens();
 		this.rand = new Random(this.seed);
 		this.ufo = new Ufo(this);
+		
 	}
 
 	public String stateToString() {
 		StringBuilder buffer = new StringBuilder();
 		buffer
-		.append("Life: ").append(this.player.getHealth()).append(System.lineSeparator())
-		.append("Points: ").append(this.score).append(System.lineSeparator())
-		.append("Shockwave: ").append((this.shockwave ? "ON" : "OFF")).append(System.lineSeparator());
+		.append("Life: ").append(player.getLife()).append(System.lineSeparator())
+		.append("Points: ").append(score).append(System.lineSeparator())
+		.append("Shockwave: ").append((shockwave.getShockwaveStatus() ? "ON" : "OFF")).append(System.lineSeparator());
 		return buffer.toString();
 
 	}
@@ -93,7 +95,7 @@ public class Game implements GameStatus{
 		Bomb auxBomb = this.dAlienList.searchBombInPos(posAux);
 		
 		if(auxRAlien != null)
-			what = auxRAlien.getAppearance();
+			what = auxRAlien.getSymbol();
 		else if (auxDAlien != null)
 			what = auxDAlien.getSymbol();
 		else if (posAux.isEqual(this.player.getPos()))
@@ -102,8 +104,8 @@ public class Game implements GameStatus{
 			what = this.laser.getSymbol();
 		else if (auxBomb != null)
 			what = auxBomb.getSymbol();
-		else if (posAux.isEqual(this.ufo.getPosition()) && this.ufo.Alive()) 
-			what = this.ufo.getAppearance();
+		else if (posAux.isEqual(this.ufo.getPos()) && this.ufo.isAlive()) 
+			what = this.ufo.getSymbol();
 		else
 			what = "";
 		return what;
@@ -117,11 +119,9 @@ public class Game implements GameStatus{
 	{
 		if (this.rAlienList.anObjectInPos(getPlayerPos()) != null ||
 				this.dAlienList.anObjectInPos(getPlayerPos()) != null ||
-				this.ufo.inPosition(getPlayerPos()))
-		{
+				this.ufo.isOnPosition(getPlayerPos()))
 			this.player.setHealthToZero();
-		}
-		return (this.player.getHealth() == 0 || this.manager.inFinalRow() ||
+		return (this.player.isDead() || this.manager.inFinalRow() ||
 				this.rAlienList.anObjectInPos(this.player.getPos()) != null);
 		
 	}
@@ -196,19 +196,17 @@ public class Game implements GameStatus{
 			i = 0;
 			while (aliensCheck && i < this.rAlienList.getNum() && laser.isAlive()) {
 				alien = this.rAlienList.getAlien(i);
-				if (this.laser.performAttack(alien))
-					alien.hit(this.laser.getDamage());
+				this.laser.performAttack(alien);
 				++i;
 			}
 			i = 0;
 			while (aliensCheck && i < this.dAlienList.getNum() && laser.isAlive()) {
 				dAlien = this.dAlienList.getAlien(i);
-				if (this.laser.performAttack(dAlien)) 
-					dAlien.hit(this.laser.getDamage());
+				this.laser.performAttack(dAlien);
 				++i;
 			}
-			if (laser.isAlive() && this.laser.performAttack(this.ufo))
-				this.ufo.hit(laser.getDamage());
+			if (laser.isAlive())
+				this.laser.performAttack(this.ufo);
 			this.removeDead();
 		}
 		
@@ -305,8 +303,8 @@ public class Game implements GameStatus{
 		if (shockwave.getShockwaveStatus())
 		{
 			completed = true;
-			this.dAlienList.shockwaveHit();
-			this.rAlienList.shockwaveHit();
+			this.dAlienList.shockwaveHit(shockwave);
+			this.rAlienList.shockwaveHit(shockwave);
 			shockwave.setShockwave(false);
 		}
 		return completed;

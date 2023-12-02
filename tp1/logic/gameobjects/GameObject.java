@@ -19,7 +19,7 @@ public abstract class GameObject implements GameItem {
 	
 	
 
-	protected int getLife() {
+	public int getLife() {
 		return this.life;
 	}
 
@@ -53,7 +53,7 @@ public abstract class GameObject implements GameItem {
 		
 	}
 	
-	protected void hit(Weapon weapon)
+	public void hit(Weapon weapon)
 	{
 		int damage = weapon.getDamage();
 		if (life <= damage)

@@ -15,11 +15,10 @@ import tp1.view.Messages;
  */
 public class Laser extends UCMWeapon{
 	
-
-	private int damage = Game.UCM_DAMAGE; //ask	
 	
 	public Laser(Game game) {
 		super(game, new Position());
+		damage = Game.UCM_DAMAGE;
 		Position auxPos = game.getPlayerPos();
 		pos = new Position(auxPos.getCol(), auxPos.getCol() - 1);
 		this.dir = Move.UP;

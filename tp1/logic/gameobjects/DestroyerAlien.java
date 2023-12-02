@@ -9,26 +9,23 @@ import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class DestroyerAlien extends AlienShip {
-	private Move dir = Move.LEFT;
-	private int health;
-	private int points = Game.DESTROYER_ALIEN_POINTS;
-	private Game game;
+//	private Move dir = Move.LEFT;
+//	private int health;
+//	private int points = Game.DESTROYER_ALIEN_POINTS;
+//	private Game game;
 	private Bomb bomb;
 	
-	private String appearance = Messages.DESTROYER_ALIEN_SYMBOL;
-	private Position pos;
-	private boolean descended = false;
-	
-	private AlienManager alienManager;
+//	private String appearance = Messages.DESTROYER_ALIEN_SYMBOL;
+//	private Position pos;
+//	private boolean descended = false;
+//	
+//	private AlienManager alienManager;
 
 	//TODO fill your code
 
-	public DestroyerAlien (int health, int col, int row, AlienManager alienManager, Game game)
+	public DestroyerAlien (Game game, Position pos, AlienManager alienManager)
 	{
-		this.health = health;
-		pos = new Position(col, row);
-		this.alienManager = alienManager;
-		this.game = game;
+		super(game, pos, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, alienManager);
 	}
 	
 	/**
@@ -48,28 +45,28 @@ public class DestroyerAlien extends AlienShip {
 //		
 //	}
 
+//
+//	private boolean isInBorder() {// ASK-------------------------------------------------------------------- FUNCION EN COMUN PARA TODAS (PUBLIC OR PRIVATE)
+//		//TODO fill your code
+//		return (this.pos.getCol() == 0 || this.pos.getCol() == Game.DIM_X - 1);
+//	}
 
-	private boolean isInBorder() {// ASK-------------------------------------------------------------------- FUNCION EN COMUN PARA TODAS (PUBLIC OR PRIVATE)
-		//TODO fill your code
-		return (this.pos.getCol() == 0 || this.pos.getCol() == Game.DIM_X - 1);
-	}
-
-	public boolean receiveAttack(Laser laser) {	//ASK ----------------------------------------------------------
-		return this.inPosition(laser.getPos()); 
-	}
+//	public boolean receiveAttack(Laser laser) {	//ASK ----------------------------------------------------------
+//		return this.inPosition(laser.getPos()); 
+//	}
 	
-	public boolean Alive()
-	{
-		boolean alive = true;
-		if (this.health <= 0)
-			alive = false;
-		return alive;
-	}
+//	public boolean Alive()
+//	{
+//		boolean alive = true;
+//		if (this.health <= 0)
+//			alive = false;
+//		return alive;
+//	}
 	
-	public int getHealth()
-	{
-		return this.health;
-	}
+//	public int getHealth()
+//	{
+//		return this.health;
+//	}
 	
 //	public void remove() //ASK ---------------------------------------------------
 //	{
@@ -77,55 +74,55 @@ public class DestroyerAlien extends AlienShip {
 //		this.pos.setRow(-1); //CHANGE
 //	}
 //	
-	public boolean inPosition(Position pos1)
+//	public boolean inPosition(Position pos1)
+//	{
+//		return this.pos.isEqual(pos1);
+//	}
+//	
+//	public Position getPos()
+//	{
+//		return this.pos;
+//	}
+	
+//	public void hit(int damage)
+//	{
+//		this.health = this.health - damage;
+//		
+//	}
+	
+//	public boolean finalRow ()
+//	{
+//		return this.pos.getRow() == Game.DIM_Y - 1;
+//	}
+	
+//	public void performMovement()
+//	{	
+//		if (this.alienManager.readyToDescend()) {
+//			this.descent();
+//		}
+//		else {
+//			if (this.descended) {
+//				if (this.dir == Move.LEFT)
+//					this.dir = Move.RIGHT;
+//				else
+//					this.dir = Move.LEFT;
+//				if (this.alienManager.onBorder())
+//					this.alienManager.notOnBorder();
+//				this.descended = false;
+//			}
+//			this.dir.updatePosition(this.pos);
+//		}
+//		if (this.isInBorder() && !this.descended) {
+//			this.alienManager.shipOnBorder();
+//		}
+//		if (this.finalRow() && !this.alienManager.inFinalRow())
+//			this.alienManager.sendInFinalRow();
+//	}
+	
+	
+	public String getSymbol()
 	{
-		return this.pos.isEqual(pos1);
-	}
-	
-	public Position getPos()
-	{
-		return this.pos;
-	}
-	
-	public void hit(int damage)
-	{
-		this.health = this.health - damage;
-		
-	}
-	
-	public boolean finalRow ()
-	{
-		return this.pos.getRow() == Game.DIM_Y - 1;
-	}
-	
-	public void performMovement()
-	{	
-		if (this.alienManager.readyToDescend()) {
-			this.descent();
-		}
-		else {
-			if (this.descended) {
-				if (this.dir == Move.LEFT)
-					this.dir = Move.RIGHT;
-				else
-					this.dir = Move.LEFT;
-				if (this.alienManager.onBorder())
-					this.alienManager.notOnBorder();
-				this.descended = false;
-			}
-			this.dir.updatePosition(this.pos);
-		}
-		if (this.isInBorder() && !this.descended) {
-			this.alienManager.shipOnBorder();
-		}
-		if (this.finalRow() && !this.alienManager.inFinalRow())
-			this.alienManager.sendInFinalRow();
-	}
-	
-	
-	public String getAppearance()
-	{
-		return appearance + "[" + (this.health < 10 ? "0": "") + Integer.toString(this.health) + "]";
+		return Messages.DESTROYER_ALIEN_SYMBOL + "[" + (life < 10 ? "0": "") + Integer.toString(life) + "]";
 	}
 	
 	public void shoot() {
@@ -143,13 +140,10 @@ public class DestroyerAlien extends AlienShip {
 		return this.game.ndd() < level.getShootFrequency();
 	}
 	
-	public void callDead() {
-		this.alienManager.alienDied();
-	}
 	
-	public int getPoints() {
-		return this.points;
-	}
+//	public int getPoints() {
+//		return this.points;
+//	}
 	
 	public void bombMove() {
 		if (this.bomb != null) {
@@ -173,7 +167,30 @@ public class DestroyerAlien extends AlienShip {
 	}
 	
 	public boolean validBomb() {
-		return this.bomb != null && this.bomb.is_active();
+		return this.bomb != null && this.bomb.isAlive();
+	}
+
+	
+	
+	//IGNORE
+	
+	@Override
+	public boolean performAttack(GameItem other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected int getDamage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public void computerAction() {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

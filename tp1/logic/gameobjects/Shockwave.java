@@ -9,7 +9,8 @@ public class Shockwave extends UCMWeapon{
 	Ufo ufo;
 
 	public Shockwave(Game game) {
-		super(game,  new Position());
+		super(game,  new Position(0, 0));
+		damage = Game.SHOCKWAVE_DAMAGE;
 		// TODO Auto-generated constructor stub
 	}
 

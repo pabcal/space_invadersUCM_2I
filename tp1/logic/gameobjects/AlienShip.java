@@ -64,4 +64,9 @@ public abstract class AlienShip extends EnemyShip {
 	public boolean descended() {
 		return this.alienManager.alreadyDescended();
 	}
+	
+	public void callDead() {
+		this.alienManager.alienDied();
+	}
+	
 }

@@ -3,6 +3,7 @@ package tp1.logic.lists;
 import tp1.logic.Game;
 import tp1.logic.Position;
 import tp1.logic.gameobjects.RegularAlien;
+import tp1.logic.gameobjects.Shockwave;
 
 
 /**
@@ -49,7 +50,7 @@ public class RegularAlienList {
 	public void removeDead() {
 		int deadObjects = 0;
 		for (int i = this.num - 1; i >= 0 ; --i) {
-			if (!this.objects[i].Alive()) {
+			if (!this.objects[i].isAlive()) {
 				this.game.markPoints(this.objects[i].getPoints());
 				this.objects[i].callDead();
 				this.objects[i] = null;
@@ -81,7 +82,7 @@ public class RegularAlienList {
 		RegularAlien alien = null;
 		int i = 0;
 		
-		while (i < num && !this.objects[i].inPosition(pos))
+		while (i < num && !this.objects[i].isOnPosition(pos))
 			++i;
 		if (i != num)
 			alien = this.objects[i];
@@ -96,9 +97,9 @@ public class RegularAlienList {
 	}
 	
 	
-	public void shockwaveHit() {
+	public void shockwaveHit(Shockwave shockwave) {
 		for (int i = 0; i < this.num; ++i) {
-			this.objects[i].hit(1);
+			this.objects[i].hit(shockwave);
 		}
 		this.removeDead();
 			

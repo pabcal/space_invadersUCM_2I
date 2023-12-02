@@ -46,7 +46,8 @@ public class AlienManager {
 		
 		for (int i = 0; i < rArows; ++i) {
 			for (int j = 0; j < nRAliens / rArows; ++j) {
-				regAlien = new RegularAlien(Game.REGULAR_ALIEN_HEALTH, 5 - j, 1 + i, this);
+				Position auxPos = new Position(5 - j, 1 + i);
+				regAlien = new RegularAlien(game, auxPos, this);
 				alienList.add(regAlien);
 				this.remainingAliens++;
 			}
@@ -65,7 +66,8 @@ public class AlienManager {
 		int colInit = ((level == Level.INSANE) ? 1 : 0);
 
 		for (int j = 0; j < nDAliens; ++j) {
-			desAlien = new DestroyerAlien(Game.DESTROYER_ALIEN_HEALTH, 4 + colInit - j, 1 + level.getNumberOfRows(), this, this.game);
+			Position auxPos = new Position(4 + colInit - j, 1 + level.getNumberOfRows());
+			desAlien = new DestroyerAlien(game, auxPos, this);
 			alienList.add(desAlien);
 			this.remainingAliens++; 
 

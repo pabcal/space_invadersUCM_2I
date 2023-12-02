@@ -126,10 +126,7 @@ public class RegularAlien extends AlienShip{
 		return Messages.REGULAR_ALIEN_SYMBOL + "[" + (this.life < 10 ? "0": "") + Integer.toString(this.life) + "]";
 	}
 	
-	public void callDead() {
-		this.alienManager.alienDied();
-	}
-	
+
 	
 	//IGNORE METHODS
 
@@ -141,12 +138,6 @@ public class RegularAlien extends AlienShip{
 
 	@Override
 	protected int getDamage() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getArmor() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

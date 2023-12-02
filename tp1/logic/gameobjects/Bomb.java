@@ -6,13 +6,12 @@ import tp1.logic.Position;
 import tp1.view.Messages;
 
 public class Bomb extends EnemyWeapon {
-	private int damage = Game.DESTROYER_ALIEN_DAMAGE;
 //	private boolean active = true;
 	
 	public Bomb( Game game, Position pos) {
 		super(game, pos);
+		damage = Game.DESTROYER_ALIEN_DAMAGE;
 		dir = Move.DOWN;
-
 	}
 	
 	public String getSymbol() {

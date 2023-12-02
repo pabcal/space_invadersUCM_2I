@@ -5,12 +5,16 @@ import tp1.logic.Move;
 import tp1.logic.Position;
 
 public abstract class Ship extends GameObject{
+	protected int armor = 0;
 
 	public Ship(Game game, Position pos, int life) {
 		super(game, pos, life);
 		// TODO Auto-generated constructor stub
 	}
 	
+	public int getArmor() {
+		return armor;
+	}
 	
 
 }

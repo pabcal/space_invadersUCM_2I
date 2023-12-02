@@ -13,6 +13,7 @@ public class UCMShip extends Ship{
 
 	public UCMShip(Game game) {
 		super(game, new Position(4, 7), Game.UCM_HEALTH);
+		armor = 0; // change
 	}
 
 
@@ -21,7 +22,8 @@ public class UCMShip extends Ship{
 //
 //	}
 	
-	public String getAppearance() {
+	@Override
+	public String getSymbol() {
 		String appearance;
 		if (this.health == 0)
 			appearance = Messages.UCMSHIP_DEAD_SYMBOL;
@@ -29,20 +31,20 @@ public class UCMShip extends Ship{
 			appearance = Messages.UCMSHIP_SYMBOL;
 		return appearance;
 	}
+//	
+//	public Position getPos() {
+//		return this.pos;
+//	}
 	
-	public Position getPos() {
-		return this.pos;
-	}
+//	public void setPos(int col, int row) {
+//		this.pos.setCol(col);
+//		this.pos.setRow(row);
+//	}
 	
-	public void setPos(int col, int row) {
-		this.pos.setCol(col);
-		this.pos.setRow(row);
-	}
-	
-	public int getHealth()
-	{
-		return this.health;
-	}
+//	public int getHealth()
+//	{
+//		return this.health;
+//	}
 	
 	public boolean performMovement(Move dir)
 	{
@@ -57,32 +59,29 @@ public class UCMShip extends Ship{
 		return performed;
 	}
 	
+	public boolean isDead() {
+		return getLife() == 0;
+	}
 	
 	public void setHealthToZero()
 	{
-		this.health = 0;
+		die();
 	}
 	
-	public boolean receiveAttack(Bomb bomb) {
-		this.getHit(bomb.getDamage());
-		return true;
-	}
+//	public boolean receiveAttack(Bomb bomb) {
+//		this.getHit(bomb.getDamage());
+//		return true;
+//	}
 	
-	public void getHit(int damage){
-		this.health -= damage;
-	}
+//	public void getHit(int damage){
+//		this.health -= damage;
+//	}
 	
 	
 	public Move getDir() {
 		return this.dir;
 	}
 	
-	
-	@Override
-	protected int getArmor() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	
 
@@ -92,11 +91,6 @@ public class UCMShip extends Ship{
 		return false;
 	}
 
-	@Override
-	protected String getSymbol() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	protected int getDamage() {
