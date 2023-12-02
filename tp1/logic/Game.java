@@ -93,7 +93,7 @@ public class Game implements GameStatus{
 			what = auxDAlien.getSymbol();
 		else if (posAux.isEqual(this.player.getPos()))
 			what = player.getSymbol();
-		else if (posAux.isEqual(this.laser.getPos()) && this.laser.is_active()) 
+		else if (posAux.isEqual(this.laser.getPos()) && this.laser.isAlive()) 
 			what = this.laser.getSymbol();
 		else if (auxBomb != null)
 			what = auxBomb.getSymbol();
@@ -124,12 +124,8 @@ public class Game implements GameStatus{
 	
 	public boolean enableLaser() { //enables UCMShip's laser
 		boolean enabled = false;
-		Position laserPos = this.laser.getPos();
-		Position playerPos = this.player.getPos();
-		if (!this.laser.is_active()) {
-			laserPos.setCol(playerPos.getCol());		
-			laserPos.setRow(playerPos.getRow());
-			this.laser.activate();
+		if (this.laser == null || !this.laser.isAlive()) {
+			laser = new Laser(this);
 			enabled = true;
 		}
 		
@@ -152,7 +148,7 @@ public class Game implements GameStatus{
 	}
 	
 	private void laser_move() {
-		if (this.laser.is_active())
+		if (this.laser.isAlive())
 			this.laser.automaticMove();
 	}
 	
@@ -185,28 +181,28 @@ public class Game implements GameStatus{
 		DestroyerAlien dAlien = null;
 		Bomb bomb = null;
 		int i = 0;
-		if (laser.is_active()) {
-			while (i < this.dAlienList.getNum() && laser.is_active()) {
+		if (laser.isAlive()) {
+			while (i < this.dAlienList.getNum() && laser.isAlive()) {
 				bomb = this.dAlienList.getBombFrom(i);
-				if (bomb != null && bomb.is_active())
+				if (bomb != null && bomb.isAlive())
 					bomb.performAttack(laser);
 				++i;
 			}
 			i = 0;
-			while (aliensCheck && i < this.rAlienList.getNum() && laser.is_active()) {
+			while (aliensCheck && i < this.rAlienList.getNum() && laser.isAlive()) {
 				alien = this.rAlienList.getAlien(i);
 				if (this.laser.performAttack(alien))
 					alien.hit(this.laser.getDamage());
 				++i;
 			}
 			i = 0;
-			while (aliensCheck && i < this.dAlienList.getNum() && laser.is_active()) {
+			while (aliensCheck && i < this.dAlienList.getNum() && laser.isAlive()) {
 				dAlien = this.dAlienList.getAlien(i);
 				if (this.laser.performAttack(dAlien)) 
 					dAlien.hit(this.laser.getDamage());
 				++i;
 			}
-			if (laser.is_active() && this.laser.performAttack(this.ufo))
+			if (laser.isAlive() && this.laser.performAttack(this.ufo))
 				this.ufo.hit(laser.getDamage());
 			this.removeDead();
 		}
@@ -324,7 +320,7 @@ public class Game implements GameStatus{
 		Bomb bomb = null;
 		for (int j = 0; j < this.dAlienList.getNum(); ++j) {
 			bomb = this.dAlienList.getBombFrom(j);
-			if (bomb != null && bomb.is_active())
+			if (bomb != null && bomb.isAlive())
 				bomb.performAttack(player);
 				
 		}

@@ -30,6 +30,16 @@ public class Laser extends UCMWeapon{
 		
 		
 	}
+	
+	public String getSymbol() { //changes 1.1
+		return Messages.LASER_SYMBOL;
+	}
+
+	@Override
+	public void computerAction() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 *  Method called when the laser disappears from the board
@@ -41,19 +51,19 @@ public class Laser extends UCMWeapon{
 	/**
 	 *  Implements the automatic movement of the laser	
 	 */
-	public void automaticMove () {
-		performMovement(dir);
-		if(isOut())
-			die();
-	}
-
-	
-	
-	public int getDamage()
-	{
-		return this.damage;
-	}
-	
+//	public void automaticMove () {
+//		performMovement(dir);
+//		if(isOut())
+//			die();
+//	}
+//
+//	
+//	
+//	public int getDamage()
+//	{
+//		return this.damage;
+//	}
+//	
 	
 	
 	
@@ -62,18 +72,18 @@ public class Laser extends UCMWeapon{
 	
 	
 	
-	private void die() { //ASK -------------------------------- PUBLIC OR PRIVATE
-
-		this.active = false;
-	}
-
-	private boolean isOut() { //
-		return this.pos.getRow() < 0;
-	}
-
-	private void performMovement(Move dir) {
-		dir.updatePosition(this.pos);
-	}
+//	private void die() { //ASK -------------------------------- PUBLIC OR PRIVATE
+//
+//		this.active = false;
+//	}
+//
+//	private boolean isOut() { //
+//		return this.pos.getRow() < 0;
+//	}
+//
+//	private void performMovement(Move dir) {
+//		dir.updatePosition(this.pos);
+//	}
 
 	/**
 	 * Method that implements the attack by the laser to a regular alien.
@@ -82,15 +92,15 @@ public class Laser extends UCMWeapon{
 	 * @param other the regular alien possibly under attack
 	 * @return <code>true</code> if the alien has been attacked by the laser.
 	 */
-	public boolean performAttack(RegularAlien other) { //ASK -----------------------------------------------------------------
-		boolean attacked = false;
-		if (other.inPosition(this.pos)) {
-			attacked = weaponAttack(other);
-			this.die();
-		}
-		//TODO fill your code
-		return attacked;
-	}
+//	public boolean performAttack(RegularAlien other) { //ASK -----------------------------------------------------------------
+//		boolean attacked = false;
+//		if (other.inPosition(this.pos)) {
+//			attacked = weaponAttack(other);
+//			this.die();
+//		}
+//		//TODO fill your code
+//		return attacked;
+//	}
 	/**
 	 * Method that implements the attack by the laser to a destroyer alien.
 	 * It checks whether both objects are alive and in the same position.
@@ -121,13 +131,11 @@ public class Laser extends UCMWeapon{
 //		return this.pos;
 //	}
 	
-	public String getSymbol() { //changes 1.1
-		return Messages.LASER_SYMBOL;
-	}
 	
-	public void activate() {
-		this.active = true;
-	}
+	
+//	public void activate() {
+//		this.active = true;
+//	}
 	
 //	public boolean is_active() {
 //		return this.active;
@@ -148,10 +156,10 @@ public class Laser extends UCMWeapon{
 //		receiveDamage();
 //		return true;
 //	}
-	
-	public void receiveDamage() {
-		die();
-	}
+//		public void receiveDamage() {
+//		die();
+//	}
+
 
 //	public boolean performAttack(DestroyerAlien other) {
 //		boolean attacked = false;
