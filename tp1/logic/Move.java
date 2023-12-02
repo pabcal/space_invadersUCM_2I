@@ -32,7 +32,7 @@ public enum Move {
 	
 	public void updatePosition(Position pos){
 		
-		pos.setCol(pos.getCol() + this.getX());
+		pos.setCol(pos.getCol() + this.getX()); //ask
 		pos.setRow(pos.getRow() + this.getY());
 
 	}
@@ -40,7 +40,7 @@ public enum Move {
 	static public Move getMovement (String mov)
 	{
 		Move move = null;
-		if (mov.equals(Move.RIGHT) || mov.equals("LEFT") || //changeeeee
+		if (mov.equals(Move.RIGHT.toString()) || mov.equals("LEFT") || //ASK
 				mov.equals("LLEFT") || mov.equals("RRIGHT") ||
 				mov.equals("DOWN") || mov.equals("UP") ||
 				mov.equals("NONE"))

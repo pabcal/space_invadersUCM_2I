@@ -43,10 +43,10 @@ public abstract class AlienShip extends EnemyShip {
 			}
 			this.dir.updatePosition(this.pos);
 		}
-		if (this.onBorder() && !this.descended) {
+		if (onBorder() && !this.descended) {
 			this.alienManager.shipOnBorder();
 		}
-		if (this.onBorder() && !this.alienManager.inFinalRow())
+		if (finalRow() && !this.alienManager.inFinalRow())
 			this.alienManager.sendInFinalRow();
 	}
 	

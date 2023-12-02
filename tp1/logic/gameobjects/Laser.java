@@ -20,7 +20,7 @@ public class Laser extends UCMWeapon{
 		super(game, new Position());
 		damage = Game.UCM_DAMAGE;
 		Position auxPos = game.getPlayerPos();
-		pos = new Position(auxPos.getCol(), auxPos.getCol() - 1);
+		pos = new Position(auxPos.getCol(), auxPos.getRow() - 1);
 		this.dir = Move.UP;
 		
 		
@@ -32,6 +32,12 @@ public class Laser extends UCMWeapon{
 
 	@Override
 	public void computerAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDelete() {
 		// TODO Auto-generated method stub
 		
 	}

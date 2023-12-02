@@ -12,7 +12,7 @@ public class Ufo extends EnemyShip{
 
 	//TODO fill your code
 
-//	private boolean enabled;
+	private boolean enabled;
 //	private Game game;
 //	private int points = Game.UFO_POINTS;
 //	private String appearance = Messages.UFO_SYMBOL;
@@ -22,15 +22,16 @@ public class Ufo extends EnemyShip{
 	
 	//TODO fill your code
 	public Ufo(Game game) {
-		super(game, new Position(Game.DIM_X, 0), Game.UCM_HEALTH, Game.UFO_POINTS);
+		super(game, new Position(Game.DIM_X, 0), Game.UFO_HEALTH, Game.UFO_POINTS);
+		dir = Move.LEFT;
 //		this.pos = ;
-//		this.enabled = false;
+		enable();
 //		this.game = game;
 		
 	}
 
 	public void computerAction() {
-		if(!isAlive() && canGenerateRandomUfo()) {
+		if((!isAlive() || !enabled) && canGenerateRandomUfo()) {
 			enable();
 		}
 	}
@@ -39,7 +40,8 @@ public class Ufo extends EnemyShip{
 	
 	private void enable() { //AlienManager
 		this.pos = new Position(Game.DIM_X, 0);
-		life = 1;
+		life = Game.UFO_HEALTH;
+		enabled = true;
 //		this.enabled = true;
 //		this.health = 1;
 	}
@@ -86,7 +88,7 @@ public class Ufo extends EnemyShip{
 	public void performMovement() {
 		this.dir.updatePosition(this.pos);
 		if (onBorder())
-			this.onDelete();
+			enabled = false;
 	}
 	
 //	public boolean inPosition(Position pos1)

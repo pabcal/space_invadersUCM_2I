@@ -12,7 +12,7 @@ public abstract class EnemyWeapon extends Weapon{
 
 	protected boolean weaponAttack(GameItem item)
 	{
-		return receiveAttack(this);
+		return item.receiveAttack(this);
 	}
 	
 	
