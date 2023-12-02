@@ -34,4 +34,10 @@ public class Shockwave extends UCMWeapon{
 	public void computerAction() {
 		// TODO Auto-generated method stub
 	}
+
+	@Override
+	public void onDelete() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -44,7 +44,8 @@ public class Controller {
 	public void run() {
 
 		printGame();
-
+		game.incrCycle();
+		
 		while (!game.isFinished()) {
 			String[] parameters = prompt();
 
@@ -54,8 +55,12 @@ public class Controller {
 				ExecutionResult result = command.execute(game);
 				if (result.success()) {
 					if (result.draw()) {
+						game.update();
 						printGame();
-						game.incrCycle();
+						
+						
+						
+						
 					}
 				} 
 				else
@@ -64,7 +69,6 @@ public class Controller {
 				System.out.println(Messages.UNKNOWN_COMMAND);
 			}
 		}
-
 		printEndMessage();
 	}
 	

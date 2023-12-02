@@ -37,6 +37,7 @@ public abstract class GameObject implements GameItem {
 	public abstract void automaticMove();
 	protected abstract boolean onBorder();
 	public abstract void computerAction();
+	public abstract void onDelete();
 	
 	//TODO fill with your code
 	
@@ -64,6 +65,7 @@ public abstract class GameObject implements GameItem {
 	
 	protected void die()
 	{
+		onDelete();
 		this.life = 0;
 	}
 	

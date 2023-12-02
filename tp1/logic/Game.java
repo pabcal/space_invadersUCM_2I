@@ -41,7 +41,7 @@ public class Game implements GameStatus{
 	private Level level; 
 	private long seed;
 	private UCMShip player = new UCMShip(this);
-	private Laser laser = new Laser(this); //changes 1.1
+	private Laser laser; //changes 1.1
 	private AlienManager manager; 
 	private RegularAlienList rAlienList;
 	private DestroyerAlienList dAlienList;
@@ -51,6 +51,7 @@ public class Game implements GameStatus{
 	private int alienCycleCounter = 0;
 	private boolean finished = false;
 	private Shockwave shockwave = new Shockwave(this);
+	boolean enableLaser = false;
 
 	
 	
@@ -100,7 +101,7 @@ public class Game implements GameStatus{
 			what = auxDAlien.getSymbol();
 		else if (posAux.isEqual(this.player.getPos()))
 			what = player.getSymbol();
-		else if (posAux.isEqual(this.laser.getPos()) && this.laser.isAlive()) 
+		else if (laser != null && this.laser.isAlive() && posAux.isEqual(this.laser.getPos())) 
 			what = this.laser.getSymbol();
 		else if (auxBomb != null)
 			what = auxBomb.getSymbol();
@@ -117,10 +118,10 @@ public class Game implements GameStatus{
 
 	public boolean aliensWin() 
 	{
-		if (this.rAlienList.anObjectInPos(getPlayerPos()) != null ||
-				this.dAlienList.anObjectInPos(getPlayerPos()) != null ||
-				this.ufo.isOnPosition(getPlayerPos()))
-			this.player.setHealthToZero();
+//		if (this.rAlienList.anObjectInPos(getPlayerPos()) != null ||
+//				this.dAlienList.anObjectInPos(getPlayerPos()) != null ||
+//				this.ufo.isOnPosition(getPlayerPos()))
+//		this.player.setHealthToZero();
 		return (this.player.isDead() || this.manager.inFinalRow() ||
 				this.rAlienList.anObjectInPos(this.player.getPos()) != null);
 		
@@ -130,7 +131,7 @@ public class Game implements GameStatus{
 	public boolean enableLaser() { //enables UCMShip's laser
 		boolean enabled = false;
 		if (this.laser == null || !this.laser.isAlive()) {
-			laser = new Laser(this);
+			enableLaser = true;
 			enabled = true;
 		}
 		
@@ -186,7 +187,7 @@ public class Game implements GameStatus{
 		DestroyerAlien dAlien = null;
 		Bomb bomb = null;
 		int i = 0;
-		if (laser.isAlive()) {
+		if (laser != null && laser.isAlive()) {
 			while (i < this.dAlienList.getNum() && laser.isAlive()) {
 				bomb = this.dAlienList.getBombFrom(i);
 				if (bomb != null && bomb.isAlive())
@@ -219,9 +220,11 @@ public class Game implements GameStatus{
 	}
 	
 	
-	private void removeDead() { //removes dead aliens
+	private void removeDead() { //removes dead aliens and laser if is not active
 		this.rAlienList.removeDead();
 		this.dAlienList.removeDead();
+		if (!laser.isAlive())
+			laser = null;
 	}
 	
 	public void listCommand()
@@ -249,7 +252,6 @@ public class Game implements GameStatus{
 		this.score = 0;
 		this.cycle = 0;
 		this.laser = null;
-		this.laser = new Laser(this);
 		this.manager = null;
 		this.manager = new AlienManager(this, this.level);
 		this.rAlienList = null;
@@ -277,7 +279,12 @@ public class Game implements GameStatus{
 	public void update() {
 		boolean aliensCheck = this.manager.readyToDescend(); //boolean variable that tells the processHit() to check collision between the laser and the aliens, it is true when aliens are ready to descend only
 		this.ufo.callUfo(); // this method is in charge of performing all UFO movements as well as checking if it must appear or not
-		this.laser_move(); // method in charge of moving the laser
+		if (laser != null)
+			this.laser_move(); // method in charge of moving the laser
+		else if (enableLaser) {
+			laser = new Laser(this);
+			enableLaser = false;
+		}
 		processHIT(aliensCheck); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
 		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
 			this.alienCycleCounter = 0;
@@ -288,7 +295,7 @@ public class Game implements GameStatus{
 		this.processHIT(true); //Second calling of the processHIT() method. Laser and aliens already moved.
 		this.playerProcessHit(); //In charge of checking collisions between bombs and player, no need to call 2 times.
 		this.dAlienList.deleteDeactivatedBombs(); //calls function to delete the bombs that are no longer active
-		
+		incrCycle();
 	}
 	// changes 
 	public void enableShockwave()

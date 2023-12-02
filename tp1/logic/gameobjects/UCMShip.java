@@ -6,9 +6,6 @@ import tp1.logic.Move;
 
 public class UCMShip extends Ship{
 	
-	private int health;
-	private Position pos = new Position();
-	Move dir = null;
 	
 
 	public UCMShip(Game game) {
@@ -25,7 +22,7 @@ public class UCMShip extends Ship{
 	@Override
 	public String getSymbol() {
 		String appearance;
-		if (this.health == 0)
+		if (this.life == 0)
 			appearance = Messages.UCMSHIP_DEAD_SYMBOL;
 		else 
 			appearance = Messages.UCMSHIP_SYMBOL;
@@ -120,6 +117,13 @@ public class UCMShip extends Ship{
 
 	@Override
 	public void computerAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onDelete() {
 		// TODO Auto-generated method stub
 		
 	}
