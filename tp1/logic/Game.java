@@ -38,7 +38,7 @@ public class Game implements GameStatus{
 	private int cycle = 0;
 	private Level level; 
 	private long seed;
-	private UCMShip player = new UCMShip();
+	private UCMShip player = new UCMShip(this);
 	private Laser laser = new Laser(this); //changes 1.1
 	private AlienManager manager; 
 	private RegularAlienList rAlienList;
@@ -257,7 +257,7 @@ public class Game implements GameStatus{
 		this.rAlienList = this.manager.initializeRegularAliens();
 		this.dAlienList = null;
 		this.dAlienList = this.manager.initializeDestroyerAliens();
-		this.player = new UCMShip();
+		this.player = new UCMShip(this);
 		this.ufo = null;
 		this.ufo = new Ufo(this);
 		this.rand = new Random(this.seed);

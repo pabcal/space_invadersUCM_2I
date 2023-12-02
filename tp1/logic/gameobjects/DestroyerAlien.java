@@ -34,19 +34,19 @@ public class DestroyerAlien extends AlienShip {
 	/**
 	 *  Implements the automatic movement of the regular alien	
 	 */
-	public void automaticMove() {
-		if(this.Alive())
-			this.performMovement();
-	}
+//	public void automaticMove() {
+//		if(this.Alive())
+//			this.performMovement();
+//	}
 
-	private void descent() {
-		Move dir2 = Move.DOWN;
-		dir2.updatePosition(this.pos);
-		if (!this.alienManager.alreadyDescended())
-			this.alienManager.setAlreadyDescended(true);
-		descended = true;
-		
-	}
+//	private void descent() {
+//		Move dir2 = Move.DOWN;
+//		dir2.updatePosition(this.pos);
+//		if (!this.alienManager.alreadyDescended())
+//			this.alienManager.setAlreadyDescended(true);
+//		descended = true;
+//		
+//	}
 
 
 	private boolean isInBorder() {// ASK-------------------------------------------------------------------- FUNCION EN COMUN PARA TODAS (PUBLIC OR PRIVATE)
