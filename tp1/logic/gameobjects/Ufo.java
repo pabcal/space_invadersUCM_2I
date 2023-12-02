@@ -12,24 +12,25 @@ public class Ufo extends EnemyShip{
 
 	//TODO fill your code
 
-	private boolean enabled;
-	private Game game;
-	private int points = Game.UFO_POINTS;
-	private String appearance = Messages.UFO_SYMBOL;
-	private Move dir = Move.LEFT;
-	private int health = Game.UFO_HEALTH;
-	private Position pos;
+//	private boolean enabled;
+//	private Game game;
+//	private int points = Game.UFO_POINTS;
+//	private String appearance = Messages.UFO_SYMBOL;
+//	private Move dir = Move.LEFT;
+//	private int health = Game.UFO_HEALTH;
+//	private Position pos;
 	
 	//TODO fill your code
 	public Ufo(Game game) {
-		this.pos = new Position (Game.DIM_X, 0);
-		this.enabled = false;
-		this.game = game;
+		super(game, new Position(Game.DIM_X, 0), Game.UCM_HEALTH, Game.UFO_POINTS);
+//		this.pos = ;
+//		this.enabled = false;
+//		this.game = game;
 		
 	}
 
 	public void computerAction() {
-		if(!enabled && canGenerateRandomUfo()) {
+		if(!isAlive() && canGenerateRandomUfo()) {
 			enable();
 		}
 	}
@@ -38,19 +39,21 @@ public class Ufo extends EnemyShip{
 	
 	private void enable() { //AlienManager
 		this.pos = new Position(Game.DIM_X, 0);
-		this.enabled = true;
-		this.health = 1;
+		life = 1;
+//		this.enabled = true;
+//		this.health = 1;
 	}
 
 	public void onDelete() {
-		this.enabled = false;
+		game.setShockwave(true);
+		this.game.markPoints(this.points);
 	}
 	
 	
 	public void callUfo() {
-		this.computerAction();
-		if(this.Alive()) {
-			this.performMovement();
+		computerAction();
+		if(isAlive()) {
+			performMovement();
 		}
 	}
 	
@@ -68,43 +71,78 @@ public class Ufo extends EnemyShip{
 		return this.game.ndd() < game.getLevel().getUfoFrequency(); //game.getRandom().nextDouble()
 	}
 	
-	public String getAppearance() {
-		return this.appearance + "[" + (this.health < 10 ? "0": "") + this.health + "]";
+	public String getSymbol() {
+		return Messages.UFO_SYMBOL + "[" + (life < 10 ? "0": "") + life + "]";
 	}
 	
-	public Position getPosition() {
-		return this.pos;
-	}
-	
-	public boolean Alive() {
-		return this.health > 0 && this.enabled;
-	}
+//	public Position getPosition() {
+//		return this.pos;
+//	}
+//	
+//	public boolean Alive() {
+//		return this.health > 0 && this.enabled;
+//	}
 	
 	public void performMovement() {
 		this.dir.updatePosition(this.pos);
-		if (this.pos.getCol() == -1)
+		if (onBorder())
 			this.onDelete();
 	}
 	
-	public boolean inPosition(Position pos1)
-	{
-		return this.pos.isEqual(pos1);
+//	public boolean inPosition(Position pos1)
+//	{
+//		return this.pos.isEqual(pos1);
+//	}
+	
+//	public boolean receiveAttack(Laser other) {
+//		return this.isOnPosition(other.getPos());
+//	}
+
+	
+	@Override
+	protected boolean onBorder() {
+		// TODO Auto-generated method stub
+		return this.pos.getCol() == -1;
 	}
 	
-	public boolean receiveAttack(Laser other) {
-		return this.inPosition(other.getPos());
-	}
 	
-	public void hit(int damage) {
-		this.health -= damage;
-		if (this.health <= 0)
-		{
-			this.onDelete();
-			game.setShockwave(true);
-			this.game.markPoints(this.points);
-		}
-			
+	
+	
+	//IGNORE
+	
+	
+	@Override
+	public boolean performAttack(GameItem other) {
+		// TODO Auto-generated method stub
+		return false;
 	}
+
+	@Override
+	protected int getDamage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	protected int getArmor() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	
+	
+	
+//	public void hit(int damage) {
+//		this.health -= damage;
+//		if (this.health <= 0)
+//		{
+//			this.onDelete();
+//			game.setShockwave(true);
+//			
+//		}
+//			
+//	}
 	
 	
 	

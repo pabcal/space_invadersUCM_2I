@@ -6,8 +6,9 @@ import tp1.logic.Position;
 public abstract class EnemyShip extends Ship{
 	protected int points;
 
-	public EnemyShip(Game game, Position pos, int life) {
+	public EnemyShip(Game game, Position pos, int life, int points) {
 		super(game, pos, life);
+		this.points = points;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -16,5 +17,8 @@ public abstract class EnemyShip extends Ship{
 			performMovement();
 	}
 	
+	public int getPoints() {
+		return this.points;
+	}
 
 }

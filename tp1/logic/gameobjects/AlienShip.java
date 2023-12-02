@@ -7,10 +7,10 @@ import tp1.logic.Position;
 
 public abstract class AlienShip extends EnemyShip {
 	protected AlienManager alienManager;
-	protected boolean descended;
+	protected boolean descended = false;
 
-	public AlienShip(Game game, Position pos, int life, AlienManager alienManager) {
-		super(game, pos, life);
+	public AlienShip(Game game, Position pos, int life, int points, AlienManager alienManager) {
+		super(game, pos, life, points);
 		this.alienManager = alienManager;
 		
 		// TODO Auto-generated constructor stub
@@ -54,5 +54,14 @@ public abstract class AlienShip extends EnemyShip {
 	@Override 
 	public boolean onBorder() {
 		return (this.pos.getCol() == 0 || this.pos.getCol() == Game.DIM_X - 1);
+	}
+	
+	public boolean finalRow ()
+	{
+		return this.pos.getRow() == Game.DIM_Y - 1;
+	}
+	
+	public boolean descended() {
+		return this.alienManager.alreadyDescended();
 	}
 }
