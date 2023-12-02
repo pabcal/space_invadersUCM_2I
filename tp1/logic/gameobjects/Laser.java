@@ -15,11 +15,7 @@ import tp1.view.Messages;
  */
 public class Laser extends UCMWeapon{
 	
-	//TODO fill your code
-//	private Move dir;
-//	private String appearance = Messages.LASER_SYMBOL;
-//	private Position pos;
-//	private boolean active = false;
+
 	private int damage = Game.UCM_DAMAGE; //ask	
 	
 	public Laser(Game game) {
@@ -41,6 +37,50 @@ public class Laser extends UCMWeapon{
 		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		//TODO fill your code
+//	private Move dir;
+//	private String appearance = Messages.LASER_SYMBOL;
+//	private Position pos;
+//	private boolean active = false;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 *  Method called when the laser disappears from the board
 	 */
