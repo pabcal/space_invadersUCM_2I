@@ -45,7 +45,7 @@ public class Ufo extends EnemyShip{
 	}
 
 	public void onDelete() {
-		game.setShockwave(true);
+		game.enableShockwave();
 		this.game.markPoints(this.points);
 	}
 	
