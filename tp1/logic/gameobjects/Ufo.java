@@ -123,11 +123,6 @@ public class Ufo extends EnemyShip{
 		return 0;
 	}
 
-	@Override
-	protected int getArmor() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 
 	
