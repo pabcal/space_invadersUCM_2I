@@ -6,7 +6,7 @@ import tp1.logic.Position;
 
 public abstract class Weapon extends GameObject{
 	static final int LIFE_OF_WEAPONS = 1;
-	protected boolean active = false;
+//	protected boolean active = false;
 	protected int damage;
 	protected int armor;
 
@@ -24,23 +24,23 @@ public abstract class Weapon extends GameObject{
 		}
 		return attacked;
 	}
-	public boolean is_active()
-	{
-		return this.active;
-	}
+//	public boolean is_active()
+//	{
+//		return this.active;
+//	}
 	@Override
 	protected boolean onBorder() //tells you if its outside
 	{
 		return pos.getRow() > Game.DIM_Y - 1 || pos.getRow() < 0;
 	}
 	@Override
-	protected int getDamage()
+	public int getDamage()
 	{
 		return this.damage;
 	}
 	@Override
 	public void automaticMove () {
-		if (this.active) {
+		if (this.isAlive()) {
 			performMovement();
 			if(onBorder())
 				die();
