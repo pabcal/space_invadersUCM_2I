@@ -293,16 +293,15 @@ public class Game implements GameStatus{
 		
 	}
 	// changes 
-//	public void setShockwave(boolean value)
-//	{
-//		this.shockwave = value;
-//	}
+	public void enableShockwave()
+	{
+		shockwave.setShockwave(true);
+	}
 	
 	
 	//changes
 	public boolean shootShockwave() {
 		boolean completed = false;
-		shockwave.UfoHasBeenHit();
 		if (shockwave.getShockwaveStatus())
 		{
 			completed = true;

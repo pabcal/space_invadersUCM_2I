@@ -18,11 +18,7 @@ public class Shockwave extends UCMWeapon{
 		return Messages.SHOCKWAVE_SYMBOL;
 	}
 
-	@Override
-	public void computerAction() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 	public boolean getShockwaveStatus()
 	{
@@ -32,15 +28,9 @@ public class Shockwave extends UCMWeapon{
 	{
 		this.shockwave = value;
 	}
-	public void UfoHasBeenHit()
-	{
-		if(!ufo.isAlive())
-			shockwave = true;
+	
+	@Override
+	public void computerAction() {
+		// TODO Auto-generated method stub
 	}
-	
-	//I can make this a boolean function that returns shockwave as well as changes it
-	//and then call it inside the if of shootShockwave
-	
-	
-
 }
