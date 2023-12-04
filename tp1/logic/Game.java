@@ -4,9 +4,11 @@ import java.util.Random;
 
 import tp1.logic.gameobjects.Laser;
 import tp1.logic.gameobjects.UCMShip;
+import tp1.logic.gameobjects.UCMWeapon;
 import tp1.logic.gameobjects.Ufo;
 import tp1.logic.gameobjects.Bomb;
 import tp1.logic.gameobjects.DestroyerAlien;
+import tp1.logic.gameobjects.GameObject;
 import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.Shockwave;
 import tp1.logic.gameobjects.SuperLaser;
@@ -45,8 +47,8 @@ public class Game implements GameStatus{
 	private Laser laser; //changes 1.1
 	private SuperLaser superLaser;
 	private AlienManager manager; 
-	private RegularAlienList rAlienList;
-	private DestroyerAlienList dAlienList;
+//	private RegularAlienList rAlienList;
+//	private DestroyerAlienList dAlienList;
 	private Random rand;
 	private Ufo ufo;
 //	private boolean shockwave = false;
@@ -74,12 +76,13 @@ public class Game implements GameStatus{
 	}
 	
 	public void init() {
-		container = new GameObjectContainer();
-		this.rAlienList  = this.manager.initializeRegularAliens();
-		this.dAlienList = this.manager.initializeDestroyerAliens();
-		this.ufo = new Ufo(this);
-		for (int i = 0; i < rAlienList.getNum(); ++i)
-			container.add(rAlienList.getAlien(i));
+		container = manager.initialize();
+		container.add(player);
+//		this.rAlienList  = this.manager.initializeRegularAliens();
+//		this.dAlienList = this.manager.initializeDestroyerAliens();
+//		this.ufo = new Ufo(this);
+//		for (int i = 0; i < rAlienList.getNum(); ++i)
+//			container.add(rAlienList.getAlien(i));
 	}
 
 	public String stateToString() {
@@ -103,26 +106,30 @@ public class Game implements GameStatus{
 	public String positionToString(int col, int row) {
 		String what;
 		Position posAux = new Position(col, row);
-		RegularAlien auxRAlien = this.rAlienList.anObjectInPos(posAux);
-		DestroyerAlien auxDAlien = this.dAlienList.anObjectInPos(posAux);
-		Bomb auxBomb = this.dAlienList.searchBombInPos(posAux);
+//		RegularAlien auxRAlien = this.rAlienList.anObjectInPos(posAux);
+//		DestroyerAlien auxDAlien = this.dAlienList.anObjectInPos(posAux);
+//		Bomb auxBomb = this.dAlienList.searchBombInPos(posAux);
+//		
+//		if(auxRAlien != null)
+//			what = auxRAlien.getSymbol();
+//		else if (auxDAlien != null)
+//			what = auxDAlien.getSymbol();
+//		else if (posAux.isEqual(this.player.getPos()))
+//			what = player.getSymbol();
+//		else if (laser != null && this.laser.isAlive() && posAux.isEqual(this.laser.getPos())) 
+//			what = this.laser.getSymbol();
+//		else if (this.superLaser != null && this.superLaser.isAlive() && posAux.isEqual(this.superLaser.getPos()) )
+//			what = superLaser.getSymbol();
+//		else if (auxBomb != null)
+//			what = auxBomb.getSymbol();
+//		else if (posAux.isEqual(this.ufo.getPos()) && this.ufo.isAlive()) 
+//			what = this.ufo.getSymbol();
+//		else
+//			what = "";
 		
-		if(auxRAlien != null)
-			what = auxRAlien.getSymbol();
-		else if (auxDAlien != null)
-			what = auxDAlien.getSymbol();
-		else if (posAux.isEqual(this.player.getPos()))
-			what = player.getSymbol();
-		else if (laser != null && this.laser.isAlive() && posAux.isEqual(this.laser.getPos())) 
-			what = this.laser.getSymbol();
-		else if (this.superLaser != null && this.superLaser.isAlive() && posAux.isEqual(this.superLaser.getPos()) )
-			what = superLaser.getSymbol();
-		else if (auxBomb != null)
-			what = auxBomb.getSymbol();
-		else if (posAux.isEqual(this.ufo.getPos()) && this.ufo.isAlive()) 
-			what = this.ufo.getSymbol();
-		else
-			what = "";
+		what = container.getSymbolInPos(posAux);
+		
+		
 		return what;
 	}
 
@@ -136,8 +143,7 @@ public class Game implements GameStatus{
 //				this.dAlienList.anObjectInPos(getPlayerPos()) != null ||
 //				this.ufo.isOnPosition(getPlayerPos()))
 //		this.player.setHealthToZero();
-		return (this.player.isDead() || this.manager.inFinalRow() ||
-				this.rAlienList.anObjectInPos(this.player.getPos()) != null);
+		return (this.player.isDead() || this.manager.inFinalRow());
 		
 	}
 
@@ -192,9 +198,7 @@ public class Game implements GameStatus{
 			this.superLaser.automaticMove();
 	}
 	
-	private void moveAliens() {
-		this.rAlienList.automaticMoves();
-		this.dAlienList.automaticMoves();
+	private void manageAliens() {
 		if (this.manager.onBorder() && !this.manager.alreadyDescended()) { //to check if in border and did not descend yet
 			this.manager.setDescend(true); //tells manager to descend
 			this.alienCycleCounter = this.level.getSpeed(); //for the next cycle to reset the counter that indicates when the aliens move
@@ -215,49 +219,52 @@ public class Game implements GameStatus{
 	  
 	  
 	 */
-	private void processHIT(boolean aliensCheck) 
+	private void processHIT(UCMWeapon weapon) 
 	{
-		RegularAlien alien = null;
-		DestroyerAlien dAlien = null;
-		Bomb bomb = null;
+//		RegularAlien alien = null;
+//		DestroyerAlien dAlien = null;
+//		Bomb bomb = null;
 		int i = 0;
-		if (laser != null && laser.isAlive()) {
-			while (i < this.dAlienList.getNum() && laser.isAlive()) {
-				bomb = this.dAlienList.getBombFrom(i);
-				if (bomb != null && bomb.isAlive())
-					bomb.performAttack(laser);
+		if (weapon != null && weapon.isAlive()) {
+			while (i < container.getSize() && weapon.isAlive()) {
+				weapon.performAttack(container.getObject(i));
 				++i;
 			}
-			i = 0;
-			while (aliensCheck && i < this.rAlienList.getNum() && (laser.isAlive() || superLaser.isAlive())) {
-				alien = this.rAlienList.getAlien(i);
-				if (laser.isAlive())
-					this.laser.performAttack(alien);
-				else if (superLaser.isAlive())
-					this.superLaser.performAttack(alien);
-				++i;
-			}
-			i = 0;
-			while (aliensCheck && i < this.dAlienList.getNum() && (laser.isAlive() || superLaser.isAlive())) {
-				dAlien = this.dAlienList.getAlien(i);
-				if (laser.isAlive())
-					this.laser.performAttack(dAlien);
-				else if (superLaser.isAlive())
-					this.superLaser.performAttack(alien);
-				++i;
-			}
-			if ((laser.isAlive() || superLaser.isAlive()))
-				if (laser.isAlive())
-					this.laser.performAttack(this.ufo);
-				else
-					this.superLaser.performAttack(this.ufo);
+//		if (laser != null && laser.isAlive()) {
+//			while (i < this.dAlienList.getNum() && laser.isAlive()) {
+//				bomb = this.dAlienList.getBombFrom(i);
+//				if (bomb != null && bomb.isAlive())
+//					bomb.performAttack(laser);
+//				++i;
+//			}
+//			i = 0;
+//			while (aliensCheck && i < this.rAlienList.getNum() && (laser.isAlive())) { // || superLaser.isAlive()
+//				alien = this.rAlienList.getAlien(i);
+//				if (laser.isAlive())
+//					this.laser.performAttack(alien);
+//				else if (superLaser.isAlive())
+//					this.superLaser.performAttack(alien);
+//				++i;
+//			}
+//			i = 0;
+//			while (aliensCheck && i < this.dAlienList.getNum() && (laser.isAlive())) { // || superLaser.isAlive()
+//				dAlien = this.dAlienList.getAlien(i);
+//				if (laser.isAlive())
+//					this.laser.performAttack(dAlien);
+//				else if (superLaser.isAlive())
+//					this.superLaser.performAttack(alien);
+//				++i;
+//			}
+//			if ((laser.isAlive())) // || superLaser.isAlive()
+//				if (laser.isAlive())
+//					this.laser.performAttack(this.ufo);
+//				else
+//					this.superLaser.performAttack(this.ufo);
 					
-				
-			this.removeDead();
+		}
 		}
 		
 		
-	}
 	
 	
 	public boolean movePlayer(Move dir) {
@@ -265,17 +272,17 @@ public class Game implements GameStatus{
 	}
 	
 	
-	private void removeDead() { //removes dead aliens and laser if is not active
-		this.rAlienList.removeDead();
-		this.dAlienList.removeDead();
-		if (!laser.isAlive())
-			laser = null;
-		for (int i = 0; i < container.getSize(); ++i) 
-			if (container.objectIsDead(i)) {
-				System.out.println(i);
-				container.remove(container.getObject(i));
-		}
-	}
+//	private void removeDead() { //removes dead aliens and laser if is not active
+//		this.rAlienList.removeDead();
+//		this.dAlienList.removeDead();
+//		if (!laser.isAlive())
+//			laser = null;
+//		for (int i = 0; i < container.getSize(); ++i) 
+//			if (container.objectIsDead(i)) {
+//				System.out.println(i);
+//				container.remove(container.getObject(i));
+//		}
+//	}
 	
 	public void listCommand()
 	{
@@ -304,10 +311,8 @@ public class Game implements GameStatus{
 		this.laser = null;
 		this.manager = null;
 		this.manager = new AlienManager(this, this.level);
-		this.rAlienList = null;
-		this.rAlienList = this.manager.initializeRegularAliens();
-		this.dAlienList = null;
-		this.dAlienList = this.manager.initializeDestroyerAliens();
+		container = null;
+		container = manager.initialize();
 		this.player = new UCMShip(this);
 		this.ufo = null;
 		this.ufo = new Ufo(this);
@@ -317,18 +322,25 @@ public class Game implements GameStatus{
 	}
 	
 	
-	private void shootBombs() {
-		this.dAlienList.automaticShoot();
-	}
-	
-	private void processBombs() {
-		this.dAlienList.bombProcess();
-		this.shootBombs();
-	}
+//	private void shootBombs() {
+//		this.dAlienList.automaticShoot();
+//	}
+//	
+//	private void processBombs() {
+////		this.dAlienList.bombProcess();
+//		this.shootBombs();
+//	}
 	
 	public void update() {
-		boolean aliensCheck = this.manager.readyToDescend(); //boolean variable that tells the processHit() to check collision between the laser and the aliens, it is true when aliens are ready to descend only
-		this.ufo.callUfo(); // this method is in charge of performing all UFO movements as well as checking if it must appear or not
+		boolean aliensCheck = this.manager.readyToDescend();
+		container.automaticMoves();
+		manageAliens();
+		container.computerActions();
+		
+		
+		
+		 //boolean variable that tells the processHit() to check collision between the laser and the aliens, it is true when aliens are ready to descend only
+//		this.ufo.callUfo(); // this method is in charge of performing all UFO movements as well as checking if it must appear or not
 		if (laser != null && laser.isAlive())
 			this.laser_move(); // method in charge of moving the laser
 		else if (enableLaser) {
@@ -342,16 +354,16 @@ public class Game implements GameStatus{
 		{
 			superLaser = new SuperLaser(this);
 			enableSuperLaser = false;
-			
 		}
-		processHIT(aliensCheck); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
-		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
-			this.alienCycleCounter = 0;
-			this.moveAliens(); //method to move aliens
-		}
-		this.processBombs(); //Method in charge of shooting/moving bombs
+		UCMWeapon weapon = (enableSuperLaser ? superLaser : (enableLaser ? laser : null));
+		processHIT(weapon); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
+//		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
+//			this.alienCycleCounter = 0;
+//			this.moveAliens(); //method to move aliens
+//		}
+//		this.processBombs(); //Method in charge of shooting/moving bombs
 		
-		this.processHIT(true); //Second calling of the processHIT() method. Laser and aliens already moved.
+//		this.processHIT(true); //Second calling of the processHIT() method. Laser and aliens already moved.
 		this.playerProcessHit(); //In charge of checking collisions between bombs and player, no need to call 2 times.
 		this.dAlienList.deleteDeactivatedBombs(); //calls function to delete the bombs that are no longer active
 		incrCycle();
@@ -408,7 +420,12 @@ public class Game implements GameStatus{
 	
 	
 	
-	
+	public boolean getAliensMove() {
+		boolean yes = (this.alienCycleCounter == (this.level.getSpeed() + 1));
+		if (yes)
+			this.alienCycleCounter = 0;
+		return yes;
+	}
 
 	
 
@@ -430,7 +447,14 @@ public class Game implements GameStatus{
 		return null;
 	}
 
-
+	
+	public void addObject(GameObject obj) {
+		container.add(obj);
+	}
+	
+	public void deleteObject(GameObject obj) {
+		container.remove(obj);
+	}
 	
 	
 	

@@ -145,11 +145,11 @@ public class DestroyerAlien extends AlienShip {
 //		return this.points;
 //	}
 	
-	public void bombMove() {
-		if (this.bomb != null) {
-			this.bomb.automaticMove();
-		}
-	}
+//	public void bombMove() {
+//		if (this.bomb != null) {
+//			this.bomb.automaticMove();
+//		}
+//	}
 	
 	
 	public Bomb getBomb() {
@@ -163,6 +163,7 @@ public class DestroyerAlien extends AlienShip {
 	private void createBomb() {
 		Position copy = new Position(this.pos.getCol(), this.pos.getRow() + 1);
 		Bomb bomb = new Bomb(game, copy);
+		game.addObject(bomb);
 		this.bomb = bomb;
 	}
 	
@@ -189,7 +190,7 @@ public class DestroyerAlien extends AlienShip {
 
 	@Override
 	public void computerAction() {
-		// TODO Auto-generated method stub
+		shoot();
 		
 	}
 

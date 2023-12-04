@@ -25,7 +25,7 @@ public class Ufo extends EnemyShip{
 		super(game, new Position(Game.DIM_X, 0), Game.UFO_HEALTH, Game.UFO_POINTS);
 		dir = Move.LEFT;
 //		this.pos = ;
-		enable();
+		enabled = false;
 //		this.game = game;
 		
 	}
@@ -39,7 +39,7 @@ public class Ufo extends EnemyShip{
 	
 	
 	private void enable() { //AlienManager
-		this.pos = new Position(Game.DIM_X, 0);
+		pos = new Position(Game.DIM_X - 1, 0);
 		life = Game.UFO_HEALTH;
 		enabled = true;
 //		this.enabled = true;
@@ -48,16 +48,16 @@ public class Ufo extends EnemyShip{
 
 	public void onDelete() {
 		game.enableShockwave();
-		this.game.markPoints(this.points);
+		game.markPoints(this.points);
 	}
 	
 	
-	public void callUfo() {
-		computerAction();
-		if(isAlive()) {
-			performMovement();
-		}
-	}
+//	public void callUfo() {
+//		computerAction();
+//		if(isAlive()) {
+//			performMovement();
+//		}
+//	}
 	
 	/**
 	 * Checks if the game should generate an ufo.

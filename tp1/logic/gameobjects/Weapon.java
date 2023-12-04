@@ -18,7 +18,7 @@ public abstract class Weapon extends GameObject{
 	
 	public boolean performAttack(GameItem other) {
 		boolean attacked = false;
-		if (other.isOnPosition(this.pos)) {
+		if (other.isOnPosition(this.pos) || other.theyCrossed(this)) {
 			attacked = weaponAttack(other);
 			die();
 		}
@@ -49,6 +49,7 @@ public abstract class Weapon extends GameObject{
 	
 	@Override
 	protected void performMovement() {
+		prevPos = pos;
 		dir.updatePosition(this.pos);
 	}
 	@Override
@@ -59,8 +60,10 @@ public abstract class Weapon extends GameObject{
 
 	protected abstract boolean weaponAttack(GameItem other);
 	
-
-	
+	@Override
+	public void onDelete() {
+		game.deleteObject(this);
+	}
 	
 	
 	

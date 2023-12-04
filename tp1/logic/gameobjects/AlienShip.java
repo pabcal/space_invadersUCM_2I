@@ -28,26 +28,29 @@ public abstract class AlienShip extends EnemyShip {
 	//Performs movement of alien
 	@Override
 	public  void performMovement() {
-		if (this.alienManager.readyToDescend()) {
-			this.descent();
-		}
-		else {
-			if (this.descended) {
-				if (this.dir == Move.LEFT)
-					this.dir = Move.RIGHT;
-				else
-					this.dir = Move.LEFT;
-				if (this.alienManager.onBorder())
-					this.alienManager.notOnBorder();
-				this.descended = false;
+		if (game.getAliensMove()) {
+			prevPos = pos;
+			if (this.alienManager.readyToDescend()) {
+				this.descent();
 			}
-			this.dir.updatePosition(this.pos);
+			else {
+				if (this.descended) {
+					if (this.dir == Move.LEFT)
+						this.dir = Move.RIGHT;
+					else
+						this.dir = Move.LEFT;
+					if (this.alienManager.onBorder())
+						this.alienManager.notOnBorder();
+					this.descended = false;
+				}
+				this.dir.updatePosition(this.pos);
+			}
+			if (onBorder() && !this.descended) {
+				this.alienManager.shipOnBorder();
+			}
+			if (finalRow() && !this.alienManager.inFinalRow())
+				this.alienManager.sendInFinalRow();
 		}
-		if (onBorder() && !this.descended) {
-			this.alienManager.shipOnBorder();
-		}
-		if (finalRow() && !this.alienManager.inFinalRow())
-			this.alienManager.sendInFinalRow();
 	}
 	
 	//Sees if alien is in border (only side borders)
@@ -67,6 +70,11 @@ public abstract class AlienShip extends EnemyShip {
 	
 	public void callDead() {
 		this.alienManager.alienDied();
+	}
+	
+	@Override
+	public void onDelete() {
+		game.deleteObject(this);
 	}
 	
 }

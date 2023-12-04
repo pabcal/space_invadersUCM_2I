@@ -15,8 +15,9 @@ public abstract class EnemyShip extends Ship{
 	}
 	
 	public  void automaticMove() { //performs movement if ship is alive, dont know if it is common for weapons too
-		if (isAlive())
+		if (isAlive()) 
 			performMovement();
+		
 	}
 	
 	public int getPoints() {

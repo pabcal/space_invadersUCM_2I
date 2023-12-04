@@ -36,12 +36,7 @@ public class Laser extends UCMWeapon{
 		
 	}
 
-	@Override
-	public void onDelete() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	
 	
 	
