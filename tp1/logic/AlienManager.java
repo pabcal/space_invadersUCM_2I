@@ -1,8 +1,11 @@
 package tp1.logic;
 
+import tp1.control.InitialConfiguration;
+import tp1.logic.gameobjects.AlienShip;
 import tp1.logic.gameobjects.DestroyerAlien;
 //import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
+import tp1.logic.gameobjects.Ufo;
 import tp1.logic.lists.DestroyerAlienList;
 //import tp1.logic.lists.DestroyerAlienList;
 import tp1.logic.lists.RegularAlienList;
@@ -30,6 +33,66 @@ public class AlienManager {
 		this.level = level;
 		this.game = game;
 		this.remainingAliens = 0;
+	}
+	
+	
+	public  GameObjectContainer initialize() {
+		this.remainingAliens = 0;
+		GameObjectContainer container = new GameObjectContainer();
+		
+		initializeOvni(container);
+		initializeRegularAliens(container);
+		initializeDestroyerAliens(container);
+		
+		//TODO fill with your code
+		
+		
+		return container;
+	}
+	
+	private void initializeOvni(GameObjectContainer container) {
+		container.add(new Ufo(game));
+	}
+	
+	private void initializeRegularAliens (GameObjectContainer container) {
+		int nRAliens = level.getNumOfRegAliens();
+		int rArows = level.getNumberOfRows();
+		RegularAlien regAlien;
+		
+		for (int i = 0; i < rArows; ++i) {
+			for (int j = 0; j < nRAliens / rArows; ++j) {
+				Position auxPos = new Position(5 - j, 1 + i);
+				regAlien = new RegularAlien(game, auxPos, this);
+				container.add(regAlien);
+				this.remainingAliens++;
+			}
+		}
+		
+		//TODO fill with your code
+		//		container.add(new RegularAlien(....));
+	}
+	
+	private void initializeDestroyerAliens(GameObjectContainer container) {
+		int nDAliens = this.level.getNumberOfDesAliens();
+		DestroyerAlien desAlien;
+		int colInit = ((level == Level.INSANE) ? 1 : 0);
+		
+		for (int j = 0; j < nDAliens; ++j) {
+			Position auxPos = new Position(4 + colInit - j, 1 + level.getNumberOfRows());
+			desAlien = new DestroyerAlien(game, auxPos, this);
+			container.add(desAlien);
+			this.remainingAliens++; 
+		}
+	}
+
+	private void costumedInitialization(GameObjectContainer container, InitialConfiguration conf) {
+		for (String shipDescription : conf.getShipDescription()) {
+			String[] words = shipDescription.toLowerCase().trim().split("\\s+");
+			Position pos = new Position(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
+			AlienShip ship = (words[0] == "R" ? new RegularAlien(game, pos, this) : new DestroyerAlien(game, pos, this));
+			container.add(ship);
+			this.remainingAliens++;
+		}
 	}
 		
 	// INITIALIZER METHODS

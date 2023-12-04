@@ -52,6 +52,7 @@ public class Game implements GameStatus{
 	private boolean finished = false;
 	private Shockwave shockwave = new Shockwave(this);
 	boolean enableLaser = false;
+	private GameObjectContainer container;
 
 	
 	
@@ -63,11 +64,19 @@ public class Game implements GameStatus{
 		this.level = level;
 		this.seed = seed;
 		this.manager = new AlienManager (this, level);
+		this.rand = new Random(this.seed);
+		init();
+		
+		
+	}
+	
+	public void init() {
+		container = new GameObjectContainer();
 		this.rAlienList  = this.manager.initializeRegularAliens();
 		this.dAlienList = this.manager.initializeDestroyerAliens();
-		this.rand = new Random(this.seed);
 		this.ufo = new Ufo(this);
-		
+		for (int i = 0; i < rAlienList.getNum(); ++i)
+			container.add(rAlienList.getAlien(i));
 	}
 
 	public String stateToString() {
@@ -225,6 +234,11 @@ public class Game implements GameStatus{
 		this.dAlienList.removeDead();
 		if (!laser.isAlive())
 			laser = null;
+		for (int i = 0; i < container.getSize(); ++i) 
+			if (container.objectIsDead(i)) {
+				System.out.println(i);
+				container.remove(container.getObject(i));
+		}
 	}
 	
 	public void listCommand()

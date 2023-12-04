@@ -24,6 +24,7 @@ public class GameObjectContainer {
 	public void automaticMoves() {
 		for (int i=0;i<objects.size();i++) {
 				GameObject object = objects.get(i);
+				object.automaticMove();
 			//TODO fill with your code
 		}
 		//TODO fill with your code
@@ -33,6 +34,17 @@ public class GameObjectContainer {
 		// TODO fill with your code
 	}
 
+	public int getSize() {
+		return objects.size();
+	}
+	
+	public boolean objectIsDead(int index) {
+		return !objects.get(index).isAlive();
+	}
+	
+	public GameObject getObject(int index) {
+		return objects.get(index);
+	}
 	//TODO fill with your code
 	
 }
