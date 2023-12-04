@@ -22,12 +22,11 @@ public class Ufo extends EnemyShip{
 	
 	//TODO fill your code
 	public Ufo(Game game) {
-		super(game, new Position(Game.DIM_X, 0), Game.UFO_HEALTH, Game.UFO_POINTS);
+		super(game, new Position(Game.DIM_X, 0), 0, Game.UFO_POINTS);
 		dir = Move.LEFT;
 //		this.pos = ;
 		enabled = false;
 //		this.game = game;
-		
 	}
 
 	public void computerAction() {
@@ -114,7 +113,7 @@ public class Ufo extends EnemyShip{
 	
 	
 	@Override
-	public boolean performAttack(GameItem other) {
+	public boolean performAttack(GameItem other, boolean cross) {
 		// TODO Auto-generated method stub
 		return false;
 	}

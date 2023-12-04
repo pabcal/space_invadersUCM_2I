@@ -50,13 +50,13 @@ public class Game implements GameStatus{
 //	private RegularAlienList rAlienList;
 //	private DestroyerAlienList dAlienList;
 	private Random rand;
-	private Ufo ufo;
 //	private boolean shockwave = false;
 	private int alienCycleCounter = 0;
 	private boolean finished = false;
 	private Shockwave shockwave = new Shockwave(this);
 	boolean enableLaser = false;
 	boolean enableSuperLaser = false;
+	boolean reseted = false;
 	private GameObjectContainer container;
 
 	
@@ -227,7 +227,12 @@ public class Game implements GameStatus{
 		int i = 0;
 		if (weapon != null && weapon.isAlive()) {
 			while (i < container.getSize() && weapon.isAlive()) {
-				weapon.performAttack(container.getObject(i));
+				weapon.performAttack(container.getObject(i), true);
+				++i;
+			}
+			i = 0;
+			while (i < container.getSize() && weapon.isAlive()) {
+				weapon.performAttack(container.getObject(i), false);
 				++i;
 			}
 //		if (laser != null && laser.isAlive()) {
@@ -315,13 +320,11 @@ public class Game implements GameStatus{
 		this.manager = null;
 		this.manager = new AlienManager(this, this.level);
 		container = null;
-		container = manager.initialize();
 		this.player = new UCMShip(this);
-		this.ufo = null;
-		this.ufo = new Ufo(this);
+		init();
 		this.rand = new Random(this.seed);
 		this.alienCycleCounter = 0;
-		
+		reseted = true;
 	}
 	
 	
@@ -335,50 +338,56 @@ public class Game implements GameStatus{
 //	}
 	
 	public void update() {
-		if (laser != null && !laser.isAlive())
-			laser = null;
-		container.automaticMoves();
-		manageAliens();
-		container.computerActions();
-		
-		
-		
-		 //boolean variable that tells the processHit() to check collision between the laser and the aliens, it is true when aliens are ready to descend only
-//		this.ufo.callUfo(); // this method is in charge of performing all UFO movements as well as checking if it must appear or not
-
-		if (laser == null && enableLaser) {
-			laser = new Laser(this);
-			container.add(laser);
+		if (!reseted) {
+			if (laser != null && !laser.isAlive())
+				laser = null;
+			if (superLaser != null && !superLaser.isAlive())
+				superLaser = null;
+			container.automaticMoves();
+			manageAliens();
+			container.computerActions();
+			
+			
+			
+			 //boolean variable that tells the processHit() to check collision between the laser and the aliens, it is true when aliens are ready to descend only
+	//		this.ufo.callUfo(); // this method is in charge of performing all UFO movements as well as checking if it must appear or not
+	
+			if (laser == null && enableLaser) {
+				laser = new Laser(this);
+				container.add(laser);
+			}
+			
+			else if (superLaser == null && enableSuperLaser)
+			{
+				superLaser = new SuperLaser(this);
+				container.add(superLaser);
+			}
+			
+			
+			UCMWeapon weapon;
+			if (laser != null)
+				weapon = laser;
+			else if (superLaser != null)
+				weapon = superLaser;
+			else
+				weapon = null;
+				
+				
+			
+			enableLaser = enableSuperLaser = false;
+			processHIT(weapon); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
+	//		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
+	//			this.alienCycleCounter = 0;
+	//			this.moveAliens(); //method to move aliens
+	//		}
+	//		this.processBombs(); //Method in charge of shooting/moving bombs
+			
+	//		this.processHIT(true); //Second calling of the processHIT() method. Laser and aliens already moved.
+			this.playerProcessHit(); //In charge of checking collisions between bombs and player, no need to call 2 times.
+			incrCycle();
 		}
-		
-		else if (enableSuperLaser)
-		{
-			superLaser = new SuperLaser(this);
-			container.add(superLaser);
-		}
-		
-		
-		UCMWeapon weapon;
-		if (laser != null)
-			weapon = laser;
-		else if (superLaser != null)
-			weapon = superLaser;
 		else
-			weapon = null;
-			
-			
-		
-		enableLaser = enableSuperLaser = false;
-		processHIT(weapon); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
-//		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
-//			this.alienCycleCounter = 0;
-//			this.moveAliens(); //method to move aliens
-//		}
-//		this.processBombs(); //Method in charge of shooting/moving bombs
-		
-//		this.processHIT(true); //Second calling of the processHIT() method. Laser and aliens already moved.
-		this.playerProcessHit(); //In charge of checking collisions between bombs and player, no need to call 2 times.
-		incrCycle();
+			reseted = false;
 	}
 	// changes 
 	public void enableShockwave()
@@ -416,7 +425,8 @@ public class Game implements GameStatus{
 		
 		for (int i = 0; i < container.getSize(); ++i) {
 			GameObject obj = container.getObject(i);
-			obj.performAttack(player);
+			if (!obj.performAttack(player, true))
+				obj.performAttack(player, false);
 		}
 //		for (int j = 0; j < this.dAlienList.getNum(); ++j) {
 //			bomb = this.dAlienList.getBombFrom(j);

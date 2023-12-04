@@ -131,7 +131,7 @@ public class RegularAlien extends AlienShip{
 	//IGNORE METHODS
 
 	@Override
-	public boolean performAttack(GameItem other) {
+	public boolean performAttack(GameItem other, boolean cross) {
 		// TODO Auto-generated method stub
 		return false;
 	}

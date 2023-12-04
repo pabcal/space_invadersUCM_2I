@@ -47,7 +47,7 @@ public class UCMShip extends Ship{
 	{
 		boolean performed = false;
 		this.dir = dir;
-		prevPos = pos;
+		prevPos = new Position(pos.getCol(), pos.getRow());
 		if (this.pos.getCol() + dir.getX() >= 0 && this.pos.getCol() + dir.getX() < Game.DIM_X &&
 				this.pos.getRow() + dir.getY() >= 0 && this.pos.getRow() + dir.getY() < Game.DIM_Y	) {
 			dir.updatePosition(this.pos);
@@ -84,7 +84,7 @@ public class UCMShip extends Ship{
 	
 
 	@Override
-	public boolean performAttack(GameItem other) {
+	public boolean performAttack(GameItem other, boolean cross) {
 		// TODO Auto-generated method stub
 		return false;
 	}

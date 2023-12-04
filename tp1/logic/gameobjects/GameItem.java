@@ -5,7 +5,7 @@ import tp1.logic.Position;
 public interface GameItem {
 	
 	
-	public boolean performAttack(GameItem other);
+	public boolean performAttack(GameItem other, boolean cross);
 	
 	public boolean receiveAttack(UCMWeapon weapon);
 	public boolean receiveAttack(EnemyWeapon weapon);
