@@ -55,8 +55,9 @@ public class MoveCommand extends Command {
         	{
             	String command2 = commandWords[1].toUpperCase();
             	move = Move.getMovement(command2); //preguntar
-            	if (move == null)
+            	if (move == null || move == Move.UP || move == Move.DOWN) {
             		System.out.println(Messages.DIRECTION_ERROR);
+            	}
             	c = this;
 
         	}

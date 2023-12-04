@@ -194,10 +194,5 @@ public class DestroyerAlien extends AlienShip {
 		
 	}
 
-	@Override
-	public void onDelete() {
-		// TODO Auto-generated method stub
-		
-	}
 }
 

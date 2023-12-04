@@ -24,12 +24,5 @@ public class SuperLaser extends UCMWeapon{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void onDelete() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
 
