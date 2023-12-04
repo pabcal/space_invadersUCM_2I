@@ -28,8 +28,8 @@ public abstract class AlienShip extends EnemyShip {
 	//Performs movement of alien
 	@Override
 	public  void performMovement() {
-		if (game.getAliensMove()) {
-			prevPos = pos;
+		if (game.getAliensMove()) { //
+			prevPos = new Position(pos.getCol(), pos.getRow());
 			if (this.alienManager.readyToDescend()) {
 				this.descent();
 			}

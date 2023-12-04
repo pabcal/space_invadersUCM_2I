@@ -179,7 +179,7 @@ public class DestroyerAlien extends AlienShip {
 	//IGNORE
 	
 	@Override
-	public boolean performAttack(GameItem other) {
+	public boolean performAttack(GameItem other, boolean cross) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -16,9 +16,11 @@ public abstract class Weapon extends GameObject{
 	
 	//TODO fill with your code
 	
-	public boolean performAttack(GameItem other) {
+	@Override
+	public boolean performAttack(GameItem other, boolean cross) {
 		boolean attacked = false;
-		if (other.isOnPosition(this.pos) || other.theyCrossed(this)) {
+		boolean crossed = (cross ? other.theyCrossed(this) : other.isOnPosition(this.pos));
+		if (crossed) {
 			attacked = weaponAttack(other);
 			if (attacked)
 				die();
@@ -50,7 +52,7 @@ public abstract class Weapon extends GameObject{
 	
 	@Override
 	protected void performMovement() {
-		prevPos = pos;
+		prevPos = new Position(pos.getCol(), pos.getRow());
 		dir.updatePosition(this.pos);
 	}
 	@Override
