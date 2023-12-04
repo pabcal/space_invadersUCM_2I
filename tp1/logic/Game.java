@@ -187,15 +187,15 @@ public class Game implements GameStatus{
 		return this.player.getPos();
 	}
 	
-	private void laser_move() {
-		if (this.laser.isAlive())
-			this.laser.automaticMove();
-	}
-	
-	private void SuperLaser_move() {
-		if (this.superLaser.isAlive())
-			this.superLaser.automaticMove();
-	}
+//	private void laser_move() {
+//		if (this.laser.isAlive())
+//			this.laser.automaticMove();
+//	}
+//	
+//	private void SuperLaser_move() {
+//		if (this.superLaser.isAlive())
+//			this.superLaser.automaticMove();
+//	}
 	
 	private void manageAliens() {
 		if (getAliensMove()) alienCycleCounter = 0;
@@ -336,7 +336,7 @@ public class Game implements GameStatus{
 	
 	public void update() {
 		if (laser != null && !laser.isAlive())
-;			laser = null;
+			laser = null;
 		container.automaticMoves();
 		manageAliens();
 		container.computerActions();
@@ -356,7 +356,18 @@ public class Game implements GameStatus{
 			superLaser = new SuperLaser(this);
 			container.add(superLaser);
 		}
-		UCMWeapon weapon = (enableSuperLaser ? superLaser : (enableLaser ? laser : null));
+		
+		
+		UCMWeapon weapon;
+		if (laser != null)
+			weapon = laser;
+		else if (superLaser != null)
+			weapon = superLaser;
+		else
+			weapon = null;
+			
+			
+		
 		enableLaser = enableSuperLaser = false;
 		processHIT(weapon); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
 //		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
