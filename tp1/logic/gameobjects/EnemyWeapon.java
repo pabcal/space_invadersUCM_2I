@@ -15,7 +15,18 @@ public abstract class EnemyWeapon extends Weapon{
 		return item.receiveAttack(this);
 	}
 	
+	@Override
+	public boolean receiveAttack(UCMWeapon weapon) {
+		hit (weapon);
+		return true;
+		
+	}
 	
+	@Override
+	public boolean receiveAttack(EnemyWeapon weapon) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 }

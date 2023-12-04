@@ -128,6 +128,9 @@ public class DestroyerAlien extends AlienShip {
 	public void shoot() {
 		Level level = game.getLevel();
 		
+		if (bomb != null && !bomb.isAlive())
+			deleteBomb();
+		
 		if ((bomb == null || bomb.getInPlayerPos()) && shootProbability()) { //If bomb is in the player's position, due to the order of our functions in Game.update(), the bomb won't be deactivated yet 
 			if (bomb != null && bomb.getInPlayerPos())
 				this.deleteBomb();
@@ -145,11 +148,11 @@ public class DestroyerAlien extends AlienShip {
 //		return this.points;
 //	}
 	
-	public void bombMove() {
-		if (this.bomb != null) {
-			this.bomb.automaticMove();
-		}
-	}
+//	public void bombMove() {
+//		if (this.bomb != null) {
+//			this.bomb.automaticMove();
+//		}
+//	}
 	
 	
 	public Bomb getBomb() {
@@ -163,6 +166,7 @@ public class DestroyerAlien extends AlienShip {
 	private void createBomb() {
 		Position copy = new Position(this.pos.getCol(), this.pos.getRow() + 1);
 		Bomb bomb = new Bomb(game, copy);
+		game.addObject(bomb);
 		this.bomb = bomb;
 	}
 	
@@ -189,14 +193,9 @@ public class DestroyerAlien extends AlienShip {
 
 	@Override
 	public void computerAction() {
-		// TODO Auto-generated method stub
+		shoot();
 		
 	}
 
-	@Override
-	public void onDelete() {
-		// TODO Auto-generated method stub
-		
-	}
 }
 

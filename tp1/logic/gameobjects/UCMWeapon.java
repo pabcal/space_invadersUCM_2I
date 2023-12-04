@@ -18,7 +18,17 @@ public abstract class UCMWeapon extends Weapon {
 	}
 	
 	
+	@Override
+	public boolean receiveAttack(EnemyWeapon weapon) {
+		hit(weapon);
+		return true;
+	}
 	
+	@Override
+	public boolean receiveAttack(UCMWeapon weapon) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 }

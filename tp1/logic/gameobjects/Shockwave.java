@@ -15,7 +15,7 @@ public class Shockwave extends UCMWeapon{
 	}
 
 	@Override
-	protected String getSymbol() {
+	public String getSymbol() {
 		return Messages.SHOCKWAVE_SYMBOL;
 	}
 

@@ -31,7 +31,10 @@ public class GameObjectContainer {
 	}
 
 	public void computerActions() {
-		// TODO fill with your code
+		for (int i = 0; i < objects.size(); i++) {
+			GameObject auxObj = objects.get(i);
+			auxObj.computerAction();
+		}	
 	}
 
 	public int getSize() {
@@ -46,5 +49,21 @@ public class GameObjectContainer {
 		return objects.get(index);
 	}
 	//TODO fill with your code
+	
+	
+	
+	public String getSymbolInPos(Position pos) {
+		int i = 0;
+		boolean found = false;
+		GameObject aux = null;
+		while (i < objects.size() && !found) {
+			aux = objects.get(i);
+			if (aux.isAlive() && pos.isEqual(aux.getPos()))
+				found = true;
+			++i;
+		}
+		
+		return (!found ? "" : aux.getSymbol());
+	}
 	
 }

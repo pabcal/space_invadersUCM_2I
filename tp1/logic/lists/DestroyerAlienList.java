@@ -97,11 +97,11 @@ public class DestroyerAlienList {
 			
 	}
 	
-	public void bombProcess() {
-		for (int i = 0; i < this.num; ++i) {
-			this.objects[i].bombMove();
-		}
-	}
+//	public void bombProcess() {
+//		for (int i = 0; i < this.num; ++i) {
+//			this.objects[i].bombMove();
+//		}
+//	}
 	
 	public Bomb searchBombInPos(Position pos) {
 		int i = 0;

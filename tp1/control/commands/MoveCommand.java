@@ -8,6 +8,7 @@ import tp1.view.Messages;
 public class MoveCommand extends Command {
 
 	private Move move;
+	private boolean directionError = false;
 
 	public MoveCommand() {}
 
@@ -38,10 +39,10 @@ public class MoveCommand extends Command {
 	@Override
 	public ExecutionResult execute(Game game) {
 		boolean valid = game.movePlayer(move);
+		String message = (directionError ? Messages.DIRECTION_ERROR : Messages.MOVEMENT_ERROR);
 		
 		
-		
-		return new ExecutionResult(valid, valid, Messages.MOVEMENT_ERROR);
+		return new ExecutionResult(valid, valid, message);
 	}
 
 
@@ -55,8 +56,9 @@ public class MoveCommand extends Command {
         	{
             	String command2 = commandWords[1].toUpperCase();
             	move = Move.getMovement(command2); //preguntar
-            	if (move == null)
-            		System.out.println(Messages.DIRECTION_ERROR);
+            	if (move == null || move == Move.UP || move == Move.DOWN) {
+            		directionError = true;
+            	}
             	c = this;
 
         	}

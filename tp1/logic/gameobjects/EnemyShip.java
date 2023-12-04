@@ -15,12 +15,26 @@ public abstract class EnemyShip extends Ship{
 	}
 	
 	public  void automaticMove() { //performs movement if ship is alive, dont know if it is common for weapons too
-		if (isAlive())
+		if (isAlive()) 
 			performMovement();
+		
 	}
 	
 	public int getPoints() {
 		return this.points;
+	}
+	
+	@Override
+	public boolean receiveAttack(UCMWeapon weapon) {
+		hit (weapon);
+		return true;
+		
+	}
+	
+	@Override
+	public boolean receiveAttack(EnemyWeapon weapon) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
