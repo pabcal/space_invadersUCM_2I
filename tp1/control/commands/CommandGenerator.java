@@ -15,7 +15,8 @@ public class CommandGenerator {
 		new NoneCommand(),
 		new ResetCommand(),
 		new ShockwaveCommand(),
-		new ShootCommand()
+		new ShootCommand(),
+		new SuperLaserCommand()
 		//TODO fill with your code
 	);
 
