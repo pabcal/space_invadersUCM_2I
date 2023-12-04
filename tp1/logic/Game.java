@@ -9,6 +9,7 @@ import tp1.logic.gameobjects.Bomb;
 import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.Shockwave;
+import tp1.logic.gameobjects.SuperLaser;
 import tp1.logic.lists.DestroyerAlienList;
 import tp1.logic.lists.RegularAlienList;
 import tp1.view.Messages;
@@ -42,6 +43,7 @@ public class Game implements GameStatus{
 	private long seed;
 	private UCMShip player = new UCMShip(this);
 	private Laser laser; //changes 1.1
+	private SuperLaser superLaser;
 	private AlienManager manager; 
 	private RegularAlienList rAlienList;
 	private DestroyerAlienList dAlienList;
@@ -52,6 +54,7 @@ public class Game implements GameStatus{
 	private boolean finished = false;
 	private Shockwave shockwave = new Shockwave(this);
 	boolean enableLaser = false;
+	boolean enableSuperLaser = false;
 	private GameObjectContainer container;
 
 	
@@ -112,6 +115,8 @@ public class Game implements GameStatus{
 			what = player.getSymbol();
 		else if (laser != null && this.laser.isAlive() && posAux.isEqual(this.laser.getPos())) 
 			what = this.laser.getSymbol();
+		else if (this.superLaser != null && this.superLaser.isAlive() && posAux.isEqual(this.superLaser.getPos()) )
+			what = superLaser.getSymbol();
 		else if (auxBomb != null)
 			what = auxBomb.getSymbol();
 		else if (posAux.isEqual(this.ufo.getPos()) && this.ufo.isAlive()) 
@@ -146,6 +151,21 @@ public class Game implements GameStatus{
 		
 		return enabled;
 	}
+	
+	public boolean enableSuperLaser() { //enables UCMShip's laser
+		boolean enabled = false;
+		if(this.score > 4)
+			if (( this.superLaser == null || !this.superLaser.isAlive() )&& (this.laser == null || !this.laser.isAlive()) ) 
+			{
+				score =- 5;
+				enableSuperLaser = true;
+				enabled = true;
+			}
+			
+		return enabled;
+	}
+	
+	
 
 	public Random getRandom() { //ASK -----------------------------------------------------------
 		
@@ -165,6 +185,11 @@ public class Game implements GameStatus{
 	private void laser_move() {
 		if (this.laser.isAlive())
 			this.laser.automaticMove();
+	}
+	
+	private void SuperLaser_move() {
+		if (this.superLaser.isAlive())
+			this.superLaser.automaticMove();
 	}
 	
 	private void moveAliens() {
@@ -204,19 +229,30 @@ public class Game implements GameStatus{
 				++i;
 			}
 			i = 0;
-			while (aliensCheck && i < this.rAlienList.getNum() && laser.isAlive()) {
+			while (aliensCheck && i < this.rAlienList.getNum() && (laser.isAlive() || superLaser.isAlive())) {
 				alien = this.rAlienList.getAlien(i);
-				this.laser.performAttack(alien);
+				if (laser.isAlive())
+					this.laser.performAttack(alien);
+				else if (superLaser.isAlive())
+					this.superLaser.performAttack(alien);
 				++i;
 			}
 			i = 0;
-			while (aliensCheck && i < this.dAlienList.getNum() && laser.isAlive()) {
+			while (aliensCheck && i < this.dAlienList.getNum() && (laser.isAlive() || superLaser.isAlive())) {
 				dAlien = this.dAlienList.getAlien(i);
-				this.laser.performAttack(dAlien);
+				if (laser.isAlive())
+					this.laser.performAttack(dAlien);
+				else if (superLaser.isAlive())
+					this.superLaser.performAttack(alien);
 				++i;
 			}
-			if (laser.isAlive())
-				this.laser.performAttack(this.ufo);
+			if ((laser.isAlive() || superLaser.isAlive()))
+				if (laser.isAlive())
+					this.laser.performAttack(this.ufo);
+				else
+					this.superLaser.performAttack(this.ufo);
+					
+				
 			this.removeDead();
 		}
 		
@@ -293,11 +329,20 @@ public class Game implements GameStatus{
 	public void update() {
 		boolean aliensCheck = this.manager.readyToDescend(); //boolean variable that tells the processHit() to check collision between the laser and the aliens, it is true when aliens are ready to descend only
 		this.ufo.callUfo(); // this method is in charge of performing all UFO movements as well as checking if it must appear or not
-		if (laser != null)
+		if (laser != null && laser.isAlive())
 			this.laser_move(); // method in charge of moving the laser
 		else if (enableLaser) {
 			laser = new Laser(this);
 			enableLaser = false;
+		}
+		
+		if (superLaser != null && superLaser.isAlive())
+			this.SuperLaser_move();
+		else if (enableSuperLaser)
+		{
+			superLaser = new SuperLaser(this);
+			enableSuperLaser = false;
+			
 		}
 		processHIT(aliensCheck); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
 		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
@@ -385,25 +430,11 @@ public class Game implements GameStatus{
 		return null;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
 	
 	
 }
+
