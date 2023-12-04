@@ -268,7 +268,10 @@ public class Game implements GameStatus{
 	
 	
 	public boolean movePlayer(Move dir) {
-		return this.player.performMovement(dir);
+		boolean did = false;
+		if (dir != null && dir != Move.UP && dir != Move.DOWN)
+			did = player.performMovement(dir);
+		return did;
 	}
 	
 	
@@ -365,7 +368,6 @@ public class Game implements GameStatus{
 		
 //		this.processHIT(true); //Second calling of the processHIT() method. Laser and aliens already moved.
 		this.playerProcessHit(); //In charge of checking collisions between bombs and player, no need to call 2 times.
-		this.dAlienList.deleteDeactivatedBombs(); //calls function to delete the bombs that are no longer active
 		incrCycle();
 	}
 	// changes 
@@ -380,10 +382,11 @@ public class Game implements GameStatus{
 		boolean completed = false;
 		if (shockwave.getShockwaveStatus())
 		{
-			completed = true;
-			this.dAlienList.shockwaveHit(shockwave);
-			this.rAlienList.shockwaveHit(shockwave);
-			shockwave.setShockwave(false);
+			for (int i = 0; i < container.getSize(); ++i) {
+				GameObject obj = container.getObject(i);
+				obj.receiveAttack(shockwave);
+			}
+				
 		}
 		return completed;
 	}
@@ -400,13 +403,16 @@ public class Game implements GameStatus{
 	 that allows us to call it only once.
 	*/
 	public void playerProcessHit() {
-		Bomb bomb = null;
-		for (int j = 0; j < this.dAlienList.getNum(); ++j) {
-			bomb = this.dAlienList.getBombFrom(j);
-			if (bomb != null && bomb.isAlive())
-				bomb.performAttack(player);
-				
+		
+		for (int i = 0; i < container.getSize(); ++i) {
+			
 		}
+//		for (int j = 0; j < this.dAlienList.getNum(); ++j) {
+//			bomb = this.dAlienList.getBombFrom(j);
+//			if (bomb != null && bomb.isAlive())
+//				bomb.performAttack(player);
+//				
+//		}
 	}
 	
 	public boolean inPlayerPos(Position aux) { //method implemented for the Bomb class

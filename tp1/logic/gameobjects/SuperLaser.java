@@ -24,5 +24,9 @@ public class SuperLaser extends UCMWeapon{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+
+	
 }
 

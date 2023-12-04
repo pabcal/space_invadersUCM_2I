@@ -20,7 +20,8 @@ public abstract class Weapon extends GameObject{
 		boolean attacked = false;
 		if (other.isOnPosition(this.pos) || other.theyCrossed(this)) {
 			attacked = weaponAttack(other);
-			die();
+			if (attacked)
+				die();
 		}
 		return attacked;
 	}

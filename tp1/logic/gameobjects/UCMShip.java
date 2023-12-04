@@ -65,10 +65,11 @@ public class UCMShip extends Ship{
 		die();
 	}
 	
-//	public boolean receiveAttack(Bomb bomb) {
-//		this.getHit(bomb.getDamage());
-//		return true;
-//	}
+	@Override
+	public boolean receiveAttack(EnemyWeapon weapon) {
+		hit(weapon);
+		return true;
+	}
 	
 //	public void getHit(int damage){
 //		this.health -= damage;
@@ -126,6 +127,13 @@ public class UCMShip extends Ship{
 	public void onDelete() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public boolean receiveAttack(UCMWeapon weapon) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 		
 }

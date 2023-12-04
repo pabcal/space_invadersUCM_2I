@@ -43,18 +43,9 @@ public abstract class GameObject implements GameItem {
 	
 	//TODO fill with your code
 	
-	@Override
-	public boolean receiveAttack(EnemyWeapon weapon) {
-		hit(weapon);
-		return true;
-	}
+	
 
-	@Override
-	public boolean receiveAttack(UCMWeapon weapon) {
-		hit (weapon);
-		return true;
-		
-	}
+	
 	
 	public void hit(Weapon weapon)
 	{

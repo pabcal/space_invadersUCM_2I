@@ -28,6 +28,8 @@ public class Bomb extends EnemyWeapon {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 	
 	
 	
