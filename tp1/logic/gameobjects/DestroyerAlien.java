@@ -128,6 +128,9 @@ public class DestroyerAlien extends AlienShip {
 	public void shoot() {
 		Level level = game.getLevel();
 		
+		if (bomb != null && !bomb.isAlive())
+			deleteBomb();
+		
 		if ((bomb == null || bomb.getInPlayerPos()) && shootProbability()) { //If bomb is in the player's position, due to the order of our functions in Game.update(), the bomb won't be deactivated yet 
 			if (bomb != null && bomb.getInPlayerPos())
 				this.deleteBomb();

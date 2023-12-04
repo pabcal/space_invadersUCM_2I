@@ -150,20 +150,19 @@ public class Game implements GameStatus{
 	
 	public boolean enableLaser() { //enables UCMShip's laser
 		boolean enabled = false;
-		if (this.laser == null || !this.laser.isAlive()) {
+		if ((this.laser == null || !this.laser.isAlive()) && (this.superLaser == null || !this.laser.isAlive())) {
 			enableLaser = true;
 			enabled = true;
 		}
-		
 		return enabled;
 	}
 	
 	public boolean enableSuperLaser() { //enables UCMShip's laser
 		boolean enabled = false;
 		if(this.score > 4)
-			if (( this.superLaser == null || !this.superLaser.isAlive() )&& (this.laser == null || !this.laser.isAlive()) ) 
+			if (( this.superLaser == null || !this.superLaser.isAlive()) && (this.laser == null || !this.laser.isAlive()) ) 
 			{
-				score =- 5;
+				score -= 5;
 				enableSuperLaser = true;
 				enabled = true;
 			}
@@ -199,9 +198,10 @@ public class Game implements GameStatus{
 	}
 	
 	private void manageAliens() {
-		if (this.manager.onBorder() && !this.manager.alreadyDescended()) { //to check if in border and did not descend yet
-			this.manager.setDescend(true); //tells manager to descend
-			this.alienCycleCounter = this.level.getSpeed(); //for the next cycle to reset the counter that indicates when the aliens move
+		if (getAliensMove()) alienCycleCounter = 0;
+		if (manager.onBorder() && !manager.alreadyDescended()) { //to check if in border and did not descend yet
+			manager.setDescend(true); //tells manager to descend
+			alienCycleCounter = level.getSpeed(); //for the next cycle to reset the counter that indicates when the aliens move
 		}
 		else if (this.manager.alreadyDescended()) //if it already descended then we don't want it to descend again
 			this.manager.setDescend(false);
@@ -262,7 +262,7 @@ public class Game implements GameStatus{
 //					this.superLaser.performAttack(this.ufo);
 					
 		}
-		}
+	}
 		
 		
 	
@@ -335,7 +335,8 @@ public class Game implements GameStatus{
 //	}
 	
 	public void update() {
-		boolean aliensCheck = this.manager.readyToDescend();
+		if (laser != null && !laser.isAlive())
+;			laser = null;
 		container.automaticMoves();
 		manageAliens();
 		container.computerActions();
@@ -344,21 +345,19 @@ public class Game implements GameStatus{
 		
 		 //boolean variable that tells the processHit() to check collision between the laser and the aliens, it is true when aliens are ready to descend only
 //		this.ufo.callUfo(); // this method is in charge of performing all UFO movements as well as checking if it must appear or not
-		if (laser != null && laser.isAlive())
-			this.laser_move(); // method in charge of moving the laser
-		else if (enableLaser) {
+
+		if (laser == null && enableLaser) {
 			laser = new Laser(this);
-			enableLaser = false;
+			container.add(laser);
 		}
 		
-		if (superLaser != null && superLaser.isAlive())
-			this.SuperLaser_move();
 		else if (enableSuperLaser)
 		{
 			superLaser = new SuperLaser(this);
-			enableSuperLaser = false;
+			container.add(superLaser);
 		}
 		UCMWeapon weapon = (enableSuperLaser ? superLaser : (enableLaser ? laser : null));
+		enableLaser = enableSuperLaser = false;
 		processHIT(weapon); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
 //		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
 //			this.alienCycleCounter = 0;
@@ -405,7 +404,8 @@ public class Game implements GameStatus{
 	public void playerProcessHit() {
 		
 		for (int i = 0; i < container.getSize(); ++i) {
-			
+			GameObject obj = container.getObject(i);
+			obj.performAttack(player);
 		}
 //		for (int j = 0; j < this.dAlienList.getNum(); ++j) {
 //			bomb = this.dAlienList.getBombFrom(j);
@@ -427,10 +427,7 @@ public class Game implements GameStatus{
 	
 	
 	public boolean getAliensMove() {
-		boolean yes = (this.alienCycleCounter == (this.level.getSpeed() + 1));
-		if (yes)
-			this.alienCycleCounter = 0;
-		return yes;
+		return (this.alienCycleCounter == (this.level.getSpeed() + 1));
 	}
 
 	
