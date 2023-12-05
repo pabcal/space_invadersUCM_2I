@@ -150,7 +150,7 @@ public class Game implements GameStatus{
 	
 	public boolean enableLaser() { //enables UCMShip's laser
 		boolean enabled = false;
-		if ((this.laser == null || !this.laser.isAlive()) && (this.superLaser == null || !this.laser.isAlive())) {
+		if ((this.laser == null || !this.laser.isAlive()) && (this.superLaser == null || !this.superLaser.isAlive())) {
 			enableLaser = true;
 			enabled = true;
 		}
@@ -228,11 +228,15 @@ public class Game implements GameStatus{
 		if (weapon != null && weapon.isAlive()) {
 			while (i < container.getSize() && weapon.isAlive()) {
 				weapon.performAttack(container.getObject(i), true);
+//				if(!container.getObject(i).isAlive())
+//					manager.alienDied();
 				++i;
 			}
 			i = 0;
 			while (i < container.getSize() && weapon.isAlive()) {
 				weapon.performAttack(container.getObject(i), false);
+//				if(!container.getObject(i).isAlive())
+//					manager.alienDied();
 				++i;
 			}
 //		if (laser != null && laser.isAlive()) {
@@ -341,7 +345,7 @@ public class Game implements GameStatus{
 		if (!reseted) {
 			if (laser != null && !laser.isAlive())
 				laser = null;
-			if (superLaser != null && !superLaser.isAlive())
+			if (superLaser != null && !superLaser.isAlive()) //should be else if i think
 				superLaser = null;
 			container.automaticMoves();
 			manageAliens();
