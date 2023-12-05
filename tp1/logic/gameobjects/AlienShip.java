@@ -76,6 +76,7 @@ public abstract class AlienShip extends EnemyShip {
 	public void onDelete() {
 		game.deleteObject(this);
 		game.markPoints(getPoints());
+		alienManager.alienDied();
 	}
 	
 }
