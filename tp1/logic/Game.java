@@ -327,7 +327,7 @@ public class Game implements GameStatus{
 		this.player = new UCMShip(this);
 		init();
 		this.rand = new Random(this.seed);
-		this.alienCycleCounter = 0;
+		this.alienCycleCounter = 1;
 		reseted = true;
 	}
 	
@@ -403,13 +403,14 @@ public class Game implements GameStatus{
 	//changes
 	public boolean shootShockwave() {
 		boolean completed = false;
+		int size = container.getSize();
 		if (shockwave.getShockwaveStatus())
 		{
-			for (int i = 0; i < container.getSize(); ++i) {
+			for (int i = size - 1; i >= 0; --i) {
 				GameObject obj = container.getObject(i);
 				obj.receiveAttack(shockwave);
 			}
-				
+			completed = true;
 		}
 		return completed;
 	}

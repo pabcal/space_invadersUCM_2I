@@ -22,7 +22,8 @@ public class GameObjectContainer {
 	}
 
 	public void automaticMoves() {
-		for (int i=0;i<objects.size();i++) {
+		int size = objects.size();
+		for (int i = size - 1; i >= 0; i--) {
 				GameObject object = objects.get(i);
 				object.automaticMove();
 			//TODO fill with your code

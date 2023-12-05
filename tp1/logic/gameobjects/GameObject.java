@@ -11,6 +11,7 @@ public abstract class GameObject implements GameItem {
 	protected int life;
 	protected Game game;
 	protected Move dir;
+	boolean delete = false;
 	
 	public GameObject(Game game, Position pos, int life) {	
 		this.pos = pos;
