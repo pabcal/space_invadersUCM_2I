@@ -46,8 +46,6 @@ public class GameObjectContainer {
 			
 	}
 	
-	
-	
 	public void computerActions() {
 		for (int i = 0; i < objects.size(); i++) {
 			GameObject auxObj = objects.get(i);
