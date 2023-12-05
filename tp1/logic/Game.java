@@ -6,6 +6,7 @@ import tp1.logic.gameobjects.Laser;
 import tp1.logic.gameobjects.UCMShip;
 import tp1.logic.gameobjects.UCMWeapon;
 import tp1.logic.gameobjects.Ufo;
+import tp1.control.InitialConfiguration;
 import tp1.logic.gameobjects.Bomb;
 import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.GameObject;
@@ -70,13 +71,13 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		this.seed = seed;
 		this.manager = new AlienManager (this, level);
 		this.rand = new Random(this.seed);
-		init();
+		init(null);
 		
 		
 	}
 	
-	private void init() { //nada
-		container = manager.initialize();
+	private void init(InitialConfiguration config) { //nada
+		container = manager.initialize(config);
 		container.add(player);
 //		this.rAlienList  = this.manager.initializeRegularAliens();
 //		this.dAlienList = this.manager.initializeDestroyerAliens();
@@ -316,7 +317,7 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		return this.level;
 	}
 
-	public void reset() //model
+	public void reset(InitialConfiguration config) //model
 	{
 		this.score = 0;
 		this.cycle = 0;
@@ -325,7 +326,7 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		this.manager = new AlienManager(this, this.level);
 		container = null;
 		this.player = new UCMShip(this);
-		init();
+		init(config);
 		this.rand = new Random(this.seed);
 		this.alienCycleCounter = 1;
 		reseted = true;

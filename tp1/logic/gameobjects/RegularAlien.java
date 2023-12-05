@@ -35,8 +35,15 @@ public class RegularAlien extends AlienShip{
 	}
 	
 	public RegularAlien() {
-		super(null, null, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, null);
+		super(null, null, Game.REGULAR_ALIEN_HEALTH, Game.REGULAR_ALIEN_POINTS, null);
 		symbol = Messages.REGULAR_ALIEN_SYMBOL;
+	}
+	
+	@Override
+	public void onDelete() {
+		game.deleteObject(this);
+		game.markPoints(getPoints());
+		alienManager.alienDied();
 	}
 	
 	/**

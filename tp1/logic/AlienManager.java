@@ -5,6 +5,7 @@ import tp1.logic.gameobjects.AlienShip;
 import tp1.logic.gameobjects.DestroyerAlien;
 //import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
+import tp1.logic.gameobjects.ShipFactory;
 import tp1.logic.gameobjects.Ufo;
 import tp1.logic.lists.DestroyerAlienList;
 //import tp1.logic.lists.DestroyerAlienList;
@@ -36,14 +37,17 @@ public class AlienManager {
 	}
 	
 	
-	public  GameObjectContainer initialize() {
+	public  GameObjectContainer initialize(InitialConfiguration config) {
 		this.remainingAliens = 0;
 		GameObjectContainer container = new GameObjectContainer();
 		
 		initializeOvni(container);
-		initializeRegularAliens(container);
-		initializeDestroyerAliens(container);
-		
+		if (config == null) {
+			initializeRegularAliens(container);
+			initializeDestroyerAliens(container);
+		}
+		else
+			costumedInitialization(container, config);
 		//TODO fill with your code
 		
 		
@@ -88,9 +92,8 @@ public class AlienManager {
 	private void costumedInitialization(GameObjectContainer container, InitialConfiguration conf) {
 		for (String shipDescription : conf.getShipDescription()) {
 			String[] words = shipDescription.toLowerCase().trim().split("\\s+");
-			Position pos = new Position(Integer.parseInt(words[1]), Integer.parseInt(words[2]));
-			AlienShip ship = (words[0] == "R" ? new RegularAlien(game, pos, this) : new DestroyerAlien(game, pos, this));
-			container.add(ship);
+			container.add(ShipFactory.spawnAlienShip(words[0], game,
+					new Position(Integer.valueOf(words[1]), Integer.valueOf(words[2])), this));
 			this.remainingAliens++;
 		}
 	}

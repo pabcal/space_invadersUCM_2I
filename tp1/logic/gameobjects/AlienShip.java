@@ -75,12 +75,6 @@ public abstract class AlienShip extends EnemyShip {
 		this.alienManager.alienDied();
 	}
 	
-	@Override
-	public void onDelete() {
-		game.deleteObject(this);
-		game.markPoints(getPoints());
-		alienManager.alienDied();
-	}
 	
 	@Override
 	public String getSymbol()

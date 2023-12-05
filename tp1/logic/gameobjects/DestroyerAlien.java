@@ -36,6 +36,13 @@ public class DestroyerAlien extends AlienShip {
 	}
 	
 	
+	@Override
+	public void onDelete() {
+		game.deleteObject(this);
+		game.markPoints(getPoints());
+		alienManager.alienDied();
+	}
+	
 	/**
 	 *  Implements the automatic movement of the regular alien	
 	 */

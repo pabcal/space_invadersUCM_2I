@@ -13,7 +13,8 @@ public class ShipFactory {
 	
 	private static final List<AlienShip> AVAILABLE_ALIEN_SHIPS = Arrays.asList(
 			new RegularAlien(),
-			new DestroyerAlien()
+			new DestroyerAlien(),
+			new ExplodingShip()
 		);
 	
 	public static AlienShip spawnAlienShip(String input, GameWorld game, Position pos, AlienManager am) {

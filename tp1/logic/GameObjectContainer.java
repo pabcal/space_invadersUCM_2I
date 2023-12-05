@@ -39,7 +39,7 @@ public class GameObjectContainer {
 		while (i < getSize() && !found)
 		{
 			objectInPos = objects.get(i);
-			found = objectInPos.getPos() == pos;
+			found = pos.isEqual(objectInPos.getPos());
 			i++;
 		}
 		return  found ? objectInPos: null;
