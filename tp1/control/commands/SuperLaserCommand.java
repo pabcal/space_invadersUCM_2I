@@ -6,7 +6,7 @@ import tp1.logic.GameModel;
 public class SuperLaserCommand extends NoParamsCommand {
 	@Override
 	protected String getName() {
-		return "super laser";
+		return "superlaser";
 	}
 
 	@Override

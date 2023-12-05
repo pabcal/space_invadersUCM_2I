@@ -31,6 +31,12 @@ public class RegularAlien extends AlienShip{
 	public RegularAlien (GameWorld game, Position pos, AlienManager alienManager)
 	{	
 		super(game, pos, Game.REGULAR_ALIEN_HEALTH, Game.REGULAR_ALIEN_POINTS, alienManager);
+		symbol = Messages.REGULAR_ALIEN_SYMBOL;
+	}
+	
+	public RegularAlien() {
+		super(null, null, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, null);
+		symbol = Messages.REGULAR_ALIEN_SYMBOL;
 	}
 	
 	/**
@@ -122,10 +128,11 @@ public class RegularAlien extends AlienShip{
 //	}
 	
 	
-	public String getSymbol()
-	{
-		return Messages.REGULAR_ALIEN_SYMBOL + "[" + (this.life < 10 ? "0": "") + Integer.toString(this.life) + "]";
+	@Override
+	protected AlienShip copy(GameWorld game, Position pos, AlienManager am) {
+		return new RegularAlien(game, pos, am);
 	}
+
 	
 
 	
@@ -149,6 +156,7 @@ public class RegularAlien extends AlienShip{
 		
 	}
 
+	
 	
 
 	

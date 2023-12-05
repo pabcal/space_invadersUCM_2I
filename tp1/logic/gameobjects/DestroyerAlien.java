@@ -27,7 +27,14 @@ public class DestroyerAlien extends AlienShip {
 	public DestroyerAlien (GameWorld game, Position pos, AlienManager alienManager)
 	{
 		super(game, pos, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, alienManager);
+		symbol = Messages.DESTROYER_ALIEN_SYMBOL;
 	}
+	
+	public DestroyerAlien() {
+		super(null, null, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, null);
+		symbol = Messages.DESTROYER_ALIEN_SYMBOL;
+	}
+	
 	
 	/**
 	 *  Implements the automatic movement of the regular alien	
@@ -121,10 +128,6 @@ public class DestroyerAlien extends AlienShip {
 //	}
 	
 	
-	public String getSymbol()
-	{
-		return Messages.DESTROYER_ALIEN_SYMBOL + "[" + (life < 10 ? "0": "") + Integer.toString(life) + "]";
-	}
 	
 	public void shoot() {
 		Level level = game.getLevel();
@@ -196,5 +199,12 @@ public class DestroyerAlien extends AlienShip {
 		
 	}
 
+	@Override
+	protected AlienShip copy(GameWorld game, Position pos, AlienManager am) {
+		// TODO Auto-generated method stub
+		return new DestroyerAlien(game, pos, am);
+	}
+	
+	
 }
 

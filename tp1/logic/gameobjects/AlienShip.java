@@ -9,6 +9,7 @@ import tp1.logic.Position;
 public abstract class AlienShip extends EnemyShip {
 	protected AlienManager alienManager;
 	protected boolean descended = false;
+	protected String symbol;
 
 	public AlienShip(GameWorld game, Position pos, int life, int points, AlienManager alienManager) {
 		super(game, pos, life, points);
@@ -16,6 +17,7 @@ public abstract class AlienShip extends EnemyShip {
 		
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	//Is in charge of descending the alien
 	public  void descent() { 
@@ -80,4 +82,16 @@ public abstract class AlienShip extends EnemyShip {
 		alienManager.alienDied();
 	}
 	
+	@Override
+	public String getSymbol()
+	{
+		return symbol + "[" + (this.life < 10 ? "0": "") + Integer.toString(this.life) + "]";
+	}
+	
+	public String getSymbolFact() {
+		return symbol;
+	}
+	
+	protected abstract AlienShip copy(GameWorld game, Position pos, AlienManager am);
+
 }
