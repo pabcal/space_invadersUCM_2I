@@ -2,6 +2,7 @@ package tp1.logic.gameobjects;
 
 import tp1.logic.AlienManager;
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
@@ -27,7 +28,7 @@ public class RegularAlien extends AlienShip{
 
 	//TODO fill your code
 
-	public RegularAlien (Game game, Position pos, AlienManager alienManager)
+	public RegularAlien (GameWorld game, Position pos, AlienManager alienManager)
 	{	
 		super(game, pos, Game.REGULAR_ALIEN_HEALTH, Game.REGULAR_ALIEN_POINTS, alienManager);
 	}

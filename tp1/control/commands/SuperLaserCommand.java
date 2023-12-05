@@ -1,8 +1,7 @@
 package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
-import tp1.logic.Game;
-import tp1.view.Messages;
+import tp1.logic.GameModel;
 
 public class SuperLaserCommand extends NoParamsCommand {
 	@Override
@@ -26,7 +25,7 @@ public class SuperLaserCommand extends NoParamsCommand {
 	}
 
 	@Override
-	public ExecutionResult execute(Game game) {
+	public ExecutionResult execute(GameModel game) {
 		boolean valid = game.enableSuperLaser();
 
 		return new ExecutionResult(valid, valid, "Super laser cannot be shot");

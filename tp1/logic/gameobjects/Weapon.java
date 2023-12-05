@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
@@ -10,7 +11,7 @@ public abstract class Weapon extends GameObject{
 	protected int damage;
 	protected int armor;
 
-	public Weapon(Game game, Position pos) {
+	public Weapon(GameWorld game, Position pos) {
 		super(game, pos, LIFE_OF_WEAPONS);
 	}
 	

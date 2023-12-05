@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
@@ -16,7 +17,7 @@ import tp1.view.Messages;
 public class Laser extends UCMWeapon{
 	
 	
-	public Laser(Game game) {
+	public Laser(GameWorld game) {
 		super(game, new Position());
 		damage = Game.UCM_DAMAGE;
 		Position auxPos = game.getPlayerPos();

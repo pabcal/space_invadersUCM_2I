@@ -3,6 +3,7 @@ package tp1.logic.gameobjects;
 
 
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
@@ -21,7 +22,7 @@ public class Ufo extends EnemyShip{
 //	private Position pos;
 	
 	//TODO fill your code
-	public Ufo(Game game) {
+	public Ufo(GameWorld game) {
 		super(game, new Position(Game.DIM_X, 0), 0, Game.UFO_POINTS);
 		dir = Move.LEFT;
 //		this.pos = ;
@@ -73,7 +74,10 @@ public class Ufo extends EnemyShip{
 	}
 	
 	public String getSymbol() {
-		return Messages.UFO_SYMBOL + "[" + (life < 10 ? "0": "") + life + "]";
+		String symbol = "";
+		if (isAlive())
+			symbol = Messages.UFO_SYMBOL + "[" + (life < 10 ? "0": "") + life + "]";
+		return symbol;
 	}
 	
 //	public Position getPosition() {

@@ -59,7 +59,7 @@ public class GameObjectContainer {
 		GameObject aux = null;
 		while (i < objects.size() && !found) {
 			aux = objects.get(i);
-			if (aux.isAlive() && pos.isEqual(aux.getPos()))
+			if (pos.isEqual(aux.getPos()))
 				found = true;
 			++i;
 		}

@@ -2,6 +2,7 @@ package tp1.logic.gameobjects;
 
 import tp1.logic.AlienManager;
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
@@ -9,7 +10,7 @@ public abstract class AlienShip extends EnemyShip {
 	protected AlienManager alienManager;
 	protected boolean descended = false;
 
-	public AlienShip(Game game, Position pos, int life, int points, AlienManager alienManager) {
+	public AlienShip(GameWorld game, Position pos, int life, int points, AlienManager alienManager) {
 		super(game, pos, life, points);
 		this.alienManager = alienManager;
 		

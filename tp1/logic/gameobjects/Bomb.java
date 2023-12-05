@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
@@ -8,7 +9,7 @@ import tp1.view.Messages;
 public class Bomb extends EnemyWeapon {
 //	private boolean active = true;
 	
-	public Bomb( Game game, Position pos) {
+	public Bomb( GameWorld game, Position pos) {
 		super(game, pos);
 		damage = Game.DESTROYER_ALIEN_DAMAGE;
 		dir = Move.DOWN;
@@ -19,9 +20,9 @@ public class Bomb extends EnemyWeapon {
 	}
 
 	
-	public boolean getInPlayerPos() {
-		return game.inPlayerPos(pos);
-	}
+//	public boolean getInPlayerPos() {
+//		return game.inPlayerPos(pos);
+//	}
 
 	@Override
 	public void computerAction() {
