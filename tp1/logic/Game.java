@@ -6,6 +6,7 @@ import tp1.logic.gameobjects.Laser;
 import tp1.logic.gameobjects.UCMShip;
 import tp1.logic.gameobjects.UCMWeapon;
 import tp1.logic.gameobjects.Ufo;
+import tp1.control.InitialConfiguration;
 import tp1.logic.gameobjects.Bomb;
 import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.GameObject;
@@ -22,7 +23,7 @@ import tp1.view.Messages;
 
 
 // TODOimplementarlo
-public class Game implements GameStatus{
+public class Game implements GameStatus, GameModel, GameWorld{
 	
 	//constant declarations (the same in all difficulties)
 	public static final int DIM_X = 9;
@@ -70,13 +71,13 @@ public class Game implements GameStatus{
 		this.seed = seed;
 		this.manager = new AlienManager (this, level);
 		this.rand = new Random(this.seed);
-		init();
+		init(null);
 		
 		
 	}
 	
-	public void init() {
-		container = manager.initialize();
+	private void init(InitialConfiguration config) { //nada
+		container = manager.initialize(config);
 		container.add(player);
 //		this.rAlienList  = this.manager.initializeRegularAliens();
 //		this.dAlienList = this.manager.initializeDestroyerAliens();
@@ -85,7 +86,7 @@ public class Game implements GameStatus{
 //			container.add(rAlienList.getAlien(i));
 	}
 
-	public String stateToString() {
+	public String stateToString() { //status
 		StringBuilder buffer = new StringBuilder();
 		buffer
 		.append("Life: ").append(player.getLife()).append(System.lineSeparator())
@@ -95,15 +96,15 @@ public class Game implements GameStatus{
 
 	}
 
-	public int getCycle() {
+	public int getCycle() { //status
 		return this.cycle;
 	}
 
-	public int getRemainingAliens() { //used in game printer
+	public int getRemainingAliens() { //used in game printer - status
 		return this.manager.getRemainingAliens();
 	}
 
-	public String positionToString(int col, int row) {
+	public String positionToString(int col, int row) { //status
 		String what;
 		Position posAux = new Position(col, row);
 //		RegularAlien auxRAlien = this.rAlienList.anObjectInPos(posAux);
@@ -133,22 +134,22 @@ public class Game implements GameStatus{
 		return what;
 	}
 
-	public boolean playerWin() {
+	public boolean playerWin() { //status
 		return this.manager.getRemainingAliens() == 0;
 	}
 
-	public boolean aliensWin() 
+	public boolean aliensWin()  //status
 	{
 //		if (this.rAlienList.anObjectInPos(getPlayerPos()) != null ||
 //				this.dAlienList.anObjectInPos(getPlayerPos()) != null ||
 //				this.ufo.isOnPosition(getPlayerPos()))
 //		this.player.setHealthToZero();
-		return (this.player.isDead() || this.manager.inFinalRow());
+		return (!this.player.isAlive() || this.manager.inFinalRow());
 		
 	}
 
 	
-	public boolean enableLaser() { //enables UCMShip's laser
+	public boolean enableLaser() { //enables UCMShip's laser - model
 		boolean enabled = false;
 		if ((this.laser == null || !this.laser.isAlive()) && (this.superLaser == null || !this.superLaser.isAlive())) {
 			enableLaser = true;
@@ -157,7 +158,7 @@ public class Game implements GameStatus{
 		return enabled;
 	}
 	
-	public boolean enableSuperLaser() { //enables UCMShip's laser
+	public boolean enableSuperLaser() { //enables UCMShip's laser - model
 		boolean enabled = false;
 		if(this.score > 4)
 			if (( this.superLaser == null || !this.superLaser.isAlive()) && (this.laser == null || !this.laser.isAlive()) ) 
@@ -172,18 +173,18 @@ public class Game implements GameStatus{
 	
 	
 
-	public Random getRandom() { //ASK -----------------------------------------------------------
-		
-		return this.rand;
-	}
+//	public Random getRandom() { //ASK -----------------------------------------------------------
+//		
+//		return this.rand;
+//	}
 	
 	
-	public void incrCycle() {
+	public void incrCycle() { //nada
 		++this.cycle;
 		++this.alienCycleCounter;
 	}
 	
-	public Position getPlayerPos() {
+	public Position getPlayerPos() { //world
 		return this.player.getPos();
 	}
 	
@@ -197,7 +198,7 @@ public class Game implements GameStatus{
 //			this.superLaser.automaticMove();
 //	}
 	
-	private void manageAliens() {
+	private void manageAliens() { //nada
 		if (getAliensMove()) alienCycleCounter = 0;
 		if (manager.onBorder() && !manager.alreadyDescended()) { //to check if in border and did not descend yet
 			manager.setDescend(true); //tells manager to descend
@@ -219,7 +220,7 @@ public class Game implements GameStatus{
 	  
 	  
 	 */
-	private void processHIT(UCMWeapon weapon) 
+	private void processHIT(UCMWeapon weapon) //nada
 	{
 //		RegularAlien alien = null;
 //		DestroyerAlien dAlien = null;
@@ -276,7 +277,7 @@ public class Game implements GameStatus{
 		
 	
 	
-	public boolean movePlayer(Move dir) {
+	public boolean movePlayer(Move dir) { //model
 		boolean did = false;
 		if (dir != null && dir != Move.UP && dir != Move.DOWN)
 			did = player.performMovement(dir);
@@ -296,7 +297,7 @@ public class Game implements GameStatus{
 //		}
 //	}
 	
-	public void listCommand()
+	public void listCommand() //model
 	{
 		System.out.printf(Messages.UCM_DESCRIPTION, Messages.UCMSHIP_DESCRIPTION, Game.UCM_DAMAGE, Game.UCM_HEALTH);
 		System.out.println("");
@@ -308,15 +309,15 @@ public class Game implements GameStatus{
 		System.out.println("");
 	}
 	
-	public long getSeed() {
-		return this.seed;
-	}
+//	public long getSeed() {
+//		return this.seed;
+//	}
 	
-	public Level getLevel() {
+	public Level getLevel() { //world
 		return this.level;
 	}
 
-	public void reset()
+	public void reset(InitialConfiguration config) //model
 	{
 		this.score = 0;
 		this.cycle = 0;
@@ -325,7 +326,7 @@ public class Game implements GameStatus{
 		this.manager = new AlienManager(this, this.level);
 		container = null;
 		this.player = new UCMShip(this);
-		init();
+		init(config);
 		this.rand = new Random(this.seed);
 		this.alienCycleCounter = 1;
 		reseted = true;
@@ -341,7 +342,7 @@ public class Game implements GameStatus{
 //		this.shootBombs();
 //	}
 	
-	public void update() {
+	public void update() { //nada
 		if (!reseted) {
 			if (laser != null && !laser.isAlive())
 				laser = null;
@@ -394,14 +395,14 @@ public class Game implements GameStatus{
 			reseted = false;
 	}
 	// changes 
-	public void enableShockwave()
+	public void enableShockwave() //world
 	{
 		shockwave.setShockwave(true);
 	}
 	
 	
 	//changes
-	public boolean shootShockwave() {
+	public boolean shootShockwave() { //model
 		boolean completed = false;
 		int size = container.getSize();
 		if (shockwave.getShockwaveStatus())
@@ -411,12 +412,13 @@ public class Game implements GameStatus{
 				obj.receiveAttack(shockwave);
 			}
 			completed = true;
+			shockwave.setShockwave(false);
 		}
 		return completed;
 	}
 	
 	
-	public void markPoints(int points) {
+	public void markPoints(int points) { //world
 		this.score += points;
 	}
 	
@@ -426,7 +428,7 @@ public class Game implements GameStatus{
 	 a difference between this function and the laser�s Game.processHIT() is that is not called two times. This is due to the implementation of Bomb.performAttcak(UCMShip other)
 	 that allows us to call it only once.
 	*/
-	public void playerProcessHit() {
+	private void playerProcessHit() { //nada
 		
 		for (int i = 0; i < container.getSize(); ++i) {
 			GameObject obj = container.getObject(i);
@@ -441,24 +443,24 @@ public class Game implements GameStatus{
 //		}
 	}
 	
-	public boolean inPlayerPos(Position aux) { //method implemented for the Bomb class
-		return aux.isEqual(player.getPos());
-	}
+//	public boolean inPlayerPos(Position aux) { //method implemented for the Bomb class
+//		return aux.isEqual(player.getPos());
+//	}
 	
-	public double ndd() { //produces and returns the next double of the Random object in Game
+	public double ndd() { //produces and returns the next double of the Random object in Game - world
 		double nextDouble = this.rand.nextDouble();
 		return nextDouble;
 	}
 	
 	
 	
-	public boolean getAliensMove() {
+	public boolean getAliensMove() { //world
 		return (this.alienCycleCounter == (this.level.getSpeed() + 1));
 	}
 
 	
 
-	public boolean isFinished() //COMENTAR
+	public boolean isFinished() //COMENTAR - model
 	{
 		if (!finished && (this.playerWin() || this.aliensWin()))
 			finished = true;
@@ -466,22 +468,35 @@ public class Game implements GameStatus{
 		return finished;
 	}
 
-	public void exit() { //COMENTAR
+	public void exit() { //COMENTAR - model
 		finished = true;
 	}
 
 	@Override
-	public String infoToString() {
+	public String infoToString() { // status
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public GameObject objectsExploded (Position pos)
+	{
+		return container.getInPos(pos);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
-	public void addObject(GameObject obj) {
+	public void addObject(GameObject obj) { //world
 		container.add(obj);
 	}
 	
-	public void deleteObject(GameObject obj) {
+	public void deleteObject(GameObject obj) { //world
 		container.remove(obj);
 	}
 	

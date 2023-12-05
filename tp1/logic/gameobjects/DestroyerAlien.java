@@ -3,6 +3,7 @@ package tp1.logic.gameobjects;
 
 import tp1.logic.AlienManager;
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Level;
 import tp1.logic.Move;
 import tp1.logic.Position;
@@ -23,9 +24,23 @@ public class DestroyerAlien extends AlienShip {
 
 	//TODO fill your code
 
-	public DestroyerAlien (Game game, Position pos, AlienManager alienManager)
+	public DestroyerAlien (GameWorld game, Position pos, AlienManager alienManager)
 	{
 		super(game, pos, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, alienManager);
+		symbol = Messages.DESTROYER_ALIEN_SYMBOL;
+	}
+	
+	public DestroyerAlien() {
+		super(null, null, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, null);
+		symbol = Messages.DESTROYER_ALIEN_SYMBOL;
+	}
+	
+	
+	@Override
+	public void onDelete() {
+		game.deleteObject(this);
+		game.markPoints(getPoints());
+		alienManager.alienDied();
 	}
 	
 	/**
@@ -120,10 +135,6 @@ public class DestroyerAlien extends AlienShip {
 //	}
 	
 	
-	public String getSymbol()
-	{
-		return Messages.DESTROYER_ALIEN_SYMBOL + "[" + (life < 10 ? "0": "") + Integer.toString(life) + "]";
-	}
 	
 	public void shoot() {
 		Level level = game.getLevel();
@@ -131,9 +142,7 @@ public class DestroyerAlien extends AlienShip {
 		if (bomb != null && !bomb.isAlive())
 			deleteBomb();
 		
-		if ((bomb == null || bomb.getInPlayerPos()) && shootProbability()) { //If bomb is in the player's position, due to the order of our functions in Game.update(), the bomb won't be deactivated yet 
-			if (bomb != null && bomb.getInPlayerPos())
-				this.deleteBomb();
+		if (bomb == null && shootProbability()) { //If bomb is in the player's position, due to the order of our functions in Game.update(), the bomb won't be deactivated yet 
 			this.createBomb();
 		}
 	}
@@ -197,5 +206,12 @@ public class DestroyerAlien extends AlienShip {
 		
 	}
 
+	@Override
+	protected AlienShip copy(GameWorld game, Position pos, AlienManager am) {
+		// TODO Auto-generated method stub
+		return new DestroyerAlien(game, pos, am);
+	}
+	
+	
 }
 

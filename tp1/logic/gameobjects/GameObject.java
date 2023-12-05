@@ -1,6 +1,7 @@
 package tp1.logic.gameobjects;
 
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
@@ -9,11 +10,11 @@ public abstract class GameObject implements GameItem {
 	protected Position pos;
 	protected Position prevPos;
 	protected int life;
-	protected Game game;
+	protected GameWorld game;
 	protected Move dir;
 	boolean delete = false;
 	
-	public GameObject(Game game, Position pos, int life) {	
+	public GameObject(GameWorld game, Position pos, int life) {	
 		this.pos = pos;
 		this.game = game;
 		this.life = life;
@@ -45,7 +46,11 @@ public abstract class GameObject implements GameItem {
 	//TODO fill with your code
 	
 	
-
+	public void receiveAttack(Explosion weapon)
+	{
+		hit(weapon);
+	
+	}
 	
 	
 	public void hit(Weapon weapon)

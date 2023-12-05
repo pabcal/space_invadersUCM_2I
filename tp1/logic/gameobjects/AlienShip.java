@@ -2,19 +2,22 @@ package tp1.logic.gameobjects;
 
 import tp1.logic.AlienManager;
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 
 public abstract class AlienShip extends EnemyShip {
 	protected AlienManager alienManager;
 	protected boolean descended = false;
+	protected String symbol;
 
-	public AlienShip(Game game, Position pos, int life, int points, AlienManager alienManager) {
+	public AlienShip(GameWorld game, Position pos, int life, int points, AlienManager alienManager) {
 		super(game, pos, life, points);
 		this.alienManager = alienManager;
 		
 		// TODO Auto-generated constructor stub
 	}
+	
 	
 	//Is in charge of descending the alien
 	public  void descent() { 
@@ -72,11 +75,17 @@ public abstract class AlienShip extends EnemyShip {
 		this.alienManager.alienDied();
 	}
 	
+	
 	@Override
-	public void onDelete() {
-		game.deleteObject(this);
-		game.markPoints(getPoints());
-		alienManager.alienDied();
+	public String getSymbol()
+	{
+		return symbol + "[" + (this.life < 10 ? "0": "") + Integer.toString(this.life) + "]";
 	}
 	
+	public String getSymbolFact() {
+		return symbol;
+	}
+	
+	protected abstract AlienShip copy(GameWorld game, Position pos, AlienManager am);
+
 }

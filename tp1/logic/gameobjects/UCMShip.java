@@ -2,13 +2,14 @@ package tp1.logic.gameobjects;
 import tp1.logic.Position;
 import tp1.view.Messages;
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 
 public class UCMShip extends Ship{
 	
 	
 
-	public UCMShip(Game game) {
+	public UCMShip(GameWorld game) {
 		super(game, new Position(4, 7), Game.UCM_HEALTH);
 		armor = 0; // change
 	}
@@ -22,7 +23,7 @@ public class UCMShip extends Ship{
 	@Override
 	public String getSymbol() {
 		String appearance;
-		if (this.life == 0)
+		if (this.life == 0 || game.aliensWin())
 			appearance = Messages.UCMSHIP_DEAD_SYMBOL;
 		else 
 			appearance = Messages.UCMSHIP_SYMBOL;
@@ -56,9 +57,6 @@ public class UCMShip extends Ship{
 		return performed;
 	}
 	
-	public boolean isDead() {
-		return getLife() == 0;
-	}
 	
 	public void setHealthToZero()
 	{

@@ -30,7 +30,22 @@ public class GameObjectContainer {
 		}
 		//TODO fill with your code
 	}
-
+	
+	public GameObject getInPos(Position pos)
+	{
+		GameObject objectInPos = null;
+		int i = 0;
+		boolean found = false;
+		while (i < getSize() && !found)
+		{
+			objectInPos = objects.get(i);
+			found = pos.isEqual(objectInPos.getPos());
+			i++;
+		}
+		return  found ? objectInPos: null;
+			
+	}
+	
 	public void computerActions() {
 		for (int i = 0; i < objects.size(); i++) {
 			GameObject auxObj = objects.get(i);
@@ -59,7 +74,7 @@ public class GameObjectContainer {
 		GameObject aux = null;
 		while (i < objects.size() && !found) {
 			aux = objects.get(i);
-			if (aux.isAlive() && pos.isEqual(aux.getPos()))
+			if (pos.isEqual(aux.getPos()))
 				found = true;
 			++i;
 		}
