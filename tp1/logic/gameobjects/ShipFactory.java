@@ -23,7 +23,7 @@ public class ShipFactory {
 				alienShip = a.copy(game, pos, am);
 		}
 		
-		return null;
+		return alienShip;
 
 	}
 	

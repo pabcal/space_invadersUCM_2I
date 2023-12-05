@@ -9,7 +9,7 @@ public class SuperLaser extends UCMWeapon{
 
 	public SuperLaser(GameWorld game) {
 		super(game, new Position());
-		damage = 3;
+		damage = 2;
 		Position auxPos = game.getPlayerPos();
 		pos = new Position(auxPos.getCol(), auxPos.getRow() - 1);
 		this.dir = Move.UP;

@@ -46,7 +46,11 @@ public abstract class GameObject implements GameItem {
 	//TODO fill with your code
 	
 	
-
+	public void receiveAttack(Explosion weapon)
+	{
+		hit(weapon);
+	
+	}
 	
 	
 	public void hit(Weapon weapon)

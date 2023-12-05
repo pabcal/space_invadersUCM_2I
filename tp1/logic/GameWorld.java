@@ -12,4 +12,5 @@ public interface GameWorld {
 	public void deleteObject(GameObject obj);
 	public double ndd();
 	public boolean aliensWin();
+	public GameObject objectsExploded(Position pos);
 }

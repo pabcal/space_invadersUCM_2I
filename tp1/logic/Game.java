@@ -411,6 +411,7 @@ public class Game implements GameStatus, GameModel, GameWorld{
 				obj.receiveAttack(shockwave);
 			}
 			completed = true;
+			shockwave.setShockwave(false);
 		}
 		return completed;
 	}
@@ -475,6 +476,19 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public GameObject objectsExploded (Position pos)
+	{
+		return container.getInPos(pos);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	public void addObject(GameObject obj) { //world
