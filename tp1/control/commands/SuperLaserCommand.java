@@ -2,26 +2,27 @@ package tp1.control.commands;
 
 import tp1.control.ExecutionResult;
 import tp1.logic.GameModel;
+import tp1.view.Messages;
 
 public class SuperLaserCommand extends NoParamsCommand {
 	@Override
 	protected String getName() {
-		return "superlaser";
+		return Messages.COMMAND_SUPERLASER_NAME;
 	}
 
 	@Override
 	protected String getShortcut() {
-		return "sl";
+		return Messages.COMMAND_SUPERLASER_SHORTCUT;
 	}
 
 	@Override
 	protected String getDetails() {
-		return "[s]uper[L]aser";
+		return Messages.COMMAND_SUPERLASER_DETAILS;
 	}
 
 	@Override
 	protected String getHelp() {
-		return "shoots a super laser when player has enough points";
+		return Messages.COMMAND_SUPERLASER_HELP;
 	}
 
 	@Override

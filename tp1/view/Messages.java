@@ -141,7 +141,7 @@ public class Messages {
 	
 	public static final String COMMAND_RESET_NAME = "reset";
 	public static final String COMMAND_RESET_SHORTCUT = "r";
-	public static final String COMMAND_RESET_DETAILS = "[r]eset";
+	public static final String COMMAND_RESET_DETAILS = "[r]eset <CONF_1|CONF_2|CONF_3>";
 	public static final String COMMAND_RESET_HELP = "resets the game";
 
 	public static final String COMMAND_SHOCKWAVE_NAME = "shockwave";
@@ -158,6 +158,11 @@ public class Messages {
 	public static final String COMMAND_NONE_SHORTCUT = "n";
 	public static final String COMMAND_NONE_DETAILS = "[n]one";
 	public static final String COMMAND_NONE_HELP = "user does not perform any action";
+	
+	public static final String COMMAND_SUPERLASER_NAME = "superlaser";
+	public static final String COMMAND_SUPERLASER_SHORTCUT = "sl";
+	public static final String COMMAND_SUPERLASER_DETAILS = "[s]uper[L]aser";
+	public static final String COMMAND_SUPERLASER_HELP = "shoots a super laser when player has enough points";
 
 	/**
 	 * Formats an error message.
