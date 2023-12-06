@@ -10,14 +10,16 @@ public abstract class UCMWeapon extends Weapon {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
+	/*
+	 * Deals damage to the object it is attacking
+	 */
 	protected boolean weaponAttack(GameItem item)
 	{
 		return item.receiveAttack(this);
 	}
-	
-	
+	/*
+	 * receives damage from another weapon
+	 */
 	@Override
 	public boolean receiveAttack(EnemyWeapon weapon) {
 		hit(weapon);
@@ -26,7 +28,6 @@ public abstract class UCMWeapon extends Weapon {
 	
 	@Override
 	public boolean receiveAttack(UCMWeapon weapon) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

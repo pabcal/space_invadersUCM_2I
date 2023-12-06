@@ -21,37 +21,48 @@ public abstract class GameObject implements GameItem {
 	}
 	
 	
-
+	/*
+	 * getter method for object's life
+	 */
 	public int getLife() {
 		return this.life;
 	}
 
-	//TODO fill with your code
-
-	
+	/*
+	 * Getter method for object's symbol
+	 */
 	public abstract String getSymbol();
+	/*
+	 * Getter method for object's Damage
+	 */
 	protected abstract int getDamage();
+	/*
+	 * Getter method for object's armor
+	 */
 	protected abstract int getArmor();
 	
 	protected abstract void performMovement();
 	
-			
-	//public abstract void onDelete();
 	public abstract void automaticMove();
 	protected abstract boolean onBorder();
 	public abstract void computerAction();
+	/*
+	 * method called when object dies 
+	 */
 	public abstract void onDelete();
 	
-	//TODO fill with your code
-	
-	
+
 	public void receiveAttack(Explosion weapon)
 	{
 		hit(weapon);
 	
 	}
 	
-	
+	/*
+	 * if the life of the object being attacked, is the same as the damage of the weapon 
+	 * attacking it, the object dies
+	 * otherwise, it looses as much life as the damage of the weapon attacking it
+	 */
 	public void hit(Weapon weapon)
 	{
 		int damage = weapon.getDamage();
@@ -61,12 +72,16 @@ public abstract class GameObject implements GameItem {
 			life -= damage;
 	}
 	
+	/*
+	 * Sets life to 0 and calls onDelete()
+	 */
+	
 	protected void die()
 	{
 		onDelete();
 		this.life = 0;
 	}
-	
+
 	@Override
 	public boolean isAlive() {
 		return this.life > 0;
@@ -75,16 +90,22 @@ public abstract class GameObject implements GameItem {
 	public boolean isOnPosition(Position pos) {
 		return this.pos.isEqual(pos);
 	}
-	
+	/*
+	 * Getter method for object's position
+	 */
 	public Position getPos()
 	{
 		return pos;
 	}
-	
+	/*
+	 * Getter method for object's previous pos
+	 */
 	public Position getPrevPos() {
 		return prevPos;
 	}
-	
+	/*
+	 * Checks if 2 object's paths have crossed 
+	 */
 	public boolean theyCrossed(GameObject obj) {
 		
 		return (prevPos.isEqual(obj.getPos()) && pos.isEqual(obj.getPrevPos()));

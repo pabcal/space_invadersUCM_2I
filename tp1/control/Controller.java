@@ -56,11 +56,7 @@ public class Controller {
 				if (result.success()) {
 					if (result.draw()) {
 						game.update();
-						printGame();
-						
-						
-						
-						
+						printGame();	
 					}
 				} 
 				else
