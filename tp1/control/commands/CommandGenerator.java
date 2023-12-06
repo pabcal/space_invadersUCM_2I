@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CommandGenerator {
-
+/*
+ * list of all available commands 
+ */
 	private static final List<Command> availableCommands = Arrays.asList(
 		new HelpCommand(),
 		new MoveCommand(),
@@ -18,7 +20,7 @@ public class CommandGenerator {
 		//TODO fill with your code
 	);
 
-	public static Command parse(String[] commandWords) {		 // Pepe
+	public static Command parse(String[] commandWords) {
 		Command command = null;
 		for (Command c: availableCommands) {
 			if (command == null)

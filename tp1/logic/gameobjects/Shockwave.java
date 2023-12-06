@@ -12,7 +12,6 @@ public class Shockwave extends UCMWeapon{
 	public Shockwave(GameWorld game) {
 		super(game,  new Position(0, 0));
 		damage = Game.SHOCKWAVE_DAMAGE;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -20,12 +19,17 @@ public class Shockwave extends UCMWeapon{
 		return Messages.SHOCKWAVE_SYMBOL;
 	}
 
-	
-	
+	/*
+	 * Getter method for boolean shockwave 
+	 */
 	public boolean getShockwaveStatus()
 	{
 		return this.shockwave;
 	}
+	
+	/*
+	 * Getter method for boolean shockwave
+	 */
 	public void setShockwave(boolean value)
 	{
 		this.shockwave = value;
