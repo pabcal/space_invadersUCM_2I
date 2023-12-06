@@ -5,7 +5,6 @@ import java.util.List;
 
 import tp1.logic.Position;
 
-import tp1.control.commands.Command;
 import tp1.logic.AlienManager;
 import tp1.logic.GameWorld;
 

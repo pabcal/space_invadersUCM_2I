@@ -5,7 +5,6 @@ import tp1.logic.AlienManager;
 import tp1.logic.Game;
 import tp1.logic.GameWorld;
 import tp1.logic.Level;
-import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
@@ -137,7 +136,6 @@ public class DestroyerAlien extends AlienShip {
 	
 	
 	public void shoot() {
-		Level level = game.getLevel();
 		
 		if (bomb != null && !bomb.isAlive())
 			deleteBomb();
