@@ -1,5 +1,6 @@
 package tp1.logic.gameobjects;
 
+import tp1.logic.Game;
 import tp1.logic.GameWorld;
 import tp1.logic.Position;
 
@@ -7,7 +8,7 @@ public class Explosion extends Weapon{
 
 	public Explosion(GameWorld game, Position pos) {
 		super(game, pos);
-		damage = 1;
+		damage = Game.EXPLOSION_DAMAGE;
 		// TODO Auto-generated constructor stub
 	}
 

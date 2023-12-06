@@ -28,6 +28,9 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	public static final int UCM_DAMAGE = 1;
 	public static final int UCM_HEALTH = 3;
 	public static final int SHOCKWAVE_DAMAGE = 1;
+	public static final int EXPLOSIVE_ALIEN_HEALTH = 2; //ADD IN GAME
+	public static final int EXPLOSIVE_ALIEN_POINTS = 12; //ADD IN GAME	
+	public static final int EXPLOSION_DAMAGE = 1;
 
 	
 	
@@ -203,7 +206,7 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		System.out.println("");
 		System.out.printf(Messages.ALIEN_DESCRIPTION, Messages.UFO_DESCRIPTION,Game.UFO_POINTS, 0, Game.UFO_HEALTH);
 		System.out.println("");
-		System.out.printf(Messages.ALIEN_DESCRIPTION, Messages.UFO_DESCRIPTION,Game.UFO_POINTS, 0, Game.UFO_HEALTH);
+		System.out.printf(Messages.ALIEN_DESCRIPTION, Messages.EXPLOSIVE_ALIEN_DESCRIPTION,Game.EXPLOSIVE_ALIEN_POINTS, Game.EXPLOSION_DAMAGE, Game.EXPLOSIVE_ALIEN_HEALTH);
 		System.out.println("");
 	}
 
