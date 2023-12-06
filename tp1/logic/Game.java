@@ -5,16 +5,10 @@ import java.util.Random;
 import tp1.logic.gameobjects.Laser;
 import tp1.logic.gameobjects.UCMShip;
 import tp1.logic.gameobjects.UCMWeapon;
-import tp1.logic.gameobjects.Ufo;
 import tp1.control.InitialConfiguration;
-import tp1.logic.gameobjects.Bomb;
-import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.GameObject;
-import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.Shockwave;
 import tp1.logic.gameobjects.SuperLaser;
-import tp1.logic.lists.DestroyerAlienList;
-import tp1.logic.lists.RegularAlienList;
 import tp1.view.Messages;
 
 //changes 1.1: UCMLaser integration to board. Changes in UCMLaser class and in Game class, referred in code with comments.
