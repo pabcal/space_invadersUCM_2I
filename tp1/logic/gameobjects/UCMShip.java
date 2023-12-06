@@ -13,37 +13,30 @@ public class UCMShip extends Ship{
 		super(game, new Position(4, 7), Game.UCM_HEALTH);
 		armor = 0; // change
 	}
-
-
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//
-//	}
 	
+	
+	/**
+	 Getter method for the UCMShip's symbol. If aliens won the game for any reason 
+	 the UCMShip will return its dead symbol. Otherwise it will return its normal symbol.
+	 @return String 
+	*/
 	@Override
 	public String getSymbol() {
 		String appearance;
-		if (this.life == 0 || game.aliensWin())
+		if (game.aliensWin())
 			appearance = Messages.UCMSHIP_DEAD_SYMBOL;
 		else 
 			appearance = Messages.UCMSHIP_SYMBOL;
 		return appearance;
 	}
-//	
-//	public Position getPos() {
-//		return this.pos;
-//	}
 	
-//	public void setPos(int col, int row) {
-//		this.pos.setCol(col);
-//		this.pos.setRow(row);
-//	}
 	
-//	public int getHealth()
-//	{
-//		return this.health;
-//	}
-	
+	/**
+	 Method in charge of performing UCMShip's movement given a direction of type Move. 
+	 @return If the resulting position of the movement is outside the boundaries of the board, 
+	 then the movement will not be effective and the function will return false. Otherwise,
+	 it will return true.
+	 * */
 	public boolean performMovement(Move dir)
 	{
 		boolean performed = false;
@@ -58,22 +51,21 @@ public class UCMShip extends Ship{
 	}
 	
 	
-	public void setHealthToZero()
-	{
-		die();
-	}
 	
+	/**
+	 Method to receive attack from EnemyWeapon. Calls hit() method.
+	 @return always return True
+	 */
 	@Override
 	public boolean receiveAttack(EnemyWeapon weapon) {
 		hit(weapon);
 		return true;
 	}
+
 	
-//	public void getHit(int damage){
-//		this.health -= damage;
-//	}
-	
-	
+	/**
+	 Getter method for the direction type Move. Returns attribute dir (Move).
+	 */
 	public Move getDir() {
 		return this.dir;
 	}
@@ -81,13 +73,22 @@ public class UCMShip extends Ship{
 	
 	
 
+	
+	////////////////////////////////////////////////////////////////////////////////////
+	//EMPTY METHODS
+	
+	
 	@Override
 	public boolean performAttack(GameItem other, boolean cross) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-
+	/*
+	 
+	 
+	 
+	 */
 	@Override
 	protected int getDamage() {
 		// TODO Auto-generated method stub
@@ -95,25 +96,41 @@ public class UCMShip extends Ship{
 	}
 
 	
-
+	/*
+	 
+	 
+	 
+	 */
 	@Override
 	protected void performMovement() {
 		// TODO Auto-generated method stub
 		
 	}
 
+	
+	/*
+	 
+	 
+	 
+	 */
 	@Override
 	public void automaticMove() {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/*
+	 
+	 
+	 
+	 */
 	@Override
 	protected boolean onBorder() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	
 	@Override
 	public void computerAction() {
 		// TODO Auto-generated method stub

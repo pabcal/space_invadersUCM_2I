@@ -21,12 +21,16 @@ public class ExplodingShip extends AlienShip{
 		symbol = Messages.EXPLOSIVE_ALIEN_SYMBOL;
 	}
 
-	
+	/**
+	 Method in charge of the explosion of the ship. Calls Explosion.performExplosion() to deal the damage.
+	 */
 	public void explode() { 
 		Explosion explosion = new Explosion(game, pos) ;
 		explosion.performExplosion();
 	}
-
+	/**
+	 onDelete() method for ExplodingShip. Calls explode(). Further specified in GameObject.
+	 */
 	@Override
 	public void onDelete() {
 		game.deleteObject(this);
@@ -35,16 +39,25 @@ public class ExplodingShip extends AlienShip{
 		explode();
 	}
 	
+	/**
+	 copy() method for ExplodingShip. Further specified in AlienShip.
+	 @return ExplodingShip
+	 */
+	@Override
+	protected AlienShip copy(GameWorld game, Position pos, AlienManager am) {
+		return new ExplodingShip(game, pos, am);
+	}
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////
+	//EMPTY METHODS
 	
 	@Override
 	public boolean performAttack(GameItem other, boolean cross) {
 		return false;
 	}
 	
-	@Override
-	protected AlienShip copy(GameWorld game, Position pos, AlienManager am) {
-		return new ExplodingShip(game, pos, am);
-	}
+	
 
 	@Override
 	protected int getDamage() {

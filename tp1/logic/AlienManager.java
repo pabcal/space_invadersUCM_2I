@@ -31,7 +31,12 @@ public class AlienManager {
 		this.remainingAliens = 0;
 	}
 	
-	
+	/**
+	 * Initializes the game.container GameObjectContainer and the aliens of the game. Depending on the 
+	 * input config it will initialize the game normally (depending on the three levels of the game) or customized.
+	 * @param config
+	 * @return GameObjectContainer
+	 */
 	public  GameObjectContainer initialize(InitialConfiguration config) {
 		this.remainingAliens = 0;
 		GameObjectContainer container = new GameObjectContainer();
@@ -49,10 +54,18 @@ public class AlienManager {
 		return container;
 	}
 	
+	/**
+	 * Initializes the UFO in the game and adds it to the container.
+	 * @param container
+	 */
 	private void initializeOvni(GameObjectContainer container) {
 		container.add(new Ufo(game));
 	}
 	
+	/**
+	 * Initializes the regular aliens of the game and adds them to the container.
+	 * @param container
+	 */
 	private void initializeRegularAliens (GameObjectContainer container) {
 		int nRAliens = level.getNumOfRegAliens();
 		int rArows = level.getNumberOfRows();
@@ -71,6 +84,10 @@ public class AlienManager {
 		//		container.add(new RegularAlien(....));
 	}
 	
+	/**
+	 * Initializes the destroyer aliens of the game and adds them to the container. 
+	 * @param container
+	 */
 	private void initializeDestroyerAliens(GameObjectContainer container) {
 		int nDAliens = this.level.getNumberOfDesAliens();
 		DestroyerAlien desAlien;
@@ -84,6 +101,11 @@ public class AlienManager {
 		}
 	}
 
+	/**
+	 * Initializes the corresponding aliens of the game (RegularAlien, DestroyerAlien, ExplodingShip) depending on the configuration given by InitialConfiguration conf
+	 * @param container
+	 * @param conf
+	 */
 	private void costumedInitialization(GameObjectContainer container, InitialConfiguration conf) {
 		for (String shipDescription : conf.getShipDescription()) {
 			String[] words = shipDescription.toLowerCase().trim().split("\\s+");
@@ -92,54 +114,12 @@ public class AlienManager {
 			this.remainingAliens++;
 		}
 	}
-		
-	// INITIALIZER METHODS
-	
-	/**
-	 * Initializes the list of regular aliens
-	 * @return the initial list of regular aliens according to the current level
-	 */
-//	protected RegularAlienList initializeRegularAliens() {
-//		int nRAliens = this.level.getNumOfRegAliens();
-//		int rArows = this.level.getNumberOfRows();
-//		RegularAlienList alienList = new RegularAlienList(nRAliens, game);
-//		RegularAlien regAlien;
-//		
-//		for (int i = 0; i < rArows; ++i) {
-//			for (int j = 0; j < nRAliens / rArows; ++j) {
-//				Position auxPos = new Position(5 - j, 1 + i);
-//				regAlien = new RegularAlien(game, auxPos, this);
-//				alienList.add(regAlien);
-//				this.remainingAliens++;
-//			}
-//		}
-//		return alienList;
-//	}
-
-	/**
-	 * Initializes the list of destroyer aliens
-	 * @return the initial list of destroyer aliens according to the current level
-	 */
-//	protected  DestroyerAlienList initializeDestroyerAliens() {
-//		int nDAliens = this.level.getNumberOfDesAliens();
-//		DestroyerAlienList alienList = new DestroyerAlienList(nDAliens, game);
-//		DestroyerAlien desAlien;
-//		int colInit = ((level == Level.INSANE) ? 1 : 0);
-//
-//		for (int j = 0; j < nDAliens; ++j) {
-//			Position auxPos = new Position(4 + colInit - j, 1 + level.getNumberOfRows());
-//			desAlien = new DestroyerAlien(game, auxPos, this);
-//			alienList.add(desAlien);
-//			this.remainingAliens++; 
-//
-//		}
-//		
-//		return alienList;
-//	}
-
 	
 	// CONTROL METHODS
 		
+	/**
+	 * Sets the boolean attribute onBorder to true
+	 */
 	public void shipOnBorder() {
 		if(!onBorder) {
 			onBorder = true;
@@ -147,6 +127,9 @@ public class AlienManager {
 		}
 	}
 	
+	/**
+	 * Sets the boolean attribute onBorder to false
+	 */
 	public void notOnBorder() {
 		
 		if(onBorder) {
@@ -160,43 +143,77 @@ public class AlienManager {
 //	public void checkInBorder(boolean value) {
 //		this.onBorder = this.onBorder || value;
 //	}
-
+	
+	/**
+	 * Getter method for onBorder (boolean) attribute
+	 * @return onBorder
+	 */
 	public boolean onBorder() {
 		
 		return onBorder;
 	}
 	
+	/**
+	 * Getter method for remainingAliens (int) attribute
+	 * @return reaminingAliens
+	 */
 	public int getRemainingAliens()
 	{
 		return this.remainingAliens;
 	}
 	
+	/**
+	 * Substracts 1 from remainingAliens (int) attribute. Called when an aliens dies.
+	 */
 	public void alienDied() {
 		this.remainingAliens--;
 	}
 	
+	/**
+	 * Setter method for descend (boolean) attribute.
+	 * @param value (boolean)
+	 */
 	public void setDescend(boolean value)
 	{
 		this.descend = value;
 		
 	}
 	
+	/**
+	 * Setter method for alreadyDescended (boolean) attribute.
+	 * @param value (boolean)
+	 */
 	public void setAlreadyDescended(boolean value) {
 		this.alreadyDescended = value;
 	}
 	
+	/**
+	 * Getter method for alreadyDescended (boolean) attribute.
+	 * @return alreadyDescended
+	 */
 	public boolean alreadyDescended() {
 		return this.alreadyDescended;
 	}
 	
+	/**
+	 * Getter method for descend (boolean) attribute.
+	 * @return descend
+	 */
 	public boolean readyToDescend() {
 		return this.descend;
 	}
 	
+	/**
+	 * Sets inFinalRow (boolean) to true.
+	 */
 	public void sendInFinalRow() {
 		this.inFinalRow = true;
 	}
 	
+	/**
+	 * Getter method for inFinalRow (boolean) attribute.
+	 * @return inFinalRow
+	 */
 	public boolean inFinalRow()
 	{
 		return this.inFinalRow;

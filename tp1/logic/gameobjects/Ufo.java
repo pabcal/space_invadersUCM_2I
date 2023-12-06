@@ -30,6 +30,9 @@ public class Ufo extends EnemyShip{
 //		this.game = game;
 	}
 
+	/**
+	 Computer action for UFO. Enables UFO randomly.
+	 */
 	public void computerAction() {
 		if((!isAlive() || !enabled) && canGenerateRandomUfo()) {
 			enable();
@@ -37,7 +40,9 @@ public class Ufo extends EnemyShip{
 	}
 	
 	
-	
+	/**
+	 Enables UFO
+	 */
 	private void enable() { //AlienManager
 		pos = new Position(Game.DIM_X - 1, 0);
 		life = Game.UFO_HEALTH;
@@ -46,6 +51,9 @@ public class Ufo extends EnemyShip{
 //		this.health = 1;
 	}
 
+	/**
+	 onDelete() method for UFO. Enables shockwave. Further specified in GameObject.
+	 */
 	public void onDelete() {
 		game.enableShockwave();
 		game.markPoints(this.points);
@@ -66,13 +74,19 @@ public class Ufo extends EnemyShip{
 	 */
 	
 	
-	
+	/**
+	 * Method that checks if UFO must be generated or not.
+	 * @return True if game.ndd() returns a lower double than the UFO frequency.
+	 */
 	private boolean canGenerateRandomUfo(){
 ////		Random rand = ;
 //		Level level = ;
 		return this.game.ndd() < game.getLevel().getUfoFrequency(); //game.getRandom().nextDouble()
 	}
 	
+	/**
+	 Returns symbol of UFO checking if it is alive. If not alive returns empty String.
+	 */
 	public String getSymbol() {
 		String symbol = "";
 		if (isAlive())
@@ -88,10 +102,15 @@ public class Ufo extends EnemyShip{
 //		return this.health > 0 && this.enabled;
 //	}
 	
+	/**
+	 Performs UFO's movement for the cycle if UFO is alive. Puts enable to false if UFO is in border.
+	 */
 	public void performMovement() {
-		this.dir.updatePosition(this.pos);
-		if (onBorder())
-			enabled = false;
+		if (isAlive() && enabled) {
+			this.dir.updatePosition(this.pos);
+			if (onBorder())
+				enabled = false;
+		}
 	}
 	
 //	public boolean inPosition(Position pos1)
@@ -103,7 +122,9 @@ public class Ufo extends EnemyShip{
 //		return this.isOnPosition(other.getPos());
 //	}
 
-	
+	/**
+	 @return True if UFO is beyond the left border of the board.
+	 */
 	@Override
 	protected boolean onBorder() {
 		// TODO Auto-generated method stub
@@ -113,7 +134,8 @@ public class Ufo extends EnemyShip{
 	
 	
 	
-	//IGNORE
+	////////////////////////////////////////////////////////////////////////////////////
+	//EMPTY METHODS
 	
 	
 	@Override

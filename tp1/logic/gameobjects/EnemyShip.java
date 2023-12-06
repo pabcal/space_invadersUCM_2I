@@ -11,19 +11,30 @@ public abstract class EnemyShip extends Ship{
 		super(game, pos, life);
 		this.points = points;
 		this.dir = Move.LEFT;
-		// TODO Auto-generated constructor stub
 	}
 	
-	public  void automaticMove() { //performs movement if ship is alive, dont know if it is common for weapons too
+	
+	/*
+	 Performs movement if ship is alive.
+	 */
+	public  void automaticMove() { 
 		if (isAlive()) 
 			performMovement();
 		
 	}
 	
+	
+	/*
+	 Getter method for attribute points (int).
+	 */
 	public int getPoints() {
 		return this.points;
 	}
 	
+	
+	/*
+	 Receives attack from a UCMWeapon. Always return true.
+	 */
 	@Override
 	public boolean receiveAttack(UCMWeapon weapon) {
 		hit (weapon);
@@ -31,6 +42,10 @@ public abstract class EnemyShip extends Ship{
 		
 	}
 	
+	
+	/*
+	 Receives attack from EnemyWeapon. Does not affect life of object. Always return false.
+	 */
 	@Override
 	public boolean receiveAttack(EnemyWeapon weapon) {
 		// TODO Auto-generated method stub

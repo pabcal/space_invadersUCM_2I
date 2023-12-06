@@ -8,10 +8,12 @@ public abstract class Ship extends GameObject{
 
 	public Ship(GameWorld game, Position pos, int life) {
 		super(game, pos, life);
-		// TODO Auto-generated constructor stub
 	}
 	
-	public int getArmor() {
+	/*
+	 Getter method for armor attribute.
+	*/
+	public int getArmor() { 
 		return armor;
 	}
 	
