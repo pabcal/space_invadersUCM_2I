@@ -40,7 +40,7 @@ public interface GameWorld {
 	 */
 	public boolean aliensWin();
 	/*
-	 * Returns the object in a specific location of the container 
+	 * Returns the object in a specific location of the container. Used only for explosion.
 	 */
 	public GameObject objectsExploded(Position pos);
 }

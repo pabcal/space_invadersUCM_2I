@@ -23,13 +23,11 @@ public enum Move {
 	public int getY() {
 		return y;
 	}
-
-
-	public int moveToString() {
-		return 0;
 	
-	}
-	
+	/**
+	 * Given a position, it updates that same position using the attributes of the object (x and y)
+	 * @param pos
+	 */
 	public void updatePosition(Position pos){
 		
 		pos.setCol(pos.getCol() + this.getX()); //ask
@@ -37,13 +35,19 @@ public enum Move {
 
 	}
 	
+	/**
+	 * Given a string it returns a Move object in case the string is valid.
+	 *  Otherwise, it returns null.
+	 * @param mov
+	 * @return Move or null
+	 */
 	static public Move getMovement (String mov)
 	{
 		Move move = null;
-		if (mov.equals(Move.RIGHT.toString()) || mov.equals("LEFT") || //ASK
-				mov.equals("LLEFT") || mov.equals("RRIGHT") ||
-				mov.equals("DOWN") || mov.equals("UP") ||
-				mov.equals("NONE"))
+		if (mov.equals(Move.RIGHT.toString()) || mov.equals(Move.LEFT.toString()) || //ASK
+				mov.equals(Move.RRIGHT.toString()) || mov.equals(Move.LLEFT.toString()) ||
+				mov.equals(Move.DOWN.toString()) || mov.equals(Move.UP.toString()) ||
+				mov.equals(Move.NONE.toString()))
 			move = Move.valueOf(mov);
 		return move;
 	}

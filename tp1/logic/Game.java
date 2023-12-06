@@ -11,15 +11,11 @@ import tp1.logic.gameobjects.Shockwave;
 import tp1.logic.gameobjects.SuperLaser;
 import tp1.view.Messages;
 
-//changes 1.1: UCMLaser integration to board. Changes in UCMLaser class and in Game class, referred in code with comments.
-//In class Game UCMLaser object was added and method positionToString was modified so that the laser could be displayed in board 
 
 
 
-// TODOimplementarlo
 public class Game implements GameStatus, GameModel, GameWorld{
 	
-	//constant declarations (the same in all difficulties)
 	public static final int DIM_X = 9;
 	public static final int DIM_Y = 8;
 	public static final int DESTROYER_ALIEN_DAMAGE = 1;
@@ -39,13 +35,10 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	private Level level; 
 	private long seed;
 	private UCMShip player = new UCMShip(this);
-	private Laser laser; //changes 1.1
+	private Laser laser; 
 	private SuperLaser superLaser;
 	private AlienManager manager; 
-//	private RegularAlienList rAlienList;
-//	private DestroyerAlienList dAlienList;
 	private Random rand;
-//	private boolean shockwave = false;
 	private int alienCycleCounter = 0;
 	private boolean finished = false;
 	private Shockwave shockwave = new Shockwave(this);
@@ -58,7 +51,6 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	
 	
 	private int score = 0;
-	//TODO fill your code
 
 	public Game(Level level, long seed) {
 		this.level = level;
@@ -66,21 +58,19 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		this.manager = new AlienManager (this, level);
 		this.rand = new Random(this.seed);
 		init(null);
-		
-		
 	}
 	
-	private void init(InitialConfiguration config) { //nada
+	/**
+	 * Initializes the game.continer with the aliens and adds the UCMShip to it.
+	 * @param config
+	 */
+	private void init(InitialConfiguration config) {
 		container = manager.initialize(config);
 		container.add(player);
-//		this.rAlienList  = this.manager.initializeRegularAliens();
-//		this.dAlienList = this.manager.initializeDestroyerAliens();
-//		this.ufo = new Ufo(this);
-//		for (int i = 0; i < rAlienList.getNum(); ++i)
-//			container.add(rAlienList.getAlien(i));
 	}
 
-	public String stateToString() { //status
+	//Specified in GameStatus
+	public String stateToString() { 
 		StringBuilder buffer = new StringBuilder();
 		buffer
 		.append("Life: ").append(player.getLife()).append(System.lineSeparator())
@@ -90,60 +80,38 @@ public class Game implements GameStatus, GameModel, GameWorld{
 
 	}
 
-	public int getCycle() { //status
+	//Specified in GameStatus
+	public int getCycle() {
 		return this.cycle;
 	}
 
-	public int getRemainingAliens() { //used in game printer - status
+	//Specified in GameStatus
+	public int getRemainingAliens() {
 		return this.manager.getRemainingAliens();
 	}
-
-	public String positionToString(int col, int row) { //status
+	
+	//Specified in GameStatus
+	public String positionToString(int col, int row) {
 		String what;
-		Position posAux = new Position(col, row);
-//		RegularAlien auxRAlien = this.rAlienList.anObjectInPos(posAux);
-//		DestroyerAlien auxDAlien = this.dAlienList.anObjectInPos(posAux);
-//		Bomb auxBomb = this.dAlienList.searchBombInPos(posAux);
-//		
-//		if(auxRAlien != null)
-//			what = auxRAlien.getSymbol();
-//		else if (auxDAlien != null)
-//			what = auxDAlien.getSymbol();
-//		else if (posAux.isEqual(this.player.getPos()))
-//			what = player.getSymbol();
-//		else if (laser != null && this.laser.isAlive() && posAux.isEqual(this.laser.getPos())) 
-//			what = this.laser.getSymbol();
-//		else if (this.superLaser != null && this.superLaser.isAlive() && posAux.isEqual(this.superLaser.getPos()) )
-//			what = superLaser.getSymbol();
-//		else if (auxBomb != null)
-//			what = auxBomb.getSymbol();
-//		else if (posAux.isEqual(this.ufo.getPos()) && this.ufo.isAlive()) 
-//			what = this.ufo.getSymbol();
-//		else
-//			what = "";
-		
+		Position posAux = new Position(col, row);		
 		what = container.getSymbolInPos(posAux);
-		
-		
 		return what;
 	}
 
-	public boolean playerWin() { //status
+	//Specified in GameStatus
+	public boolean playerWin() {
 		return this.manager.getRemainingAliens() == 0;
 	}
 
-	public boolean aliensWin()  //status
+	//Specified in GameStatus
+	public boolean aliensWin()
 	{
-//		if (this.rAlienList.anObjectInPos(getPlayerPos()) != null ||
-//				this.dAlienList.anObjectInPos(getPlayerPos()) != null ||
-//				this.ufo.isOnPosition(getPlayerPos()))
-//		this.player.setHealthToZero();
 		return (!this.player.isAlive() || this.manager.inFinalRow());
 		
 	}
 
-	
-	public boolean enableLaser() { //enables UCMShip's laser - model
+	//Specified in GameModel
+	public boolean enableLaser() {
 		boolean enabled = false;
 		if ((this.laser == null || !this.laser.isAlive()) && (this.superLaser == null || !this.superLaser.isAlive())) {
 			enableLaser = true;
@@ -152,7 +120,8 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		return enabled;
 	}
 	
-	public boolean enableSuperLaser() { //enables UCMShip's laser - model
+	//Specified in GameModel
+	public boolean enableSuperLaser() {
 		boolean enabled = false;
 		if(this.score > 4)
 			if (( this.superLaser == null || !this.superLaser.isAlive()) && (this.laser == null || !this.laser.isAlive()) ) 
@@ -165,34 +134,23 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		return enabled;
 	}
 	
-	
-
-//	public Random getRandom() { //ASK -----------------------------------------------------------
-//		
-//		return this.rand;
-//	}
-	
-	
-	public void incrCycle() { //nada
+	/**
+	 * Increases the game cycle
+	 */
+	public void incrCycle() { 
 		++this.cycle;
 		++this.alienCycleCounter;
 	}
 	
-	public Position getPlayerPos() { //world
+	//Specified in GameWorld
+	public Position getPlayerPos() {
 		return this.player.getPos();
 	}
 	
-//	private void laser_move() {
-//		if (this.laser.isAlive())
-//			this.laser.automaticMove();
-//	}
-//	
-//	private void SuperLaser_move() {
-//		if (this.superLaser.isAlive())
-//			this.superLaser.automaticMove();
-//	}
-	
-	private void manageAliens() { //nada
+	/**
+	 * Method partially in charge of managing the aliens by sending signals to the AlienManager
+	 */
+	private void manageAliens() {
 		if (getAliensMove()) alienCycleCounter = 0;
 		if (manager.onBorder() && !manager.alreadyDescended()) { //to check if in border and did not descend yet
 			manager.setDescend(true); //tells manager to descend
@@ -205,93 +163,37 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		
 	}
 	
-	 /* 
-	  Game.processHIT() is an important method in our implementation of the game. It is centered in the laser and the different objects with which it can collide in the game.
-	  It is called 2 times in the Game.update() method, one after the laser moves and other when the aliens/bombs move. In some cases we want to check aliens/bombs did not cross each other 
-	  vertically, which is the reason it is called two times. However, we just want the processHIT to check if they crossed each other vertically, which is why when aliens move horizontally 
-	  the function must not check aliens collision with the laser the first time after the laser moves, only the second time when both aliens and laser moved. This is the reason why there is a boolean parameter
-	  aliensCheck that indicates the function to check laser collision with aliens or not. Laser collision with bombs is checked always as both objects move always vertically in opposite directions. 
-	  
-	  
-	 */
-	private void processHIT(UCMWeapon weapon) //nada
+	 /**
+	  * Method in charge of processing the collisions of a UCMWeapon with other objects in the board. First it checks if the weapon crossed with 
+	  * another enemy object, then if it is in the same position. If any of these is true, then the weapon should die and the method should end. 
+	  * @param weapon
+	  */
+	private void processHIT(UCMWeapon weapon) 
 	{
-//		RegularAlien alien = null;
-//		DestroyerAlien dAlien = null;
-//		Bomb bomb = null;
 		int i = 0;
 		if (weapon != null && weapon.isAlive()) {
 			while (i < container.getSize() && weapon.isAlive()) {
 				weapon.performAttack(container.getObject(i), true);
-//				if(!container.getObject(i).isAlive())
-//					manager.alienDied();
 				++i;
 			}
 			i = 0;
 			while (i < container.getSize() && weapon.isAlive()) {
 				weapon.performAttack(container.getObject(i), false);
-//				if(!container.getObject(i).isAlive())
-//					manager.alienDied();
 				++i;
 			}
-//		if (laser != null && laser.isAlive()) {
-//			while (i < this.dAlienList.getNum() && laser.isAlive()) {
-//				bomb = this.dAlienList.getBombFrom(i);
-//				if (bomb != null && bomb.isAlive())
-//					bomb.performAttack(laser);
-//				++i;
-//			}
-//			i = 0;
-//			while (aliensCheck && i < this.rAlienList.getNum() && (laser.isAlive())) { // || superLaser.isAlive()
-//				alien = this.rAlienList.getAlien(i);
-//				if (laser.isAlive())
-//					this.laser.performAttack(alien);
-//				else if (superLaser.isAlive())
-//					this.superLaser.performAttack(alien);
-//				++i;
-//			}
-//			i = 0;
-//			while (aliensCheck && i < this.dAlienList.getNum() && (laser.isAlive())) { // || superLaser.isAlive()
-//				dAlien = this.dAlienList.getAlien(i);
-//				if (laser.isAlive())
-//					this.laser.performAttack(dAlien);
-//				else if (superLaser.isAlive())
-//					this.superLaser.performAttack(alien);
-//				++i;
-//			}
-//			if ((laser.isAlive())) // || superLaser.isAlive()
-//				if (laser.isAlive())
-//					this.laser.performAttack(this.ufo);
-//				else
-//					this.superLaser.performAttack(this.ufo);
-					
 		}
 	}
-		
-		
 	
-	
-	public boolean movePlayer(Move dir) { //model
+	//Specified in GameModel
+	public boolean movePlayer(Move dir) {
 		boolean did = false;
 		if (dir != null && dir != Move.UP && dir != Move.DOWN)
 			did = player.performMovement(dir);
 		return did;
 	}
 	
-	
-//	private void removeDead() { //removes dead aliens and laser if is not active
-//		this.rAlienList.removeDead();
-//		this.dAlienList.removeDead();
-//		if (!laser.isAlive())
-//			laser = null;
-//		for (int i = 0; i < container.getSize(); ++i) 
-//			if (container.objectIsDead(i)) {
-//				System.out.println(i);
-//				container.remove(container.getObject(i));
-//		}
-//	}
-	
-	public void listCommand() //model
+	//Specified in GameModel
+	public void listCommand() 
 	{
 		System.out.printf(Messages.UCM_DESCRIPTION, Messages.UCMSHIP_DESCRIPTION, Game.UCM_DAMAGE, Game.UCM_HEALTH);
 		System.out.println("");
@@ -301,17 +203,17 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		System.out.println("");
 		System.out.printf(Messages.ALIEN_DESCRIPTION, Messages.UFO_DESCRIPTION,Game.UFO_POINTS, 0, Game.UFO_HEALTH);
 		System.out.println("");
+		System.out.printf(Messages.ALIEN_DESCRIPTION, Messages.UFO_DESCRIPTION,Game.UFO_POINTS, 0, Game.UFO_HEALTH);
+		System.out.println("");
 	}
-	
-//	public long getSeed() {
-//		return this.seed;
-//	}
-	
-	public Level getLevel() { //world
+
+	//Specified in GameWorld
+	public Level getLevel() { 
 		return this.level;
 	}
 
-	public void reset(InitialConfiguration config) //model
+	//Specified in GameModel
+	public void reset(InitialConfiguration config)
 	{
 		this.score = 0;
 		this.cycle = 0;
@@ -326,43 +228,32 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		reseted = true;
 	}
 	
-	
-//	private void shootBombs() {
-//		this.dAlienList.automaticShoot();
-//	}
-//	
-//	private void processBombs() {
-////		this.dAlienList.bombProcess();
-//		this.shootBombs();
-//	}
-	
-	public void update() { //nada
-		if (!reseted) {
-			if (laser != null && !laser.isAlive())
+	/**
+	 Update method is in charge of updating all objects' state after executing a command and before printing the board again.
+	 */
+	public void update() { 
+		if (!reseted) { //If command was not reset
+			if (laser != null && !laser.isAlive()) // checks is laser is not null and is dead, and proceeds to put it to null
 				laser = null;
-			if (superLaser != null && !superLaser.isAlive()) //should be else if i think
+			if (superLaser != null && !superLaser.isAlive()) // checks is superLaser is not null and is dead, and proceeds to put it to null
 				superLaser = null;
-			container.automaticMoves();
-			manageAliens();
-			container.computerActions();
 			
-			
-			
-			 //boolean variable that tells the processHit() to check collision between the laser and the aliens, it is true when aliens are ready to descend only
-	//		this.ufo.callUfo(); // this method is in charge of performing all UFO movements as well as checking if it must appear or not
+			container.automaticMoves(); //automatic moves of all objects
+			manageAliens(); 
+			container.computerActions(); //computer actions of all objects
 	
-			if (laser == null && enableLaser) {
+			if (laser == null && enableLaser) { //If shoot was called then enableLaser will be true
 				laser = new Laser(this);
-				container.add(laser);
+				container.add(laser); //adds laser to game
 			}
 			
-			else if (superLaser == null && enableSuperLaser)
+			else if (superLaser == null && enableSuperLaser) //If Super Laser was called then enableSuperLaser will be true
 			{
 				superLaser = new SuperLaser(this);
-				container.add(superLaser);
+				container.add(superLaser); //adds Super Laser to game
 			}
 			
-			
+			//Here it checks if laser or Super Laser are not null, and if one of them is not it will call processHIT() with that UCMWeapon
 			UCMWeapon weapon;
 			if (laser != null)
 				weapon = laser;
@@ -370,33 +261,26 @@ public class Game implements GameStatus, GameModel, GameWorld{
 				weapon = superLaser;
 			else
 				weapon = null;
-				
-				
-			
+
 			enableLaser = enableSuperLaser = false;
-			processHIT(weapon); //method in charge of checking laser collision with ay other object in the board. This is only the first calling, laser already moved but aliens and bombs did not
-	//		if ((this.alienCycleCounter == (this.level.getSpeed() + 1))) { //Check if aliens must move or not in this cycle
-	//			this.alienCycleCounter = 0;
-	//			this.moveAliens(); //method to move aliens
-	//		}
-	//		this.processBombs(); //Method in charge of shooting/moving bombs
-			
-	//		this.processHIT(true); //Second calling of the processHIT() method. Laser and aliens already moved.
-			this.playerProcessHit(); //In charge of checking collisions between bombs and player, no need to call 2 times.
+			processHIT(weapon); //In charge of checking collision of the UCMWeapons with the enemy objects of the game.
+			playerProcessHit(); //In charge of checking collisions between bombs and player.
 			incrCycle();
 		}
 		else
-			reseted = false;
+			reseted = false; //put reseted to false for next cycle (board is just printed)
 	}
-	// changes 
-	public void enableShockwave() //world
+	
+	
+	//Specified in GameWorld
+	public void enableShockwave()
 	{
 		shockwave.setShockwave(true);
 	}
 	
 	
-	//changes
-	public boolean shootShockwave() { //model
+	//Specified in GameModel
+	public boolean shootShockwave() { 
 		boolean completed = false;
 		int size = container.getSize();
 		if (shockwave.getShockwaveStatus())
@@ -411,50 +295,38 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		return completed;
 	}
 	
-	
-	public void markPoints(int points) { //world
+	//Specified in GameWorld
+	public void markPoints(int points) { 
 		this.score += points;
 	}
 	
 	
-	/*
-	 Game.playerProcessHit() is the method concerning the collision and damage effects between the bombs and the player. Is important to notice that
-	 a difference between this function and the laser�s Game.processHIT() is that is not called two times. This is due to the implementation of Bomb.performAttcak(UCMShip other)
-	 that allows us to call it only once.
+	/**
+	 Method concerning the collision and damage effects between the bombs and the player.
 	*/
-	private void playerProcessHit() { //nada
+	private void playerProcessHit() { 
 		
 		for (int i = 0; i < container.getSize(); ++i) {
 			GameObject obj = container.getObject(i);
-			if (!obj.performAttack(player, true))
-				obj.performAttack(player, false);
+			obj.performAttack(player, false);
 		}
-//		for (int j = 0; j < this.dAlienList.getNum(); ++j) {
-//			bomb = this.dAlienList.getBombFrom(j);
-//			if (bomb != null && bomb.isAlive())
-//				bomb.performAttack(player);
-//				
-//		}
 	}
 	
-//	public boolean inPlayerPos(Position aux) { //method implemented for the Bomb class
-//		return aux.isEqual(player.getPos());
-//	}
-	
+	//Specified in GameWorld
 	public double ndd() { //produces and returns the next double of the Random object in Game - world
 		double nextDouble = this.rand.nextDouble();
 		return nextDouble;
 	}
 	
 	
-	
+	//Specified in GameWorld
 	public boolean getAliensMove() { //world
 		return (this.alienCycleCounter == (this.level.getSpeed() + 1));
 	}
 
 	
-
-	public boolean isFinished() //COMENTAR - model
+	//Specified in GameModel
+	public boolean isFinished()
 	{
 		if (!finished && (this.playerWin() || this.aliensWin()))
 			finished = true;
@@ -462,34 +334,30 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		return finished;
 	}
 
+	//Specified in GameModel
 	public void exit() { //COMENTAR - model
 		finished = true;
 	}
 
+	//Specified in GameStatus
 	@Override
 	public String infoToString() { // status
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
+	//Specified in GameWorld
 	public GameObject objectsExploded (Position pos)
 	{
 		return container.getInPos(pos);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-
-	
+	//Specified in GameWorld
 	public void addObject(GameObject obj) { //world
 		container.add(obj);
 	}
 	
+	//Specified in GameWorld
 	public void deleteObject(GameObject obj) { //world
 		container.remove(obj);
 	}

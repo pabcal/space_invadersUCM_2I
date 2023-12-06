@@ -38,6 +38,11 @@ public class Position {
 		this.col = col;
 	}
 	
+	/**
+	 * Returns true if pos2 has same attributes that this object Position.
+	 * @param pos2
+	 * @return boolean
+	 */
 	public boolean isEqual(Position pos2) {
 		return this.col == pos2.getCol() && this.row == pos2.getRow();
 	}
