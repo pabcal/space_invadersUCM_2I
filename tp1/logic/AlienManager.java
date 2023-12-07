@@ -18,8 +18,6 @@ public class AlienManager {
 	private Game game;
 	private int remainingAliens;
 	
-//	
-//	private int shipsOnBorder; //not used
 	private boolean onBorder;
 	private boolean descend = false;
 	private boolean alreadyDescended = false;
@@ -38,7 +36,7 @@ public class AlienManager {
 	 * @return GameObjectContainer
 	 */
 	public  GameObjectContainer initialize(InitialConfiguration config) {
-		this.remainingAliens = 0;
+		remainingAliens = 0;
 		GameObjectContainer container = new GameObjectContainer();
 		
 		initializeOvni(container);
@@ -48,9 +46,7 @@ public class AlienManager {
 		}
 		else
 			costumedInitialization(container, config);
-		//TODO fill with your code
-		
-		
+	
 		return container;
 	}
 	
@@ -89,7 +85,7 @@ public class AlienManager {
 	 * @param container
 	 */
 	private void initializeDestroyerAliens(GameObjectContainer container) {
-		int nDAliens = this.level.getNumberOfDesAliens();
+		int nDAliens = level.getNumberOfDesAliens();
 		DestroyerAlien desAlien;
 		int colInit = ((level == Level.INSANE) ? 1 : 0);
 		
@@ -97,7 +93,7 @@ public class AlienManager {
 			Position auxPos = new Position(4 + colInit - j, 1 + level.getNumberOfRows());
 			desAlien = new DestroyerAlien(game, auxPos, this);
 			container.add(desAlien);
-			this.remainingAliens++; 
+			remainingAliens++; 
 		}
 	}
 
@@ -134,15 +130,13 @@ public class AlienManager {
 		
 		if(onBorder) {
 			onBorder = false;
-//			shipsOnBorder = 0;
+
 		}
 		 
 		
 	}
 	
-//	public void checkInBorder(boolean value) {
-//		this.onBorder = this.onBorder || value;
-//	}
+
 	
 	/**
 	 * Getter method for onBorder (boolean) attribute
@@ -159,14 +153,14 @@ public class AlienManager {
 	 */
 	public int getRemainingAliens()
 	{
-		return this.remainingAliens;
+		return remainingAliens;
 	}
 	
 	/**
 	 * Substracts 1 from remainingAliens (int) attribute. Called when an aliens dies.
 	 */
 	public void alienDied() {
-		this.remainingAliens--;
+		remainingAliens--;
 	}
 	
 	/**
@@ -175,7 +169,7 @@ public class AlienManager {
 	 */
 	public void setDescend(boolean value)
 	{
-		this.descend = value;
+		descend = value;
 		
 	}
 	
@@ -184,7 +178,7 @@ public class AlienManager {
 	 * @param value (boolean)
 	 */
 	public void setAlreadyDescended(boolean value) {
-		this.alreadyDescended = value;
+		alreadyDescended = value;
 	}
 	
 	/**
@@ -192,7 +186,7 @@ public class AlienManager {
 	 * @return alreadyDescended
 	 */
 	public boolean alreadyDescended() {
-		return this.alreadyDescended;
+		return alreadyDescended;
 	}
 	
 	/**
@@ -200,14 +194,14 @@ public class AlienManager {
 	 * @return descend
 	 */
 	public boolean readyToDescend() {
-		return this.descend;
+		return descend;
 	}
 	
 	/**
 	 * Sets inFinalRow (boolean) to true.
 	 */
 	public void sendInFinalRow() {
-		this.inFinalRow = true;
+		inFinalRow = true;
 	}
 	
 	/**
@@ -216,7 +210,7 @@ public class AlienManager {
 	 */
 	public boolean inFinalRow()
 	{
-		return this.inFinalRow;
+		return inFinalRow;
 	}
 	
 	

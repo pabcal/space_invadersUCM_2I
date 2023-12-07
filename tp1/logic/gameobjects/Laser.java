@@ -15,9 +15,9 @@ public class Laser extends UCMWeapon{
 	
 	public Laser(GameWorld game) {
 		super(game, new Position());
-		damage = Game.UCM_DAMAGE;
+		this.damage = Game.UCM_DAMAGE;
 		Position auxPos = game.getPlayerPos();
-		pos = new Position(auxPos.getCol(), auxPos.getRow() - 1);
+		this.pos = new Position(auxPos.getCol(), auxPos.getRow() - 1);
 		this.dir = Move.UP;		
 	}
 	
