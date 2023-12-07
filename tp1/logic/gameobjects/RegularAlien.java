@@ -13,29 +13,15 @@ import tp1.view.Messages;
  */
 public class RegularAlien extends AlienShip{
 
-	//TODO fill your code
-//	private int cyclesToMove;
-//	private Move dir = Move.LEFT;
-//	private int health;
-//	private int points = Game.REGULAR_ALIEN_POINTS;
-//	
-//	private String appearance = Messages.REGULAR_ALIEN_SYMBOL;
-//	private Position pos;
-//	private boolean descended = false;
-	
-//	private AlienManager alienManager;
-
-	//TODO fill your code
-
 	public RegularAlien (GameWorld game, Position pos, AlienManager alienManager)
 	{	
 		super(game, pos, Game.REGULAR_ALIEN_HEALTH, Game.REGULAR_ALIEN_POINTS, alienManager);
-		symbol = Messages.REGULAR_ALIEN_SYMBOL;
+		this.symbol = Messages.REGULAR_ALIEN_SYMBOL;
 	}
 	
 	public RegularAlien() {
 		super(null, null, Game.REGULAR_ALIEN_HEALTH, Game.REGULAR_ALIEN_POINTS, null);
-		symbol = Messages.REGULAR_ALIEN_SYMBOL;
+		this.symbol = Messages.REGULAR_ALIEN_SYMBOL;
 	}
 	
 	

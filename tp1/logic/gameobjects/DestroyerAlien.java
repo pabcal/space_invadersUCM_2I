@@ -14,12 +14,12 @@ public class DestroyerAlien extends AlienShip {
 	public DestroyerAlien (GameWorld game, Position pos, AlienManager alienManager)
 	{
 		super(game, pos, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, alienManager);
-		symbol = Messages.DESTROYER_ALIEN_SYMBOL;
+		this.symbol = Messages.DESTROYER_ALIEN_SYMBOL;
 	}
 	
 	public DestroyerAlien() {
 		super(null, null, Game.DESTROYER_ALIEN_HEALTH, Game.DESTROYER_ALIEN_POINTS, null);
-		symbol = Messages.DESTROYER_ALIEN_SYMBOL;
+		this.symbol = Messages.DESTROYER_ALIEN_SYMBOL;
 	}
 	
 	
@@ -52,17 +52,10 @@ public class DestroyerAlien extends AlienShip {
 	 */
 	private boolean shootProbability() {
 		Level level = game.getLevel();
-		return this.game.ndd() < level.getShootFrequency();
+		return game.ndd() < level.getShootFrequency();
 	}
 	
-	/**
-	 * Getter method for the bomb shot by the destroyer alien.
-	 * @return Bomb class or null, depending if the destroyer alien has an active bomb or not.
-	 */
-//	public Bomb getBomb() {
-//		return this.bomb;
-//	}
-	
+
 	/**
 	 Method in charge of putting the bomb (Bomb) attribute to null
 	 */

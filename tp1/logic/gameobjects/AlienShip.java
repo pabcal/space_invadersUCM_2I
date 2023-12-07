@@ -25,8 +25,8 @@ public abstract class AlienShip extends EnemyShip {
 	public  void descent() { 
 		Move dir2 = Move.DOWN;
 		dir2.updatePosition(this.pos);
-		if (!this.alienManager.alreadyDescended())
-			this.alienManager.setAlreadyDescended(true);
+		if (!alienManager.alreadyDescended())
+			alienManager.setAlreadyDescended(true);
 		descended = true;
 	}
 	
@@ -38,26 +38,26 @@ public abstract class AlienShip extends EnemyShip {
 	public  void performMovement() {
 		if (game.getAliensMove()) { //
 			prevPos = new Position(pos.getCol(), pos.getRow());
-			if (this.alienManager.readyToDescend()) { //if alien manager tells it to descend it calls descend()
-				this.descent();
+			if (alienManager.readyToDescend()) { //if alien manager tells it to descend it calls descend()
+				descent();
 			}
 			else {
-				if (this.descended) {
-					if (this.dir == Move.LEFT) //changes direction
-						this.dir = Move.RIGHT;
+				if (descended) {
+					if (dir == Move.LEFT) //changes direction
+						dir = Move.RIGHT;
 					else
-						this.dir = Move.LEFT;
-					if (this.alienManager.onBorder()) //calls alien manager to tell it it is no longer in border
-						this.alienManager.notOnBorder();
-					this.descended = false;
+						dir = Move.LEFT;
+					if (alienManager.onBorder()) //calls alien manager to tell it it is no longer in border
+						alienManager.notOnBorder();
+					descended = false;
 				}
-				this.dir.updatePosition(this.pos); //updates position
+				dir.updatePosition(pos); //updates position
 			}
-			if (onBorder() && !this.descended) { //if it is on border and havent't descended yet, then it tells alien manager it is on border
-				this.alienManager.shipOnBorder();
+			if (onBorder() && !descended) { //if it is on border and havent't descended yet, then it tells alien manager it is on border
+				alienManager.shipOnBorder();
 			}
-			if (finalRow() && !this.alienManager.inFinalRow()) //if in final row, it sends a signal to alien manager
-				this.alienManager.sendInFinalRow();
+			if (finalRow() && !alienManager.inFinalRow()) //if in final row, it sends a signal to alien manager
+				alienManager.sendInFinalRow();
 		}
 	}
 	
@@ -66,7 +66,7 @@ public abstract class AlienShip extends EnemyShip {
 	 */
 	@Override 
 	public boolean onBorder() {
-		return (this.pos.getCol() == 0 || this.pos.getCol() == Game.DIM_X - 1);
+		return (pos.getCol() == 0 || pos.getCol() == Game.DIM_X - 1);
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public abstract class AlienShip extends EnemyShip {
 	 */
 	public boolean finalRow ()
 	{
-		return this.pos.getRow() == Game.DIM_Y - 1;
+		return pos.getRow() == Game.DIM_Y - 1;
 	}
 	
 	/*
@@ -88,7 +88,7 @@ public abstract class AlienShip extends EnemyShip {
 	 Calls a method to tell alien manager that alien died. 
 	 */
 	public void callDead() {
-		this.alienManager.alienDied();
+		alienManager.alienDied();
 	}
 	
 	
@@ -98,7 +98,7 @@ public abstract class AlienShip extends EnemyShip {
 	@Override
 	public String getSymbol()
 	{
-		return symbol + "[" + (this.life < 10 ? "0": "") + Integer.toString(this.life) + "]";
+		return symbol + "[" + (life < 10 ? "0": "") + Integer.toString(life) + "]";
 	}
 	
 	/**

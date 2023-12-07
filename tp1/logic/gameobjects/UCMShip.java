@@ -42,9 +42,9 @@ public class UCMShip extends Ship{
 		boolean performed = false;
 		this.dir = dir;
 		prevPos = new Position(pos.getCol(), pos.getRow());
-		if (this.pos.getCol() + dir.getX() >= 0 && this.pos.getCol() + dir.getX() < Game.DIM_X &&
-				this.pos.getRow() + dir.getY() >= 0 && this.pos.getRow() + dir.getY() < Game.DIM_Y	) {
-			dir.updatePosition(this.pos);
+		if (pos.getCol() + dir.getX() >= 0 && pos.getCol() + dir.getX() < Game.DIM_X &&
+				pos.getRow() + dir.getY() >= 0 && pos.getRow() + dir.getY() < Game.DIM_Y	) {
+			dir.updatePosition(pos);
 			performed = true;
 		}	
 		return performed;
@@ -67,7 +67,7 @@ public class UCMShip extends Ship{
 	 Getter method for the direction type Move. Returns attribute dir (Move).
 	 */
 	public Move getDir() {
-		return this.dir;
+		return dir;
 	}
 	
 	
