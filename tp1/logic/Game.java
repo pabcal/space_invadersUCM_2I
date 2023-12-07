@@ -227,7 +227,7 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		this.player = new UCMShip(this);
 		init(config);
 		this.rand = new Random(this.seed);
-		this.alienCycleCounter = 1;
+		alienCycleCounter = 0;
 		reseted = true;
 	}
 	
@@ -236,6 +236,7 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	 */
 	public void update() { 
 		if (!reseted) { //If command was not reset
+			incrCycle();
 			if (laser != null && !laser.isAlive()) // checks is laser is not null and is dead, and proceeds to put it to null
 				laser = null;
 			if (superLaser != null && !superLaser.isAlive()) // checks is superLaser is not null and is dead, and proceeds to put it to null
@@ -268,7 +269,6 @@ public class Game implements GameStatus, GameModel, GameWorld{
 			enableLaser = enableSuperLaser = false;
 			processHIT(weapon); //In charge of checking collision of the UCMWeapons with the enemy objects of the game.
 			playerProcessHit(); //In charge of checking collisions between bombs and player.
-			incrCycle();
 		}
 		else
 			reseted = false; //put reseted to false for next cycle (board is just printed)

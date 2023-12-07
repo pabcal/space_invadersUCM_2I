@@ -7,6 +7,8 @@ import tp1.control.InitialConfiguration;
 
 public class ResetCommand extends Command{
 	InitialConfiguration initial = null;
+	private boolean wrongInitialConfiguration = false;
+	private String parameterString = null;
 	@Override
 	protected String getName() {
 		return Messages.COMMAND_RESET_NAME;
@@ -31,12 +33,13 @@ public class ResetCommand extends Command{
 	public ExecutionResult execute(GameModel game) {
 		boolean ok = false;
 		String message = null;
-		if (initial != null) {
+		if (!wrongInitialConfiguration) {
 			game.reset(initial);
 			ok = true;
 		}
 		else
-			message = "Wrong configuration";
+			message = "Invalid initial configuration " + parameterString;
+		wrongInitialConfiguration = false;
 		return new ExecutionResult(ok, ok, message);
 	}
 
@@ -48,8 +51,15 @@ public class ResetCommand extends Command{
         	if (commandWords.length > 1)
         	{
             	initial = InitialConfiguration.valueOfIgnoreCase(commandWords[1]);
-            	c = this;
+            	if (initial == null) {
+            		wrongInitialConfiguration = true;
+            		parameterString = commandWords[1];
+            	}
+            		
         	}
+        	else
+        		initial = null;
+        	c = this;
         }
 	    return c;
 	}

@@ -44,7 +44,6 @@ public class Controller {
 	public void run() {
 
 		printGame();
-		game.incrCycle();
 		
 		while (!game.isFinished()) {
 			String[] parameters = prompt();

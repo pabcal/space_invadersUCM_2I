@@ -59,9 +59,9 @@ public class DestroyerAlien extends AlienShip {
 	 * Getter method for the bomb shot by the destroyer alien.
 	 * @return Bomb class or null, depending if the destroyer alien has an active bomb or not.
 	 */
-	public Bomb getBomb() {
-		return this.bomb;
-	}
+//	public Bomb getBomb() {
+//		return this.bomb;
+//	}
 	
 	/**
 	 Method in charge of putting the bomb (Bomb) attribute to null
@@ -97,6 +97,15 @@ public class DestroyerAlien extends AlienShip {
 		return new DestroyerAlien(game, pos, am);
 	}
 	
+	/**
+	 * Calls shoot()
+	 */
+	@Override
+	public void computerAction() {
+		shoot();
+		
+	}
+	
 	
 	////////////////////////////////////////////////////////////////////////////////////
 	//EMPTY METHODS
@@ -114,11 +123,6 @@ public class DestroyerAlien extends AlienShip {
 	}
 
 
-	@Override
-	public void computerAction() {
-		shoot();
-		
-	}
 
 	
 	
