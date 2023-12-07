@@ -6,7 +6,7 @@ import tp1.logic.Move;
 import tp1.view.Messages;
 
 public class MoveCommand extends Command {
-
+	private String command2 = null;
 	private Move move;
 	private boolean directionError = false;
 
@@ -39,7 +39,7 @@ public class MoveCommand extends Command {
 	@Override
 	public ExecutionResult execute(GameModel game) {
 		boolean valid = game.movePlayer(move);
-		String message = (directionError ? Messages.DIRECTION_ERROR : Messages.MOVEMENT_ERROR);
+		String message = (directionError ? Messages.DIRECTION_ERROR + command2: Messages.MOVEMENT_ERROR);
 		
 		
 		return new ExecutionResult(valid, valid, message);
@@ -54,11 +54,13 @@ public class MoveCommand extends Command {
         {
         	if (commandWords.length > 1)
         	{
-            	String command2 = commandWords[1].toUpperCase();
-            	move = Move.getMovement(command2); //preguntar
+            	command2 = commandWords[1].toUpperCase();
+            	move = Move.getMovement(command2);
             	if (move == null || move == Move.UP || move == Move.DOWN) {
             		directionError = true;
             	}
+            	else
+            		directionError = false;
             	c = this;
 
         	}

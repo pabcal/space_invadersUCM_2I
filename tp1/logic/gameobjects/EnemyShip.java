@@ -28,7 +28,7 @@ public abstract class EnemyShip extends Ship{
 	 Getter method for attribute points (int).
 	 */
 	public int getPoints() {
-		return this.points;
+		return points;
 	}
 	
 	

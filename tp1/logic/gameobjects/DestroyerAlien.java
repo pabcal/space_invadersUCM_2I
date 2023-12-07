@@ -42,7 +42,7 @@ public class DestroyerAlien extends AlienShip {
 			deleteBomb();
 		
 		if (bomb == null && shootProbability()) { //If bomb is in the player's position, due to the order of our functions in Game.update(), the bomb won't be deactivated yet 
-			this.createBomb();
+			createBomb();
 		}
 	}
 	
@@ -60,7 +60,7 @@ public class DestroyerAlien extends AlienShip {
 	 Method in charge of putting the bomb (Bomb) attribute to null
 	 */
 	public void deleteBomb() {
-		this.bomb = null;
+		bomb = null;
 	}
 	
 	/**
