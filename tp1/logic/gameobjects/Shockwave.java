@@ -11,7 +11,7 @@ public class Shockwave extends UCMWeapon{
 
 	public Shockwave(GameWorld game) {
 		super(game,  new Position(0, 0));
-		damage = Game.SHOCKWAVE_DAMAGE;
+		this.damage = Game.SHOCKWAVE_DAMAGE;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class Shockwave extends UCMWeapon{
 	 */
 	public void setShockwave(boolean value)
 	{
-		this.shockwave = value;
+		shockwave = value;
 	}
 	
 	@Override

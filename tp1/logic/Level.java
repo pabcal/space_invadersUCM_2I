@@ -39,7 +39,7 @@ public enum Level {
 	}
 	
 	public double getShootFrequency() {
-		return this.shootFrequency;
+		return shootFrequency;
 	}
 	
 
@@ -78,7 +78,7 @@ public enum Level {
 	 */
 	public int getNumOfRegAliens ()
 	{
-		return this.numRegularAliens;
+		return numRegularAliens;
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public enum Level {
 	 */
 	public int getTotalAliens()
 	{
-		return (this.numRegularAliens + this.numDestroyerAliens);
+		return (numRegularAliens + numDestroyerAliens);
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public enum Level {
 	 * @return nuRowsRegularAliens
 	 */
 	public int getNumberOfRows() {
-		return this.numRowsRegularAliens;
+		return numRowsRegularAliens;
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public enum Level {
 	 */
 	public int getNumberOfDesAliens()
 	{
-		return this.numDestroyerAliens;
+		return numDestroyerAliens;
 	}
 	
 	/**
@@ -112,6 +112,6 @@ public enum Level {
 	 * @return numCyclesToMoveOneCell
 	 */
 	public int getSpeed() {
-		return this.numCyclesToMoveOneCell;
+		return numCyclesToMoveOneCell;
 	}
 }

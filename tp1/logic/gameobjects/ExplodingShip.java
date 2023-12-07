@@ -11,12 +11,12 @@ public class ExplodingShip extends AlienShip{
 	public ExplodingShip (GameWorld game, Position pos, AlienManager alienManager)
 	{	
 		super(game, pos, Game.EXPLOSIVE_ALIEN_HEALTH, Game.EXPLOSIVE_ALIEN_POINTS, alienManager);
-		symbol = Messages.EXPLOSIVE_ALIEN_SYMBOL;
+		this.symbol = Messages.EXPLOSIVE_ALIEN_SYMBOL;
 	}
 	
 	public ExplodingShip() {
 		super(null, null, Game.EXPLOSIVE_ALIEN_HEALTH, Game.EXPLOSIVE_ALIEN_POINTS, null);
-		symbol = Messages.EXPLOSIVE_ALIEN_SYMBOL;
+		this.symbol = Messages.EXPLOSIVE_ALIEN_SYMBOL;
 	}
 
 	/**

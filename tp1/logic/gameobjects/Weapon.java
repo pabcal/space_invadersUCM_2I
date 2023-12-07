@@ -44,7 +44,7 @@ public abstract class Weapon extends GameObject{
 	@Override
 	public int getDamage()
 	{
-		return this.damage;
+		return damage;
 	}
 	/*
 	 * If the weapon is alive, it calls perform movement, if it is on the border, it kills it
@@ -64,7 +64,7 @@ public abstract class Weapon extends GameObject{
 	@Override
 	protected void performMovement() {
 		prevPos = new Position(pos.getCol(), pos.getRow());
-		dir.updatePosition(this.pos);
+		dir.updatePosition(pos);
 	}
 	/*
 	 * Getter method for armor
@@ -72,7 +72,7 @@ public abstract class Weapon extends GameObject{
 	@Override
 	protected int getArmor()
 	{
-		return this.armor;
+		return armor;
 	}
 	
 	protected abstract boolean weaponAttack(GameItem other);

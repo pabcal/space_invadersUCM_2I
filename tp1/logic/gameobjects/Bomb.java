@@ -10,8 +10,8 @@ public class Bomb extends EnemyWeapon {
 	
 	public Bomb( GameWorld game, Position pos) {
 		super(game, pos);
-		damage = Game.DESTROYER_ALIEN_DAMAGE;
-		dir = Move.DOWN;
+		this.damage = Game.DESTROYER_ALIEN_DAMAGE;
+		this.dir = Move.DOWN;
 	}
 	
 	public String getSymbol() {

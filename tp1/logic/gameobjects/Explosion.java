@@ -8,7 +8,7 @@ public class Explosion extends Weapon{
 
 	public Explosion(GameWorld game, Position pos) {
 		super(game, pos);
-		damage = Game.EXPLOSION_DAMAGE;
+		this.damage = Game.EXPLOSION_DAMAGE;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -18,7 +18,7 @@ public class Explosion extends Weapon{
 		for(int i = -1; i < 2; i++)
 			for(int j = -1; j < 2; j++)
 			{
-				Position adjeacentAndDiagonalPos = new Position(pos.getCol() + i, pos.getRow() + j); //what if its on an edge? does it access invalid index
+				Position adjeacentAndDiagonalPos = new Position(pos.getCol() + i, pos.getRow() + j); 
 				other = game.objectsExploded(adjeacentAndDiagonalPos);
 				if (other != null && other.isAlive())
 				{
