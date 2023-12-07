@@ -30,8 +30,8 @@ public enum Move {
 	 */
 	public void updatePosition(Position pos){
 		
-		pos.setCol(pos.getCol() + this.getX()); //ask
-		pos.setRow(pos.getRow() + this.getY());
+		pos.setCol(pos.getCol() + getX()); 
+		pos.setRow(pos.getRow() + getY());
 
 	}
 	

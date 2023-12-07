@@ -79,12 +79,12 @@ public abstract class GameObject implements GameItem {
 	protected void die()
 	{
 		onDelete();
-		this.life = 0;
+		life = 0;
 	}
 
 	@Override
 	public boolean isAlive() {
-		return this.life > 0;
+		return life > 0;
 	}
 	
 	public boolean isOnPosition(Position pos) {

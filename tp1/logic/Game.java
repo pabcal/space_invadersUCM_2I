@@ -85,12 +85,12 @@ public class Game implements GameStatus, GameModel, GameWorld{
 
 	//Specified in GameStatus
 	public int getCycle() {
-		return this.cycle;
+		return cycle;
 	}
 
 	//Specified in GameStatus
 	public int getRemainingAliens() {
-		return this.manager.getRemainingAliens();
+		return manager.getRemainingAliens();
 	}
 	
 	//Specified in GameStatus
@@ -103,20 +103,20 @@ public class Game implements GameStatus, GameModel, GameWorld{
 
 	//Specified in GameStatus
 	public boolean playerWin() {
-		return this.manager.getRemainingAliens() == 0;
+		return manager.getRemainingAliens() == 0;
 	}
 
 	//Specified in GameStatus
 	public boolean aliensWin()
 	{
-		return (!this.player.isAlive() || this.manager.inFinalRow());
+		return (!player.isAlive() || manager.inFinalRow());
 		
 	}
 
 	//Specified in GameModel
 	public boolean enableLaser() {
 		boolean enabled = false;
-		if ((this.laser == null || !this.laser.isAlive()) && (this.superLaser == null || !this.superLaser.isAlive())) {
+		if ((laser == null || !laser.isAlive()) && (superLaser == null || !superLaser.isAlive())) {
 			enableLaser = true;
 			enabled = true;
 		}
@@ -127,7 +127,7 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	public boolean enableSuperLaser() {
 		boolean enabled = false;
 		if(this.score > 4)
-			if (( this.superLaser == null || !this.superLaser.isAlive()) && (this.laser == null || !this.laser.isAlive()) ) 
+			if (( superLaser == null || !superLaser.isAlive()) && (laser == null || !laser.isAlive()) ) 
 			{
 				score -= 5;
 				enableSuperLaser = true;
@@ -141,13 +141,13 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	 * Increases the game cycle
 	 */
 	public void incrCycle() { 
-		++this.cycle;
-		++this.alienCycleCounter;
+		++cycle;
+		++alienCycleCounter;
 	}
 	
 	//Specified in GameWorld
 	public Position getPlayerPos() {
-		return this.player.getPos();
+		return player.getPos();
 	}
 	
 	/**
@@ -159,10 +159,10 @@ public class Game implements GameStatus, GameModel, GameWorld{
 			manager.setDescend(true); //tells manager to descend
 			alienCycleCounter = level.getSpeed(); //for the next cycle to reset the counter that indicates when the aliens move
 		}
-		else if (this.manager.alreadyDescended()) //if it already descended then we don't want it to descend again
-			this.manager.setDescend(false);
-		if (!this.manager.onBorder()) //when we get off the border we set already descended to false for the next time it is on the border it knows it has to descend
-			this.manager.setAlreadyDescended(false);
+		else if (manager.alreadyDescended()) //if it already descended then we don't want it to descend again
+			manager.setDescend(false);
+		if (!manager.onBorder()) //when we get off the border we set already descended to false for the next time it is on the border it knows it has to descend
+			manager.setAlreadyDescended(false);
 		
 	}
 	
@@ -212,21 +212,21 @@ public class Game implements GameStatus, GameModel, GameWorld{
 
 	//Specified in GameWorld
 	public Level getLevel() { 
-		return this.level;
+		return level;
 	}
 
 	//Specified in GameModel
 	public void reset(InitialConfiguration config)
 	{
-		this.score = 0;
-		this.cycle = 0;
-		this.laser = null;
-		this.manager = null;
-		this.manager = new AlienManager(this, this.level);
+		score = 0;
+		cycle = 0;
+		laser = null;
+		manager = null;
+		manager = new AlienManager(this, this.level);
 		container = null;
-		this.player = new UCMShip(this);
+		player = new UCMShip(this);
 		init(config);
-		this.rand = new Random(this.seed);
+		rand = new Random(this.seed);
 		alienCycleCounter = 0;
 		reseted = true;
 	}
@@ -317,21 +317,21 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	
 	//Specified in GameWorld
 	public double ndd() { //produces and returns the next double of the Random object in Game - world
-		double nextDouble = this.rand.nextDouble();
+		double nextDouble = rand.nextDouble();
 		return nextDouble;
 	}
 	
 	
 	//Specified in GameWorld
 	public boolean getAliensMove() { //world
-		return (this.alienCycleCounter == (this.level.getSpeed() + 1));
+		return (alienCycleCounter == (level.getSpeed() + 1));
 	}
 
 	
 	//Specified in GameModel
 	public boolean isFinished()
 	{
-		if (!finished && (this.playerWin() || this.aliensWin()))
+		if (!finished && (playerWin() || aliensWin()))
 			finished = true;
 			
 		return finished;

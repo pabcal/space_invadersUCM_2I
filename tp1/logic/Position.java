@@ -44,7 +44,7 @@ public class Position {
 	 * @return boolean
 	 */
 	public boolean isEqual(Position pos2) {
-		return this.col == pos2.getCol() && this.row == pos2.getRow();
+		return col == pos2.getCol() && row == pos2.getRow();
 	}
 	
 	
