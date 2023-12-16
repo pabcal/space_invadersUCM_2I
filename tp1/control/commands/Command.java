@@ -41,7 +41,7 @@ public abstract class Command {
 	   * returns the command that matches the input commandwords
 	   * if no such command exists, it returns null
 	   */
-	  public abstract Command parse(String[] commandWords);
+	  public abstract Command parse(String[] commandWords) throws CommandParseException;
 	  /*
 	   * returns true if the input name equals a command's shortcut or name
 	   * false if otherwise 

@@ -44,9 +44,9 @@ public class ResetCommand extends Command{
 	}
 
 	@Override
-	public Command parse(String[] commandWords) {
+	public Command parse(String[] commandWords) throws CommandParseException{
 		Command c = null;
-        if ( commandWords.length > 0 && this.matchCommandName(commandWords[0])) 
+        if (this.matchCommandName(commandWords[0])) 
         {
         	if (commandWords.length > 1)
         	{

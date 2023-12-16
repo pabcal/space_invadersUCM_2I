@@ -41,14 +41,15 @@ public enum Move {
 	 * @param mov
 	 * @return Move or null
 	 */
-	static public Move getMovement (String mov)
+	static public Move getMovement (String mov) throws IllegalArgumentException
 	{
 		Move move = null;
-		if (mov.equals(Move.RIGHT.toString()) || mov.equals(Move.LEFT.toString()) || //ASK
-				mov.equals(Move.RRIGHT.toString()) || mov.equals(Move.LLEFT.toString()) ||
-				mov.equals(Move.DOWN.toString()) || mov.equals(Move.UP.toString()) ||
-				mov.equals(Move.NONE.toString()))
-			move = Move.valueOf(mov);
+		try {
+		move = Move.valueOf(mov);
+		}
+		catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException();
+		}
 		return move;
 	}
 	
