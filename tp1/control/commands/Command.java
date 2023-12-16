@@ -36,7 +36,7 @@ public abstract class Command {
 	   * Checks if the execution was a success, prints the board if told to, and if the execution wasnt a success
 	   * it prints the error message
 	   */
-	  public abstract ExecutionResult execute(GameModel game);	  
+	  public abstract boolean execute(GameModel game) throws CommandExecuteException;	  
 	  /*
 	   * returns the command that matches the input commandwords
 	   * if no such command exists, it returns null
