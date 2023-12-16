@@ -47,23 +47,29 @@ public class MoveCommand extends Command {
 
 
 	@Override
-	public Command parse(String[] commandWords) 
+	public Command parse(String[] commandWords) throws CommandParseException
 	{
 		Command c = null;
         if ( commandWords.length > 0 && this.matchCommandName(commandWords[0])) 
         {
-        	if (commandWords.length > 1)
-        	{
-            	command2 = commandWords[1].toUpperCase();
-            	move = Move.getMovement(command2);
-            	if (move == null || move == Move.UP || move == Move.DOWN) {
-            		directionError = true;
-            	}
-            	else
-            		directionError = false;
-            	c = this;
+        	if (commandWords.length == 2)
+        	{	try {
+	            	command2 = commandWords[1].toUpperCase();
+	            	move = Move.getMovement(command2);
+	            	if (move == null || move == Move.UP || move == Move.DOWN) {
+	            		directionError = true;
+	            	}
+	            	else
+	            		directionError = false;
+	            	c = this;
+        		}
+	        	catch (IllegalArgumentException e) {
+	        		throw new CommandParseException(Messages.DIRECTION_ERROR + command2);
+	        	}
 
         	}
+        	else if (commandWords.length > 2)
+        		throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
         }
 	    return c;
 	}

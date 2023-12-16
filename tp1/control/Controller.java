@@ -5,7 +5,9 @@ import static tp1.view.Messages.debug;
 import java.util.Scanner;
 
 import tp1.control.commands.Command;
+import tp1.control.commands.CommandExecuteException;
 import tp1.control.commands.CommandGenerator;
+import tp1.control.commands.CommandParseException;
 import tp1.logic.Game;
 import tp1.view.BoardPrinter;
 import tp1.view.GamePrinter;
@@ -47,11 +49,11 @@ public class Controller {
 		
 		while (!game.isFinished()) {
 			String[] parameters = prompt();
-
+			
+			try {
 			Command command = CommandGenerator.parse(parameters);
-
-			if (command != null) {
-				ExecutionResult result = command.execute(game);
+			
+			ExecutionResult result = command.execute(game);
 				if (result.success()) {
 					if (result.draw()) {
 						game.update();
@@ -60,9 +62,12 @@ public class Controller {
 				} 
 				else
 					System.out.println(result.errorMessage());
-			} else {
-				System.out.println(Messages.UNKNOWN_COMMAND);
 			}
+			catch (CommandParseException  e) { //| CommandExecuteException
+				System.out.println(e.getMessage());
+			}
+
+			
 		}
 		printEndMessage();
 	}
