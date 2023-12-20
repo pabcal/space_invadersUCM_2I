@@ -26,8 +26,8 @@ public class ListCommand extends NoParamsCommand{
 	}
 
 	@Override
-	public ExecutionResult execute(GameModel game) {
+	public boolean execute(GameModel game) {
 		game.listCommand();
-		return new ExecutionResult(false);
+		return false;
 	}
 }

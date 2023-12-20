@@ -114,17 +114,18 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	}
 
 	//Specified in GameModel
-	public boolean enableLaser() {
+	public boolean enableLaser() throws LaserInFlightException{
 		boolean enabled = false;
 		if ((laser == null || !laser.isAlive()) && (superLaser == null || !superLaser.isAlive())) {
 			enableLaser = true;
 			enabled = true;
 		}
+		else throw new LaserInFlightException("Another laser is already on board.");
 		return enabled;
 	}
 	
 	//Specified in GameModel
-	public boolean enableSuperLaser() {
+	public boolean enableSuperLaser() throws LaserInFlightException, NotEnoughPointsException {
 		boolean enabled = false;
 		if(this.score > 4)
 			if (( superLaser == null || !superLaser.isAlive()) && (laser == null || !laser.isAlive()) ) 
@@ -133,7 +134,11 @@ public class Game implements GameStatus, GameModel, GameWorld{
 				enableSuperLaser = true;
 				enabled = true;
 			}
-			
+			else
+				throw new LaserInFlightException("Another laser is already on board.");
+		else
+			throw new NotEnoughPointsException("Not enough points: only " + score + " points, 5 points required.");
+
 		return enabled;
 	}
 	
@@ -188,11 +193,15 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	}
 	
 	//Specified in GameModel
-	public boolean movePlayer(Move dir) {
+	public boolean movePlayer(Move dir) throws OffWorldException, NotAllowedMoveException{
 		boolean did = false;
 		if (dir != null && dir != Move.UP && dir != Move.DOWN)
 			did = player.performMovement(dir);
-		return did;
+		else
+			throw new NotAllowedMoveException(null);
+		if (!did)
+			throw new OffWorldException(null);
+		return true;
 	}
 	
 	//Specified in GameModel
@@ -283,7 +292,7 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	
 	
 	//Specified in GameModel
-	public boolean shootShockwave() { 
+	public boolean shootShockwave() throws NoShockWaveException { 
 		boolean completed = false;
 		int size = container.getSize();
 		if (shockwave.getShockwaveStatus())
@@ -295,6 +304,8 @@ public class Game implements GameStatus, GameModel, GameWorld{
 			completed = true;
 			shockwave.setShockwave(false);
 		}
+		else
+			throw new NoShockWaveException(null);
 		return completed;
 	}
 	

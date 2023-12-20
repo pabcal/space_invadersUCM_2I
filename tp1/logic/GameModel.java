@@ -4,7 +4,7 @@ import tp1.control.InitialConfiguration;
 /*
 * The game methods which are called in commands 
 */
-public interface  GameModel {
+public interface GameModel {
 	
 	
 	/*
@@ -22,7 +22,7 @@ public interface  GameModel {
 	/*
 	 * Inputting a parameter of type move, performs that movement in that direction if it is valid
 	 */
-	public boolean movePlayer(Move dir);
+	public boolean movePlayer(Move dir) throws OffWorldException, NotAllowedMoveException;
 	/*
 	 * resets the game based on the configuration chosen 
 	 */
@@ -31,13 +31,13 @@ public interface  GameModel {
 	 * If the shockwave is active, shoots the shockwave dealing damage to everyone in the container.
 	 * Once shot, sets the shoclwave to false
 	 */
-	public boolean shootShockwave();
+	public boolean shootShockwave() throws NoShockWaveException;
 	/*
 	 * Activates the laser if there is no laser already active (including the superlaser)
 	 */
-	public boolean enableLaser();
+	public boolean enableLaser() throws LaserInFlightException;
 	/*
 	 * Activates the superlaser if there is no laser already active (including the regular laser)
 	 */
-	public boolean enableSuperLaser();
+	public boolean enableSuperLaser() throws LaserInFlightException, NotEnoughPointsException;
 }

@@ -7,9 +7,9 @@ import tp1.view.Messages;
 public class ExitCommand extends NoParamsCommand{
 		  		
 		@Override
-		public ExecutionResult execute(GameModel game) {
+		public boolean execute(GameModel game) {
 			game.exit();
-			return new ExecutionResult(false);
+			return false;
 		}
 
 		@Override

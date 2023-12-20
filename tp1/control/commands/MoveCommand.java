@@ -3,6 +3,8 @@ package tp1.control.commands;
 import tp1.control.ExecutionResult;
 import tp1.logic.GameModel;
 import tp1.logic.Move;
+import tp1.logic.NotAllowedMoveException;
+import tp1.logic.OffWorldException;
 import tp1.view.Messages;
 
 public class MoveCommand extends Command {
@@ -37,12 +39,21 @@ public class MoveCommand extends Command {
 	}
 
 	@Override
-	public ExecutionResult execute(GameModel game) {
-		boolean valid = game.movePlayer(move);
-		String message = (directionError ? Messages.DIRECTION_ERROR + command2: Messages.MOVEMENT_ERROR);
+	public boolean execute(GameModel game) throws CommandExecuteException{
+		boolean valid = false;
+		try {
+		valid = game.movePlayer(move);
+		}
+		catch (OffWorldException owe) {
+			throw new CommandExecuteException(Messages.MOVEMENT_ERROR, owe);
+		}
+		catch (NotAllowedMoveException name) {
+			throw new CommandExecuteException(Messages.DIRECTION_ERROR + command2, name);
+		}
 		
 		
-		return new ExecutionResult(valid, valid, message);
+		
+		return valid;
 	}
 
 

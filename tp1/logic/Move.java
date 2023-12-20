@@ -44,12 +44,8 @@ public enum Move {
 	static public Move getMovement (String mov) throws IllegalArgumentException
 	{
 		Move move = null;
-		try {
+		
 		move = Move.valueOf(mov);
-		}
-		catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException();
-		}
 		return move;
 	}
 	
