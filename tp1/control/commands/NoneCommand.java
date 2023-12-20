@@ -27,8 +27,8 @@ public class NoneCommand extends NoParamsCommand{
 	}
 
 	@Override
-	public ExecutionResult execute(GameModel game) {
-		return new ExecutionResult(true);
+	public boolean execute(GameModel game) {
+		return true;
 	}
 
 	

@@ -1,7 +1,8 @@
 package tp1.control.commands;
 
-import tp1.control.ExecutionResult;
 import tp1.logic.GameModel;
+import tp1.logic.LaserInFlightException;
+import tp1.logic.NotEnoughPointsException;
 import tp1.view.Messages;
 
 public class SuperLaserCommand extends NoParamsCommand {
@@ -26,10 +27,17 @@ public class SuperLaserCommand extends NoParamsCommand {
 	}
 
 	@Override
-	public ExecutionResult execute(GameModel game) {
-		boolean valid = game.enableSuperLaser();
+	public boolean execute(GameModel game) throws CommandExecuteException{
+		boolean valid = false;
 
-		return new ExecutionResult(valid, valid, "Super laser cannot be shot");
+		try { 
+			valid = game.enableSuperLaser();
+		}
+		catch(NotEnoughPointsException | LaserInFlightException nep) {
+			throw new CommandExecuteException("Super " + Messages.LASER_ERROR.toLowerCase(), nep);
+		}
+		
+		return valid;
 	}
 }
 

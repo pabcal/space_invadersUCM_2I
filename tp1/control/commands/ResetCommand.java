@@ -1,6 +1,5 @@
 package tp1.control.commands;
 
-import tp1.control.ExecutionResult;
 import tp1.logic.GameModel;
 import tp1.view.Messages;
 import tp1.control.InitialConfiguration;
@@ -30,17 +29,15 @@ public class ResetCommand extends Command{
 	}
 
 	@Override
-	public ExecutionResult execute(GameModel game) {
+	public boolean execute(GameModel game) {
 		boolean ok = false;
-		String message = null;
 		if (!wrongInitialConfiguration) {
 			game.reset(initial);
 			ok = true;
+		} else {
 		}
-		else
-			message = "Invalid initial configuration " + parameterString;
 		wrongInitialConfiguration = false;
-		return new ExecutionResult(ok, ok, message);
+		return ok;
 	}
 
 	@Override

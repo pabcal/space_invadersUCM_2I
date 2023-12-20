@@ -51,20 +51,19 @@ public class Controller {
 			String[] parameters = prompt();
 			
 			try {
-			Command command = CommandGenerator.parse(parameters);
+				Command command = CommandGenerator.parse(parameters);
 			
-			ExecutionResult result = command.execute(game);
-				if (result.success()) {
-					if (result.draw()) {
-						game.update();
-						printGame();	
-					}
+				boolean result = command.execute(game);
+				if (result) {
+					game.update();
+					printGame();	
 				} 
-				else
-					System.out.println(result.errorMessage());
 			}
-			catch (CommandParseException  e) { //| CommandExecuteException
+			catch (CommandParseException | CommandExecuteException  e) { //| CommandExecuteException
 				System.out.println(e.getMessage());
+	 			Throwable cause = e.getCause();
+	 			if (cause != null) 
+	 			    System.out.println(cause.getMessage());
 			}
 
 			
