@@ -33,7 +33,7 @@ public class ShockwaveCommand extends NoParamsCommand{
 			shot = game.shootShockwave();
 		}
 		catch (NoShockWaveException e) {
-			throw new CommandExecuteException(Messages.SHOCKWAVE_ERROR, e);
+			throw new CommandExecuteException(Messages.SHOCKWAVE_ERROR, null);
 		}
 		return shot;
 	}

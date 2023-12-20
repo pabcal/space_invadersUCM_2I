@@ -127,17 +127,17 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	//Specified in GameModel
 	public boolean enableSuperLaser() throws LaserInFlightException, NotEnoughPointsException {
 		boolean enabled = false;
-		if(this.score > 4)
-			if (( superLaser == null || !superLaser.isAlive()) && (laser == null || !laser.isAlive()) ) 
+		if(( superLaser == null || !superLaser.isAlive()) && (laser == null || !laser.isAlive()) )
+			if (score > 4) 
 			{
 				score -= 5;
 				enableSuperLaser = true;
-				enabled = true;
+				enabled = true; 
 			}
 			else
-				throw new LaserInFlightException("Another laser is already on board.");
+				throw new NotEnoughPointsException("Not enough points: only " + score + " points, 5 points required.");
 		else
-			throw new NotEnoughPointsException("Not enough points: only " + score + " points, 5 points required.");
+			throw new LaserInFlightException("Another laser is already on board.");
 
 		return enabled;
 	}
@@ -198,9 +198,11 @@ public class Game implements GameStatus, GameModel, GameWorld{
 		if (dir != null && dir != Move.UP && dir != Move.DOWN)
 			did = player.performMovement(dir);
 		else
-			throw new NotAllowedMoveException(null);
-		if (!did)
-			throw new OffWorldException(null);
+			throw new NotAllowedMoveException("Allowed UCMShip moves: <left|lleft|right|rright>");
+		if (!did) {
+			Position playerPos = player.getPos();
+			throw new OffWorldException("Cannot move in direction " + dir + " from position (" +  playerPos.getCol() + ", " + playerPos.getRow() + ")");
+		}
 		return true;
 	}
 	

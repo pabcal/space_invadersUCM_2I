@@ -34,7 +34,7 @@ public class SuperLaserCommand extends NoParamsCommand {
 			valid = game.enableSuperLaser();
 		}
 		catch(NotEnoughPointsException | LaserInFlightException nep) {
-			throw new CommandExecuteException(Messages.LASER_ERROR, nep);
+			throw new CommandExecuteException("Super " + Messages.LASER_ERROR.toLowerCase(), nep);
 		}
 		
 		return valid;
