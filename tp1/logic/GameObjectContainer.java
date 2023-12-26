@@ -39,7 +39,7 @@ public class GameObjectContainer {
 		while (i < getSize() && !found)
 		{
 			objectInPos = objects.get(i);
-			found = pos.isEqual(objectInPos.getPos());
+			found = objectInPos.isOnPosition(pos);
 			i++;
 		}
 		return  found ? objectInPos: null;
@@ -48,8 +48,7 @@ public class GameObjectContainer {
 	
 	public void computerActions() {
 		for (int i = 0; i < objects.size(); i++) {
-			GameObject auxObj = objects.get(i);
-			auxObj.computerAction();
+			objects.get(i).computerAction();
 		}	
 	}
 
