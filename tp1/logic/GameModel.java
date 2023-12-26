@@ -26,7 +26,7 @@ public interface GameModel {
 	/*
 	 * resets the game based on the configuration chosen 
 	 */
-	public void reset(InitialConfiguration config);
+	public void reset(InitialConfiguration config) throws InitializationException;
 	/*
 	 * If the shockwave is active, shoots the shockwave dealing damage to everyone in the container.
 	 * Once shot, sets the shoclwave to false

@@ -55,19 +55,20 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	
 	private int score = 0;
 
-	public Game(Level level, long seed) {
+	public Game(Level level, long seed) throws InitializationException {
 		this.level = level;
 		this.seed = seed;
 		this.manager = new AlienManager (this, level);
 		this.rand = new Random(this.seed);
-		init(null);
+		init(InitialConfiguration.NONE);
 	}
 	
 	/**
 	 * Initializes the game.continer with the aliens and adds the UCMShip to it.
 	 * @param config
+	 * @throws InitializationException 
 	 */
-	private void init(InitialConfiguration config) {
+	private void init(InitialConfiguration config) throws InitializationException { //
 		container = manager.initialize(config);
 		container.add(player);
 	}
@@ -227,19 +228,30 @@ public class Game implements GameStatus, GameModel, GameWorld{
 	}
 
 	//Specified in GameModel
-	public void reset(InitialConfiguration config)
+	public void reset(InitialConfiguration config) throws InitializationException
 	{
-		score = 0;
-		cycle = 0;
-		laser = null;
-		manager = null;
-		manager = new AlienManager(this, this.level);
-		container = null;
-		player = new UCMShip(this);
-		init(config);
-		rand = new Random(this.seed);
-		alienCycleCounter = 0;
-		reseted = true;
+		//try
+			score = 0;
+			cycle = 0;
+			laser = null;
+			manager = null;
+			manager = new AlienManager(this, this.level);
+			container = null;
+			player = new UCMShip(this);
+			init(config);
+			rand = new Random(this.seed);
+			alienCycleCounter = 0;
+			reseted = true;
+		//}
+		
+		
+		//try {
+			
+		//} catch (InitializationException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		//}
+		
 	}
 	
 	/**

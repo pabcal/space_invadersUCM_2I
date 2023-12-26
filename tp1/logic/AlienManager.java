@@ -5,6 +5,7 @@ import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
 import tp1.logic.gameobjects.ShipFactory;
 import tp1.logic.gameobjects.Ufo;
+import tp1.view.Messages;
 
 /**
  * 
@@ -34,19 +35,19 @@ public class AlienManager {
 	 * input config it will initialize the game normally (depending on the three levels of the game) or customized.
 	 * @param config
 	 * @return GameObjectContainer
+	 * @throws InitializationException 
 	 */
-	public  GameObjectContainer initialize(InitialConfiguration config) {
+	public  GameObjectContainer initialize(InitialConfiguration config) throws InitializationException {//throws InitializationException
 		remainingAliens = 0;
 		GameObjectContainer container = new GameObjectContainer();
 		
 		initializeOvni(container);
-		if (config == null) {
+		if (config == InitialConfiguration.NONE) {
 			initializeRegularAliens(container);
 			initializeDestroyerAliens(container);
 		}
 		else
-			costumedInitialization(container, config);
-	
+				costumedInitialization(container, config);
 		return container;
 	}
 	
@@ -102,11 +103,30 @@ public class AlienManager {
 	 * @param container
 	 * @param conf
 	 */
-	private void costumedInitialization(GameObjectContainer container, InitialConfiguration conf) {
+	private void costumedInitialization(GameObjectContainer container, InitialConfiguration conf) throws InitializationException  { //throws InitializationException 
 		for (String shipDescription : conf.getShipDescription()) {
 			String[] words = shipDescription.toLowerCase().trim().split("\\s+");
+			if (!words[0].equals("r") && !words[0].equals("e") && !words[0].equals("d"))
+				throw new InitializationException("Unknown ship: " + "'" +  words[0] + "'");
+			if (words.length != 3)
+				throw new InitializationException("Incorrect entry " + "'" + words[0].toUpperCase() + " " + words[1] + "'." + " Insufficient parameters." );
+			try {
+				int col = Integer.valueOf(words[1]) , row = Integer.valueOf(words[2]);
+				if (col < 0 || col >= game.DIM_X || row  < 0 || row >= game.DIM_Y)
+					throw new InitializationException("Position " + "(" + words[1] + " , " + words[2] + ")" + " is off board" );
 			container.add(ShipFactory.spawnAlienShip(words[0], game,
-					new Position(Integer.valueOf(words[1]), Integer.valueOf(words[2])), this));
+					new Position(col, row), this));
+			}
+			catch (NumberFormatException e)
+			{
+				throw new InitializationException("Invalid position " + "(" + words[1] + " , " + words[2] + ")");
+			}
+				
+			
+			
+			
+			
+			
 			this.remainingAliens++;
 		}
 	}

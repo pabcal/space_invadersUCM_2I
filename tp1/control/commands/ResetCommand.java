@@ -1,13 +1,16 @@
 package tp1.control.commands;
 
 import tp1.logic.GameModel;
+import tp1.logic.InitializationException;
 import tp1.view.Messages;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import tp1.control.InitialConfiguration;
 
 public class ResetCommand extends Command{
 	InitialConfiguration initial = null;
-	private boolean wrongInitialConfiguration = false;
-	private String parameterString = null;
 	@Override
 	protected String getName() {
 		return Messages.COMMAND_RESET_NAME;
@@ -29,14 +32,15 @@ public class ResetCommand extends Command{
 	}
 
 	@Override
-	public boolean execute(GameModel game) {
+	public boolean execute(GameModel game) throws CommandExecuteException {
 		boolean ok = false;
-		if (!wrongInitialConfiguration) {
-			game.reset(initial);
-			ok = true;
-		} else {
-		}
-		wrongInitialConfiguration = false;
+			try {
+				game.reset(initial);
+				ok = true;
+			}
+			catch (InitializationException ie){
+				throw new CommandExecuteException("Invalid initial configuration" , ie);
+			}
 		return ok;
 	}
 
@@ -45,17 +49,21 @@ public class ResetCommand extends Command{
 		Command c = null;
         if (this.matchCommandName(commandWords[0])) 
         {
-        	if (commandWords.length > 1)
+        	if (commandWords.length == 2)
         	{
-            	initial = InitialConfiguration.valueOfIgnoreCase(commandWords[1]);
-            	if (initial == null) {
-            		wrongInitialConfiguration = true;
-            		parameterString = commandWords[1];
-            	}
+            	try {
+					initial = InitialConfiguration.readFromFile(commandWords[1] + ".txt");
+				} catch (FileNotFoundException e) {
+					throw new CommandParseException("File not found: " + "'" + commandWords[1] + "'");					
+				} catch (IOException e) {
+					throw new CommandParseException("IO Exception");				
+				}
             		
         	}
+        	else if (commandWords.length > 2)
+        		throw new CommandParseException(Messages.COMMAND_INCORRECT_PARAMETER_NUMBER);
         	else
-        		initial = null;
+        		initial = InitialConfiguration.NONE;
         	c = this;
         }
 	    return c;
