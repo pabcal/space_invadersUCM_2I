@@ -23,20 +23,31 @@ public enum Move {
 	public int getY() {
 		return y;
 	}
-
-
-	public int moveToString() {
-		return 0;
 	
-	}
-	
+	/**
+	 * Given a position, it updates that same position using the attributes of the object (x and y)
+	 * @param pos
+	 */
 	public void updatePosition(Position pos){
 		
-		pos.setCol(pos.getCol() + this.getX());
-		pos.setRow(pos.getRow() + this.getY());
+		pos.setCol(pos.getCol() + getX()); 
+		pos.setRow(pos.getRow() + getY());
 
 	}
 	
+	/**
+	 * Given a string it returns a Move object in case the string is valid.
+	 *  Otherwise, it returns null.
+	 * @param mov
+	 * @return Move or null
+	 */
+	static public Move getMovement (String mov) throws IllegalArgumentException
+	{
+		Move move = null;
+		
+		move = Move.valueOf(mov);
+		return move;
+	}
 	
 	
 	

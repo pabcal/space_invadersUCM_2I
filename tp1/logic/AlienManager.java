@@ -1,11 +1,11 @@
 package tp1.logic;
 
+import tp1.control.InitialConfiguration;
 import tp1.logic.gameobjects.DestroyerAlien;
-//import tp1.logic.gameobjects.DestroyerAlien;
 import tp1.logic.gameobjects.RegularAlien;
-import tp1.logic.lists.DestroyerAlienList;
-//import tp1.logic.lists.DestroyerAlienList;
-import tp1.logic.lists.RegularAlienList;
+import tp1.logic.gameobjects.ShipFactory;
+import tp1.logic.gameobjects.Ufo;
+import tp1.view.Messages;
 
 /**
  * 
@@ -19,8 +19,6 @@ public class AlienManager {
 	private Game game;
 	private int remainingAliens;
 	
-	
-	private int shipsOnBorder; //not used
 	private boolean onBorder;
 	private boolean descend = false;
 	private boolean alreadyDescended = false;
@@ -31,112 +29,208 @@ public class AlienManager {
 		this.game = game;
 		this.remainingAliens = 0;
 	}
-		
-	// INITIALIZER METHODS
 	
 	/**
-	 * Initializes the list of regular aliens
-	 * @return the initial list of regular aliens according to the current level
+	 * Initializes the game.container GameObjectContainer and the aliens of the game. Depending on the 
+	 * input config it will initialize the game normally (depending on the three levels of the game) or customized.
+	 * @param config
+	 * @return GameObjectContainer
+	 * @throws InitializationException 
 	 */
-	protected RegularAlienList initializeRegularAliens() {
-		int nRAliens = this.level.getNumOfRegAliens();
-		int rArows = this.level.getNumberOfRows();
-		RegularAlienList alienList = new RegularAlienList(nRAliens, game);
+	public  GameObjectContainer initialize(InitialConfiguration config) throws InitializationException {//throws InitializationException
+		remainingAliens = 0;
+		GameObjectContainer container = new GameObjectContainer();
+		
+		initializeOvni(container);
+		if (config == InitialConfiguration.NONE) {
+			initializeRegularAliens(container);
+			initializeDestroyerAliens(container);
+		}
+		else
+				costumedInitialization(container, config);
+		return container;
+	}
+	
+	/**
+	 * Initializes the UFO in the game and adds it to the container.
+	 * @param container
+	 */
+	private void initializeOvni(GameObjectContainer container) {
+		container.add(new Ufo(game));
+	}
+	
+	/**
+	 * Initializes the regular aliens of the game and adds them to the container.
+	 * @param container
+	 */
+	private void initializeRegularAliens (GameObjectContainer container) {
+		int nRAliens = level.getNumOfRegAliens();
+		int rArows = level.getNumberOfRows();
 		RegularAlien regAlien;
 		
 		for (int i = 0; i < rArows; ++i) {
 			for (int j = 0; j < nRAliens / rArows; ++j) {
-				regAlien = new RegularAlien(Game.REGULAR_ALIEN_HEALTH, 5 - j, 1 + i, this);
-				alienList.add(regAlien);
+				Position auxPos = new Position(5 - j, 1 + i);
+				regAlien = new RegularAlien(game, auxPos, this);
+				container.add(regAlien);
 				this.remainingAliens++;
 			}
 		}
-		return alienList;
+		
+		//TODO fill with your code
+		//		container.add(new RegularAlien(....));
+	}
+	
+	/**
+	 * Initializes the destroyer aliens of the game and adds them to the container. 
+	 * @param container
+	 */
+	private void initializeDestroyerAliens(GameObjectContainer container) {
+		int nDAliens = level.getNumberOfDesAliens();
+		DestroyerAlien desAlien;
+		int colInit = ((level == Level.INSANE) ? 1 : 0);
+		
+		for (int j = 0; j < nDAliens; ++j) {
+			Position auxPos = new Position(4 + colInit - j, 1 + level.getNumberOfRows());
+			desAlien = new DestroyerAlien(game, auxPos, this);
+			container.add(desAlien);
+			remainingAliens++; 
+		}
 	}
 
 	/**
-	 * Initializes the list of destroyer aliens
-	 * @return the initial list of destroyer aliens according to the current level
+	 * Initializes the corresponding aliens of the game (RegularAlien, DestroyerAlien, ExplodingShip) depending on the configuration given by InitialConfiguration conf
+	 * @param container
+	 * @param conf
 	 */
-	protected  DestroyerAlienList initializeDestroyerAliens() {
-		int nDAliens = this.level.getNumberOfDesAliens();
-		DestroyerAlienList alienList = new DestroyerAlienList(nDAliens, game);
-		DestroyerAlien desAlien;
-		int colInit = ((level == Level.INSANE) ? 1 : 0);
-
-		for (int j = 0; j < nDAliens; ++j) {
-			desAlien = new DestroyerAlien(Game.DESTROYER_ALIEN_HEALTH, 4 + colInit - j, 1 + level.getNumberOfRows(), this, this.game);
-			alienList.add(desAlien);
-			this.remainingAliens++; 
-
+	private void costumedInitialization(GameObjectContainer container, InitialConfiguration conf) throws InitializationException  { //throws InitializationException 
+		for (String shipDescription : conf.getShipDescription()) {
+			String[] words = shipDescription.toLowerCase().trim().split("\\s+");
+			if (!words[0].equals("r") && !words[0].equals("e") && !words[0].equals("d"))
+				throw new InitializationException("Unknown ship: " + "'" +  words[0] + "'");
+			if (words.length != 3)
+				throw new InitializationException("Incorrect entry " + "'" + words[0].toUpperCase() + " " + words[1] + "'." + " Insufficient parameters." );
+			try {
+				int col = Integer.valueOf(words[1]) , row = Integer.valueOf(words[2]);
+				if (col < 0 || col >= game.DIM_X || row  < 0 || row >= game.DIM_Y)
+					throw new InitializationException("Position " + "(" + words[1] + " , " + words[2] + ")" + " is off board" );
+			container.add(ShipFactory.spawnAlienShip(words[0], game,
+					new Position(col, row), this));
+			}
+			catch (NumberFormatException e)
+			{
+				throw new InitializationException("Invalid position " + "(" + words[1] + " , " + words[2] + ")");
+			}
+				
+			
+			
+			
+			
+			
+			this.remainingAliens++;
 		}
-		
-		return alienList;
 	}
-
 	
 	// CONTROL METHODS
 		
+	/**
+	 * Sets the boolean attribute onBorder to true
+	 */
 	public void shipOnBorder() {
 		if(!onBorder) {
 			onBorder = true;
-			shipsOnBorder = remainingAliens;
+//			shipsOnBorder = remainingAliens;
 		}
 	}
 	
+	/**
+	 * Sets the boolean attribute onBorder to false
+	 */
 	public void notOnBorder() {
 		
 		if(onBorder) {
 			onBorder = false;
-			shipsOnBorder = 0;
+
 		}
 		 
 		
 	}
 	
-//	public void checkInBorder(boolean value) {
-//		this.onBorder = this.onBorder || value;
-//	}
 
+	
+	/**
+	 * Getter method for onBorder (boolean) attribute
+	 * @return onBorder
+	 */
 	public boolean onBorder() {
 		
 		return onBorder;
 	}
 	
+	/**
+	 * Getter method for remainingAliens (int) attribute
+	 * @return reaminingAliens
+	 */
 	public int getRemainingAliens()
 	{
-		return this.remainingAliens;
+		return remainingAliens;
 	}
 	
+	/**
+	 * Substracts 1 from remainingAliens (int) attribute. Called when an aliens dies.
+	 */
 	public void alienDied() {
-		this.remainingAliens--;
+		remainingAliens--;
 	}
 	
+	/**
+	 * Setter method for descend (boolean) attribute.
+	 * @param value (boolean)
+	 */
 	public void setDescend(boolean value)
 	{
-		this.descend = value;
+		descend = value;
 		
 	}
 	
+	/**
+	 * Setter method for alreadyDescended (boolean) attribute.
+	 * @param value (boolean)
+	 */
 	public void setAlreadyDescended(boolean value) {
-		this.alreadyDescended = value;
+		alreadyDescended = value;
 	}
 	
+	/**
+	 * Getter method for alreadyDescended (boolean) attribute.
+	 * @return alreadyDescended
+	 */
 	public boolean alreadyDescended() {
-		return this.alreadyDescended;
+		return alreadyDescended;
 	}
 	
+	/**
+	 * Getter method for descend (boolean) attribute.
+	 * @return descend
+	 */
 	public boolean readyToDescend() {
-		return this.descend;
+		return descend;
 	}
 	
+	/**
+	 * Sets inFinalRow (boolean) to true.
+	 */
 	public void sendInFinalRow() {
-		this.inFinalRow = true;
+		inFinalRow = true;
 	}
 	
+	/**
+	 * Getter method for inFinalRow (boolean) attribute.
+	 * @return inFinalRow
+	 */
 	public boolean inFinalRow()
 	{
-		return this.inFinalRow;
+		return inFinalRow;
 	}
 	
 	

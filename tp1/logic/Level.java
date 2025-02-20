@@ -39,7 +39,7 @@ public enum Level {
 	}
 	
 	public double getShootFrequency() {
-		return this.shootFrequency;
+		return shootFrequency;
 	}
 	
 
@@ -72,26 +72,46 @@ public enum Level {
 		return allLevels.substring(0, allLevels.length() - separator.length());
 	}
 	
+	/**
+	 * Getter method for numRegularAliens (int).
+	 * @return numRegularAliens
+	 */
 	public int getNumOfRegAliens ()
 	{
-		return this.numRegularAliens;
+		return numRegularAliens;
 	}
 	
+	/**
+	 * Getter method for the total number of aliens in game (int).
+	 * @return numRegularAliens + numDestroyerAliens
+	 */
 	public int getTotalAliens()
 	{
-		return (this.numRegularAliens + this.numDestroyerAliens);
+		return (numRegularAliens + numDestroyerAliens);
 	}
 	
+	/**
+	 * Getter method for numRowsRegularAliens (int).
+	 * @return nuRowsRegularAliens
+	 */
 	public int getNumberOfRows() {
-		return this.numRowsRegularAliens;
+		return numRowsRegularAliens;
 	}
 	
+	/**
+	 * Getter method for numDestroyerAliens (int).
+	 * @return numDestroyerAliens
+	 */
 	public int getNumberOfDesAliens()
 	{
-		return this.numDestroyerAliens;
+		return numDestroyerAliens;
 	}
 	
+	/**
+	 * Getter method for the speed of the aliens (int).
+	 * @return numCyclesToMoveOneCell
+	 */
 	public int getSpeed() {
-		return this.numCyclesToMoveOneCell;
+		return numCyclesToMoveOneCell;
 	}
 }

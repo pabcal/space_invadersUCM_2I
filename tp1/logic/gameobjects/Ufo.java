@@ -3,55 +3,48 @@ package tp1.logic.gameobjects;
 
 
 import tp1.logic.Game;
+import tp1.logic.GameWorld;
 import tp1.logic.Move;
 import tp1.logic.Position;
 import tp1.view.Messages;
 
 
-public class Ufo {
-
-	//TODO fill your code
+public class Ufo extends EnemyShip{
 
 	private boolean enabled;
-	private Game game;
-	private int points = Game.UFO_POINTS;
-	private String appearance = Messages.UFO_SYMBOL;
-	private Move dir = Move.LEFT;
-	private int health = Game.UFO_HEALTH;
-	private Position pos;
 	
 	//TODO fill your code
-	public Ufo(Game game) {
-		this.pos = new Position (9, 0);
+	public Ufo(GameWorld game) {
+		super(game, new Position(Game.DIM_X, 0), 0, Game.UFO_POINTS);
+		this.dir = Move.LEFT;
 		this.enabled = false;
-		this.game = game;
-		
 	}
 
+	/**
+	 Computer action for UFO. Enables UFO randomly.
+	 */
 	public void computerAction() {
-		if(!enabled && canGenerateRandomUfo()) {
+		if((!isAlive() || !enabled) && canGenerateRandomUfo()) {
 			enable();
 		}
 	}
 	
 	
-	
-	private void enable() {
-		this.pos = new Position(Game.DIM_X, 0);
-		this.enabled = true;
-		this.health = 1;
+	/**
+	 Enables UFO
+	 */
+	private void enable() { 
+		pos = new Position(Game.DIM_X - 1, 0);
+		life = Game.UFO_HEALTH;
+		enabled = true;
 	}
 
+	/**
+	 onDelete() method for UFO. Enables shockwave. Further specified in GameObject.
+	 */
 	public void onDelete() {
-		this.enabled = false;
-	}
-	
-	
-	public void callUfo() {
-		this.computerAction();
-		if(this.Alive()) {
-			this.performMovement();
-		}
+		game.enableShockwave();
+		game.markPoints(this.points);
 	}
 	
 	/**
@@ -61,51 +54,67 @@ public class Ufo {
 	 */
 	
 	
-	
+	/**
+	 * Method that checks if UFO must be generated or not.
+	 * @return True if game.ndd() returns a lower double than the UFO frequency.
+	 */
 	private boolean canGenerateRandomUfo(){
-////		Random rand = ;
-//		Level level = ;
-		return this.game.ndd() < game.getLevel().getUfoFrequency(); //game.getRandom().nextDouble()
+		return game.ndd() < game.getLevel().getUfoFrequency(); //game.getRandom().nextDouble()
 	}
 	
-	public String getAppearance() {
-		return this.appearance + "[" + (this.health < 10 ? "0": "") + this.health + "]";
+	/**
+	 Returns symbol of UFO checking if it is alive. If not alive returns empty String.
+	 */
+	public String getSymbol() {
+		String symbol = "";
+		if (isAlive())
+			symbol = Messages.UFO_SYMBOL + "[" + (life < 10 ? "0": "") + life + "]";
+		return symbol;
 	}
 	
-	public Position getPosition() {
-		return this.pos;
-	}
-	
-	public boolean Alive() {
-		return this.health > 0 && this.enabled;
-	}
-	
+	/**
+	 Performs UFO's movement for the cycle if UFO is alive. Puts enable to false if UFO is in border.
+	 */
 	public void performMovement() {
-		this.dir.updatePosition(this.pos);
-		if (this.pos.getCol() == -1)
-			this.onDelete();
-	}
-	
-	public boolean inPosition(Position pos1)
-	{
-		return this.pos.isEqual(pos1);
-	}
-	
-	public boolean receiveAttack(UCMLaser other) {
-		return this.inPosition(other.getPos());
-	}
-	
-	public void hit(int damage) {
-		this.health -= damage;
-		if (this.health <= 0)
-		{
-			this.onDelete();
-			game.setShockwave(true);
-			this.game.markPoints(this.points);
+		if (isAlive() && enabled) {
+			dir.updatePosition(this.pos);
+			if (onBorder())
+				enabled = false;
 		}
-			
 	}
 	
+	/**
+	 @return True if UFO is beyond the left border of the board.
+	 */
+	@Override
+	protected boolean onBorder() {
+		// TODO Auto-generated method stub
+		return pos.getCol() == -1;
+	}
+	
+	
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////
+	//EMPTY METHODS
+	
+	
+	@Override
+	public boolean performAttack(GameItem other, boolean cross) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected int getDamage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+	
+
 	
 	
 	
