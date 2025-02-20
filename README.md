@@ -3,7 +3,7 @@ Space Invaders UCM second year I group.
 
 Finsihed versions:
 Version 1
+Version 2
+Version 3
 
-In progress:
-Version 2.1
-Version 2.2
+
